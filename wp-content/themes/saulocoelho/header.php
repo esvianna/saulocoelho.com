@@ -47,11 +47,6 @@
                 'fallback_cb'    => false,
             ) );
             ?>
-            <!-- Static links to match mockup -->
-            <a href="#" class="text-sm font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest">Quem é?</a>
-            <a href="#" class="text-sm font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest">Programas</a>
-            <a href="#" class="text-sm font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest">Loja</a>
-            <a href="#" class="text-sm font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest">Masterclass</a>
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
