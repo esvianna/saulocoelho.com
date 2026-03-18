@@ -62,3 +62,18 @@ function saulocoelho_nav_menu_link_attributes( $atts, $item, $args ) {
     return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'saulocoelho_nav_menu_link_attributes', 10, 3 );
+
+/**
+ * Custom Meta Boxes and Admin UX
+ */
+if ( file_exists( __DIR__ . '/inc/metaboxes.php' ) ) {
+    require_once __DIR__ . '/inc/metaboxes.php';
+}
+
+function saulocoelho_admin_scripts($hook) {
+    // Only load on post edit pages
+    if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
+    
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'saulocoelho_admin_scripts');
