@@ -1,15 +1,15 @@
 <!-- Course Hero Section -->
-<section class="relative py-12 lg:py-24 overflow-hidden bg-slate-100 dark:bg-background-dark">
+<section class="relative py-12 lg:py-24 overflow-hidden bg-background-dark">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div class="flex flex-col gap-8">
                 <span class="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary ring-1 ring-inset ring-primary/20 w-fit uppercase tracking-widest">
                     Matrículas Abertas
                 </span>
-                <h1 class="text-4xl lg:text-7xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+                <h1 class="text-4xl lg:text-7xl font-black leading-[1.1] tracking-tight text-white">
                     Transforme sua Carreira com a <span class="text-primary">Metodologia SCCR</span>
                 </h1>
-                <p class="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-xl font-light leading-relaxed">
+                <p class="text-lg lg:text-xl text-slate-400 max-w-xl font-light leading-relaxed">
                     O passo a passo validado por Saulo Coelho para alcançar alta performance e resultados reais que o mercado exige de profissionais de elite.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6 mt-4">
@@ -17,7 +17,7 @@
                         Quero me inscrever agora
                         <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
-                    <a href="#conteudo" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-10 py-5 rounded-xl text-lg font-bold transition-all text-center">
+                    <a href="#conteudo" class="bg-slate-800 hover:bg-slate-700 text-white px-10 py-5 rounded-xl text-lg font-bold transition-all text-center">
                         Ver currículo
                     </a>
                 </div>
@@ -33,7 +33,7 @@
                             <span class="material-symbols-outlined text-white text-xs">person</span>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-500">Mais de <span class="font-bold text-slate-900 dark:text-white">10.000 alunos</span> transformados</p>
+                    <p class="text-sm text-slate-500">Mais de <span class="font-bold text-white">10.000 alunos</span> transformados</p>
                 </div>
             </div>
             
@@ -60,7 +60,7 @@
 </section>
 
 <!-- Stats Grid -->
-<section class="py-16 border-y border-slate-200 dark:border-white/5 bg-white dark:bg-background-dark-alt">
+<section class="py-16 border-y border-white/5 bg-background-dark-alt">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
             <div class="flex flex-col items-center text-center gap-2">
@@ -88,32 +88,32 @@
     <div class="mx-auto max-w-3xl px-6 lg:px-8">
         <div class="text-center mb-20 text-balance">
             <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-6">O que você vai aprender</h2>
-            <p class="text-lg text-slate-600 dark:text-slate-400 font-light leading-relaxed">Um currículo completo desenhado para te levar do zero ao domínio absoluto da metodologia.</p>
+            <p class="text-lg text-slate-400 font-light leading-relaxed">Um currículo completo desenhado para te levar do zero ao domínio absoluto da metodologia.</p>
         </div>
         
         <div class="flex flex-col gap-6">
-            <div class="bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
+            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
                 <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">Módulo 1: Fundamentos da SCCR</h4>
+                    <h4 class="text-xl font-bold text-white">Módulo 1: Fundamentos da SCCR</h4>
                     <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full tracking-widest">08 Aulas</span>
                 </div>
-                <p class="text-slate-600 dark:text-slate-400 font-light leading-relaxed">A base teórica inabalável e os primeiros passos estratégicos na implementação da metodologia.</p>
+                <p class="text-slate-400 font-light leading-relaxed">A base teórica inabalável e os primeiros passos estratégicos na implementação da metodologia.</p>
             </div>
             
-            <div class="bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
+            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
                 <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">Módulo 2: Estratégias Avançadas</h4>
+                    <h4 class="text-xl font-bold text-white">Módulo 2: Estratégias Avançadas</h4>
                     <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full tracking-widest">12 Aulas</span>
                 </div>
-                <p class="text-slate-600 dark:text-slate-400 font-light leading-relaxed">Otimização profunda de processos internos e aplicação técnica em cenários de alta complexidade.</p>
+                <p class="text-slate-400 font-light leading-relaxed">Otimização profunda de processos internos e aplicação técnica em cenários de alta complexidade.</p>
             </div>
             
-            <div class="bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
+            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl hover:border-primary/50 transition-colors">
                 <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">Módulo 3: Estudos de Caso Reais</h4>
+                    <h4 class="text-xl font-bold text-white">Módulo 3: Estudos de Caso Reais</h4>
                     <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full tracking-widest">10 Aulas</span>
                 </div>
-                <p class="text-slate-600 dark:text-slate-400 font-light leading-relaxed">Análise forense de implementações reais de sucesso e os erros que você deve evitar a todo custo.</p>
+                <p class="text-slate-400 font-light leading-relaxed">Análise forense de implementações reais de sucesso e os erros que você deve evitar a todo custo.</p>
             </div>
         </div>
     </div>

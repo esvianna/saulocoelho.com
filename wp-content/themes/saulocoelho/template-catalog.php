@@ -4,21 +4,22 @@
  */
 get_header(); ?>
 
-<main class="mx-auto w-full max-w-7xl flex-1 px-6 py-12 lg:px-10 mt-20">
-    <div class="mb-12 flex flex-col gap-4">
-        <div class="flex items-center gap-2 text-primary font-semibold text-sm tracking-wider uppercase">
-            <span class="h-px w-8 bg-primary"></span>
-            Catálogo de Formação
+<main class="bg-background-dark-alt text-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 py-12 lg:px-10 mt-20">
+        <div class="mb-12 flex flex-col gap-4">
+            <div class="flex items-center gap-2 text-primary font-semibold text-sm tracking-wider uppercase">
+                <span class="h-px w-8 bg-primary"></span>
+                Catálogo de Formação
+            </div>
+            <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-white md:text-5xl">
+                Programas de <span class="text-primary">Treinamento</span> e Mentoria
+            </h2>
+            <p class="max-w-xl text-lg text-slate-400">
+                Metodologias exclusivas desenhadas para profissionais que buscam excelência operacional e liderança estratégica.
+            </p>
         </div>
-        <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-slate-900 dark:text-white md:text-5xl">
-            Programas de <span class="text-primary">Treinamento</span> e Mentoria
-        </h2>
-        <p class="max-w-xl text-lg text-slate-600 dark:text-slate-400">
-            Metodologias exclusivas desenhadas para profissionais que buscam excelência operacional e liderança estratégica.
-        </p>
-    </div>
 
-    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <?php
         $courses = array(
             array( "title" => "Mentoria Business Elite", "desc" => "Desenvolva uma visão estratégica de alto nível e domine o mercado corporativo.", "img" => "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" ),
@@ -28,19 +29,20 @@ get_header(); ?>
         );
 
         foreach ($courses as $course) : ?>
-            <div class="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/50">
-                <div class="aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img alt="<?php echo esc_attr($course['title']); ?>" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" src="<?php echo esc_url($course['img']); ?>"/>
+            <div class="group relative flex flex-col bg-slate-800/40 rounded-2xl border border-white/5 p-8 hover:bg-slate-800/60 transition-all hover:border-primary/50">
+                <div class="size-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl">school</span>
                 </div>
-                <div class="flex flex-1 flex-col p-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white"><?php echo esc_html($course['title']); ?></h3>
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <div class="flex flex-1 flex-col">
+                    <h3 class="text-xl font-bold text-white mb-4"><?php echo esc_html($course['title']); ?></h3>
+                    <p class="text-sm text-slate-400 mb-8 font-light leading-relaxed">
                         <?php echo esc_html($course['desc']); ?>
                     </p>
-                    <a href="#" class="mt-6 flex items-center justify-between text-sm font-bold uppercase tracking-wider text-primary group-hover:gap-2 transition-all">
-                        Saiba Mais
-                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
-                    </a>
+                    <div class="mt-auto pt-6 border-t border-white/5">
+                        <a href="#" class="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest hover:gap-3 transition-all">
+                            Saiba Mais <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>

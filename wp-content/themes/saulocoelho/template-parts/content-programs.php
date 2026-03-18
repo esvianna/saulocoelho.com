@@ -4,10 +4,10 @@
         <span class="h-px w-8 bg-primary"></span>
         Catálogo de Formação
     </div>
-    <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-slate-900 dark:text-white md:text-5xl">
+    <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-white md:text-5xl">
         Programas de <span class="text-primary">Treinamento</span> e Mentoria
     </h2>
-    <p class="max-w-xl text-lg text-slate-600 dark:text-slate-400">
+    <p class="max-w-xl text-lg text-slate-400">
         Metodologias exclusivas desenhadas para profissionais que buscam excelência operacional e liderança estratégica.
     </p>
 </div>
