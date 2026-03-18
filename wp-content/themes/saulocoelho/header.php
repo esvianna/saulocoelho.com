@@ -4,6 +4,26 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
+    <!-- Temporary Tailwind CDN for layout fix -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "background-dark-alt": "#0a1118"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
