@@ -62,8 +62,8 @@ get_header(); ?>
                         <span class="material-symbols-outlined text-3xl">present_to_all</span>
                     </div>
                     <div class="space-y-3">
-                        <h3 className="text-xl font-bold text-white uppercase tracking-wider">Palestras</h3>
-                        <p className="text-slate-400 text-sm leading-relaxed">Conteúdo disruptivo, inspiração e estratégia prática para grandes convenções e públicos corporativos.</p>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-wider">Palestras</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Conteúdo disruptivo, inspiração e estratégia prática para grandes convenções e públicos corporativos.</p>
                     </div>
                 </div>
                 <!-- ... other features ... -->
