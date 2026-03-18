@@ -22,12 +22,9 @@
             </div>
         </div>
         <div class="relative">
-            <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl bg-slate-800 flex items-center justify-center border border-white/10">
-                <span class="material-symbols-outlined text-9xl text-slate-700">person</span>
-                <div class="absolute bottom-6 left-6 right-6 p-4 bg-background-dark/80 backdrop-blur-md rounded-xl border border-white/5">
-                    <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Portrait</p>
-                    <p class="text-sm text-slate-300">Substitua esta imagem no código do template part.</p>
-                </div>
+            <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-slate-800 flex items-center justify-center border border-white/5 relative group">
+                <span class="material-symbols-outlined text-9xl text-slate-700 group-hover:scale-110 transition-transform duration-500">person</span>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent"></div>
             </div>
         </div>
     </div>

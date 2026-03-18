@@ -23,9 +23,15 @@
                 </div>
                 <div class="flex items-center gap-5 pt-4">
                     <div class="flex -space-x-3">
-                        <div class="h-10 w-10 rounded-full border-2 border-background-dark bg-slate-500 shadow-sm"></div>
-                        <div class="h-10 w-10 rounded-full border-2 border-background-dark bg-slate-600 shadow-sm"></div>
-                        <div class="h-10 w-10 rounded-full border-2 border-background-dark bg-slate-700 shadow-sm"></div>
+                        <div class="h-10 w-10 rounded-full border-2 border-slate-900 bg-blue-600 shadow-sm overflow-hidden flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-xs">person</span>
+                        </div>
+                        <div class="h-10 w-10 rounded-full border-2 border-slate-900 bg-slate-700 shadow-sm overflow-hidden flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-xs">person</span>
+                        </div>
+                        <div class="h-10 w-10 rounded-full border-2 border-slate-900 bg-primary shadow-sm overflow-hidden flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-xs">person</span>
+                        </div>
                     </div>
                     <p class="text-sm text-slate-500">Mais de <span class="font-bold text-slate-900 dark:text-white">10.000 alunos</span> transformados</p>
                 </div>
@@ -126,10 +132,10 @@
             </p>
             
             <div class="flex flex-col items-center gap-8 relative z-10">
-                <div class="flex flex-col items-center gap-1">
+                <div class="flex flex-col items-center gap-2">
                     <span class="text-slate-500 line-through text-lg">De R$ 1.997,00</span>
-                    <div class="flex items-baseline gap-3">
-                        <span class="text-white text-2xl font-bold">12x de</span>
+                    <div class="flex items-center gap-4">
+                        <span class="text-white text-3xl font-bold">12x de</span>
                         <span class="text-primary text-7xl font-black">R$ 97,00</span>
                     </div>
                     <span class="text-slate-400 text-sm mt-2 font-medium">ou R$ 997,00 à vista no PIX</span>

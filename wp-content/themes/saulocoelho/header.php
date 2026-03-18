@@ -59,7 +59,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="fixed top-0 w-full z-50 border-b border-white/5 bg-background-dark-alt/80 backdrop-blur-md">
+<header class="sticky top-0 w-full z-50 border-b border-white/5 bg-background-dark/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 relative z-50">
             <div class="text-primary">

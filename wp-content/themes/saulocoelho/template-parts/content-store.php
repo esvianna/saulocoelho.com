@@ -73,10 +73,7 @@
             <!-- Product 3 -->
             <div class="group relative flex flex-col bg-background-dark-alt rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all hover:shadow-2xl shadow-primary/10 opacity-70">
                 <div class="aspect-[4/3] bg-slate-800 overflow-hidden relative">
-                    <!-- Placeholder -->
-                    <div class="w-full h-full bg-slate-900 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-6xl text-slate-800">school</span>
-                    </div>
+                    <img class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDRZPL6utRUIp361Kaapafg2sIxgYudkhynMbQBYo7mD1cjyb-F6eysao0SWY4OoCmnrdDgcsv68gLLClMTYUc2uv5h-U_tQ4dfX6-dAjt3mJ9LCjMGj-pJTuQsyEHgDvT_t64PWZ3Rv0XxY11xZTcrNG9XxdN6GlC5zrFeBwhsPsquv1Qq25-UnSQjDdN-BndHUX19cKnnik_g7CJghODLJHC4jcMJmpl00C3fA2pLD3Wpjc8JnhS_3CA0yzk76Izsnssh0JilWY" alt="Método SCCR"/>
                     <div class="absolute top-4 left-4 bg-slate-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">Esgotado</div>
                 </div>
                 <div class="p-8 flex flex-col flex-1 gap-4">
