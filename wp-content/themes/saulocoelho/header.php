@@ -56,7 +56,11 @@
         }
     </style>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class('bg-background-dark-alt'); ?>>
+<script>
+    // Ensure the body has the dark background even if classes are delayed
+    document.body.style.backgroundColor = '#0a1118';
+</script>
 <?php wp_body_open(); ?>
 
 <header class="sticky top-0 w-full z-50 border-b border-white/5 bg-background-dark/95 backdrop-blur-md">
