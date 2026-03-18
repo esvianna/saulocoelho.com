@@ -10,7 +10,7 @@
 
 get_header(); ?>
 
-<main class="bg-background-dark-alt py-32">
+<main class="bg-background-dark-alt py-32 text-white">
     <div class="max-w-7xl mx-auto px-6">
         <?php
         if ( have_posts() ) :

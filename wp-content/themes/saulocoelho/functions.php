@@ -41,8 +41,8 @@ add_action( 'after_setup_theme', 'saulocoelho_setup' );
  * Enqueue scripts and styles.
  */
 function saulocoelho_scripts() {
-    // Compiled Tailwind CSS
-    wp_enqueue_style( 'saulocoelho-style', get_template_directory_uri() . '/dist/output.css', array(), '1.0.0' );
+    // Theme Stylesheet
+    wp_enqueue_style( 'saulocoelho-style', get_stylesheet_uri(), array(), '1.0.0' );
 
     // Inter Font
     wp_enqueue_style( 'saulocoelho-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', array(), null );
@@ -51,3 +51,14 @@ function saulocoelho_scripts() {
     wp_enqueue_style( 'saulocoelho-material-symbols', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap', array(), null );
 }
 add_action( 'wp_enqueue_scripts', 'saulocoelho_scripts' );
+
+/**
+ * Add Tailwind classes to menu links
+ */
+function saulocoelho_nav_menu_link_attributes( $atts, $item, $args ) {
+    if ( isset( $args->theme_location ) && $args->theme_location === 'menu-1' ) {
+        $atts['class'] = 'text-white !text-white hover:text-primary transition-colors font-bold uppercase text-xs tracking-widest';
+    }
+    return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'saulocoelho_nav_menu_link_attributes', 10, 3 );

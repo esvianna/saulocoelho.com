@@ -24,6 +24,37 @@
         }
       }
     </script>
+    <style>
+        /* Force styling for WordPress dynamic menu */
+        nav ul {
+            display: flex !important;
+            align-items: center !important;
+            gap: 2.5rem !important; /* gap-10 */
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        nav ul li {
+            list-style: none !important;
+            margin: 0 !important;
+        }
+        nav ul li a {
+            font-size: 0.825rem !important; /* text-sm/xs */
+            font-weight: 700 !important;
+            color: #ffffff !important; /* Changed to pure white for MAX contrast */
+            text-transform: uppercase !important;
+            letter-spacing: 0.15em !important;
+            text-decoration: none !important;
+            transition: color 0.2s !important;
+        }
+        nav ul li a:hover {
+            color: #3b82f6 !important; /* text-primary light */
+        }
+        /* Mobile menu hide for now if it interferes */
+        @media (max-width: 768px) {
+            nav { display: none; }
+        }
+    </style>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
@@ -41,16 +72,15 @@
             <?php
             wp_nav_menu( array(
                 'theme_location' => 'menu-1',
-                'container'      => false,
-                'menu_class'     => 'flex items-center gap-10',
-                'items_wrap'     => '%3$s',
+                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                 'fallback_cb'    => false,
             ) );
             ?>
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
-            <a href="#" class="bg-primary hover:bg-primary/90 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-lg transition-all text-center">
+            <!-- CTA Button -->
+            <a href="https://saulo.vtis.com.br/area-do-cliente/" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all">
                 Área do Cliente
             </a>
         </div>
