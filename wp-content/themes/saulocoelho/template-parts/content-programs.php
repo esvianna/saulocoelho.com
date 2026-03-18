@@ -2,14 +2,14 @@
 <div class="mb-12 flex flex-col gap-4">
     <div class="flex items-center gap-2 text-primary font-semibold text-sm tracking-wider uppercase">
         <span class="h-px w-8 bg-primary"></span>
-        Catálogo de Formação
+        <?php the_title(); ?>
     </div>
-    <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-white md:text-5xl">
-        Programas de <span class="text-primary">Treinamento</span> e Mentoria
+    <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-white md:text-5xl uppercase">
+        Catálogo de <span class="text-primary">Programas</span> e Mentoria
     </h2>
-    <p class="max-w-xl text-lg text-slate-400">
-        Metodologias exclusivas desenhadas para profissionais que buscam excelência operacional e liderança estratégica.
-    </p>
+    <div class="prose prose-invert max-w-xl text-lg text-slate-400 font-light leading-relaxed">
+        <?php the_content(); ?>
+    </div>
 </div>
 
 <!-- Program Grid -->

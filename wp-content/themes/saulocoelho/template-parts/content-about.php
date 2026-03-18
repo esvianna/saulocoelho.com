@@ -3,12 +3,12 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
         <div class="z-10">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 rounded-full">Autoridade & Excelência</span>
-            <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-slate-900 dark:text-slate-50 mb-8">
-                Quem é <br/><span class="text-primary">Saulo Coelho?</span>
+            <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-white mb-8 uppercase">
+                <?php the_title(); ?>
             </h1>
-            <p class="text-lg lg:text-xl text-slate-600 dark:text-slate-400 font-light leading-relaxed mb-10 max-w-xl">
-                Com décadas de experiência, Saulo Coelho transformou o cenário profissional através de liderança estratégica e uma visão institucional sólida e inovadora.
-            </p>
+            <div class="prose prose-invert text-lg lg:text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-xl">
+                <?php the_content(); ?>
+            </div>
             <div class="flex items-center gap-6">
                 <div class="flex flex-col">
                     <span class="text-3xl font-bold text-slate-900 dark:text-slate-100">25+</span>
@@ -31,7 +31,7 @@
 </section>
 
 <!-- Institutional History -->
-<section class="py-24 bg-slate-100 dark:bg-slate-900/30">
+<section class="py-24 bg-background-dark/30">
     <div class="max-w-4xl mx-auto px-6 lg:px-12">
         <div class="text-center mb-20">
             <h2 class="text-3xl lg:text-4xl font-bold mb-4">Trajetória Institucional</h2>
