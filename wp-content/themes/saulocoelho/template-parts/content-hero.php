@@ -9,7 +9,7 @@ $hero_description = get_post_meta($post_id, 'hero_description', true) ?: 'Transf
 $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr.com.br/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-07-at-12.43.04-1.jpeg';
 ?>
 <!-- Hero Section -->
-<section class="relative min-h-screen flex items-center pt-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
+<section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
     <!-- Gradient Overlay for better text legibility on the left -->
     <div class="absolute inset-0 bg-gradient-to-r from-background-dark-alt via-background-dark-alt/90 to-transparent"></div>
 
@@ -36,5 +36,5 @@ $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr
     </div>
     
     <!-- Decorative Glow at bottom -->
-    <div class="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-background-dark-alt to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background-dark-alt to-transparent z-1 pointer-events-none"></div>
 </section>
