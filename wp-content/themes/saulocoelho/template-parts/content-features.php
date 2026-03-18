@@ -1,15 +1,15 @@
 <?php
-/**
- * Template part for displaying the features section
- */
+$post_id = get_the_ID();
+$features_title = get_post_meta($post_id, 'features_title', true) ?: 'Autoridade e Experiência';
+$features_description = get_post_meta($post_id, 'features_description', true) ?: 'Impactando resultados através de metodologias testadas e aprovadas por líderes de grandes corporações.';
 ?>
 <!-- Features/Services Section -->
 <section class="py-32 relative">
     <div class="max-w-7xl mx-auto px-6">
         <div class="mb-20 space-y-4">
-            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white uppercase">Autoridade e Experiência</h2>
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white uppercase"><?php echo esc_html($features_title); ?></h2>
             <div class="h-1 w-20 bg-primary"></div>
-            <p class="text-slate-400 text-lg max-w-2xl font-light">Impactando resultados através de metodologias testadas e aprovadas por líderes de grandes corporações.</p>
+            <p class="text-slate-400 text-lg max-w-2xl font-light"><?php echo esc_html($features_description); ?></p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-card p-10 rounded-xl space-y-6 hover:border-primary/50 transition-colors group">
