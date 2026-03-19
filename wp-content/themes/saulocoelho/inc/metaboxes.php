@@ -90,9 +90,17 @@ function saulocoelho_render_about_metabox($post) {
 // Programs
 function saulocoelho_render_programs_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
-    echo '<h3>Cards de Programas (Até 6)</h3>';
+    
+    $fields = [
+        'programs_title_1' => 'Título Linha 1 (Branco)',
+        'programs_title_2' => 'Título Linha 2 (Azul)',
+        'programs_description' => 'Descrição da Seção',
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
+
+    echo '<hr><h3>Cards de Programas (Até 6)</h3>';
     for ($i=1; $i<=6; $i++) {
-        saulocoelho_render_group($post->ID, "prog_card_$i", ['icon' => 'Ícone Material', 'title' => 'Título', 'desc' => 'Descrição', 'tag1' => 'Tag 1', 'tag2' => 'Tag 2', 'link' => 'Link do Botão']);
+        saulocoelho_render_group($post->ID, "prog_card_$i", ['img' => 'Imagem de Capa', 'icon' => 'Ícone Material (Opcional)', 'title' => 'Título', 'desc' => 'Descrição', 'tag1' => 'Tag 1', 'tag2' => 'Tag 2', 'link' => 'Link do Botão']);
     }
 }
 
@@ -191,7 +199,7 @@ function saulocoelho_save_metaboxes($post_id) {
     if (!current_user_can('edit_page', $post_id)) return;
 
     // Loop through all POST data and save keys starting with our prefixes
-    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_'];
+    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_'];
     foreach ($_POST as $key => $value) {
         $should_save = false;
         foreach ($prefixes as $p) {
