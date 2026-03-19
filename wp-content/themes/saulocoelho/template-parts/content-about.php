@@ -1,6 +1,10 @@
 <?php
 $post_id = get_the_ID();
 $about_eyebrow = get_post_meta($post_id, 'about_eyebrow', true) ?: 'Autoridade & Excelência';
+$about_title_1 = get_post_meta($post_id, 'about_title_1', true) ?: 'Quem é';
+$about_title_2 = get_post_meta($post_id, 'about_title_2', true) ?: 'Saulo Coelho?';
+$about_desc = get_post_meta($post_id, 'about_description', true) ?: 'Com décadas de experiência, Saulo Coelho transformou o cenário profissional através de liderança estratégica e uma visão institucional sólida e inovadora.';
+
 $stat_1_n = get_post_meta($post_id, 'about_stat_1_number', true) ?: '25+';
 $stat_1_l = get_post_meta($post_id, 'about_stat_1_label', true) ?: 'Anos de Carreira';
 $stat_2_n = get_post_meta($post_id, 'about_stat_2_number', true) ?: '500+';
@@ -13,21 +17,22 @@ $about_image = get_post_meta($post_id, 'about_image', true);
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
         <div class="z-10">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 rounded-full"><?php echo esc_html($about_eyebrow); ?></span>
-            <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-white mb-8 uppercase">
-                <?php the_title(); ?>
+            <h1 class="text-6xl lg:text-8xl font-black leading-[1.05] text-white mb-8">
+                <?php echo esc_html($about_title_1); ?><br/>
+                <span class="text-primary"><?php echo esc_html($about_title_2); ?></span>
             </h1>
             <div class="prose prose-invert text-lg lg:text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-xl">
-                <?php the_content(); ?>
+                <?php echo wp_kses_post($about_desc); ?>
             </div>
-            <div class="flex items-center gap-6">
-                <div class="flex flex-col">
-                    <span class="text-3xl font-bold text-white"><?php echo esc_html($stat_1_n); ?></span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500"><?php echo esc_html($stat_1_l); ?></span>
+            <div class="flex items-center gap-10">
+                <div class="flex flex-col gap-1">
+                    <span class="text-4xl lg:text-5xl font-black text-white"><?php echo esc_html($stat_1_n); ?></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400"><?php echo esc_html($stat_1_l); ?></span>
                 </div>
-                <div class="w-px h-10 bg-slate-800"></div>
-                <div class="flex flex-col">
-                    <span class="text-3xl font-bold text-white"><?php echo esc_html($stat_2_n); ?></span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500"><?php echo esc_html($stat_2_l); ?></span>
+                <div class="w-px h-12 bg-white/10"></div>
+                <div class="flex flex-col gap-1">
+                    <span class="text-4xl lg:text-5xl font-black text-white"><?php echo esc_html($stat_2_n); ?></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400"><?php echo esc_html($stat_2_l); ?></span>
                 </div>
             </div>
         </div>

@@ -64,7 +64,10 @@ function saulocoelho_render_home_metabox($post) {
 function saulocoelho_render_about_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     $fields = [
-        'about_eyebrow' => 'Texto Superior',
+        'about_eyebrow' => 'Texto Superior (Selo)',
+        'about_title_1' => 'Título Linha 1 (Branco)',
+        'about_title_2' => 'Título Linha 2 (Azul)',
+        'about_description' => 'Descrição Introdutória',
         'about_stat_1_number' => 'Estatística 1 (Número)',
         'about_stat_1_label' => 'Estatística 1 (Legenda)',
         'about_stat_2_number' => 'Estatística 2 (Número)',
