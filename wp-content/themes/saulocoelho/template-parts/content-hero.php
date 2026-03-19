@@ -11,7 +11,7 @@ $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr
 <!-- Hero Section -->
 <section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
     <!-- Gradient Overlay for better text legibility on the left -->
-    <div class="absolute inset-0 bg-gradient-to-r from-background-dark-alt via-background-dark-alt/90 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-background-dark-alt via-background-dark-alt/60 40% to-transparent"></div>
 
     <div class="w-full max-w-7xl mx-auto px-6 relative z-10">
         <div class="max-w-2xl space-y-8 animate-fade-in">
