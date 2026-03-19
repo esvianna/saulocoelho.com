@@ -35,8 +35,8 @@ function saulocoelho_register_metaboxes() {
     }
 
     // 5. Course Detail (Sales Page)
-    if ($template === 'page-course-detail.php') {
-        add_meta_box('course_settings', 'Configurações da Página de Vendas', 'saulocoelho_render_course_metabox', 'page', 'normal', 'high');
+    if ($template === 'page-course-detail.php' || get_post_type($post_id) === 'product') {
+        add_meta_box('course_settings', 'Configurações da Página de Vendas', 'saulocoelho_render_course_metabox', ['page', 'product'], 'normal', 'high');
     }
 }
 add_action('add_meta_boxes', 'saulocoelho_register_metaboxes');

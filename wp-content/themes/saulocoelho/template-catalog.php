@@ -30,15 +30,27 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
         <!-- Program Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <?php 
-            for ($i = 1; $i <= 6; $i++) : 
-                $title = get_post_meta($post_id, "prog_card_{$i}_title", true);
-                if (!$title && $i > 4) continue;
-                
-                $img = get_post_meta($post_id, "prog_card_{$i}_img", true);
-                $icon = get_post_meta($post_id, "prog_card_{$i}_icon", true) ?: 'school';
-                $desc = get_post_meta($post_id, "prog_card_{$i}_desc", true) ?: 'Breve descrição do programa.';
-                $link = get_post_meta($post_id, "prog_card_{$i}_link", true) ?: '#';
-                $title = $title ?: "Programa $i";
+            $args = array(
+                'post_type'      => 'product',
+                'posts_per_page' => -1,
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'product_cat',
+                        'field'    => 'slug',
+                        'terms'    => array('cursos-presenciais', 'on-line', 'palestras'),
+                    ),
+                ),
+            );
+            $products = new WP_Query($args);
+
+            if ($products->have_posts()) :
+                while ($products->have_posts()) : $products->the_post();
+                    global $product;
+                    $id = get_the_ID();
+                    $img = get_the_post_thumbnail_url($id, 'large');
+                    $desc = $product->get_short_description() ?: get_post_meta($id, 'course_badge', true) ?: 'Programa exclusivo.';
+                    $link = get_permalink();
+                    $title = get_the_title();
             ?>
             <div class="group flex flex-col bg-slate-900/40 rounded-2xl border border-white/5 overflow-hidden hover:bg-slate-900/60 transition-all hover:border-primary/50">
                 <div class="aspect-[3/4] relative overflow-hidden bg-slate-800">
@@ -46,7 +58,7 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
                         <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <?php else : ?>
                         <div class="w-full h-full flex items-center justify-center opacity-20">
-                            <span class="material-symbols-outlined text-6xl"><?php echo esc_html($icon); ?></span>
+                            <span class="material-symbols-outlined text-6xl">school</span>
                         </div>
                     <?php endif; ?>
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
@@ -54,7 +66,7 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
                 
                 <div class="p-6 flex flex-col flex-1">
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors"><?php echo esc_html($title); ?></h3>
-                    <p class="text-xs text-slate-400 mb-6 font-light leading-relaxed line-clamp-2 italic"><?php echo esc_html($desc); ?></p>
+                    <p class="text-xs text-slate-400 mb-6 font-light leading-relaxed line-clamp-2 italic"><?php echo wp_strip_all_tags($desc); ?></p>
                     
                     <div class="mt-auto pt-4 border-t border-white/5">
                         <a href="<?php echo esc_url($link); ?>" class="inline-flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-widest hover:gap-3 transition-all">
@@ -63,7 +75,13 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
                     </div>
                 </div>
             </div>
-            <?php endfor; ?>
+            <?php 
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo '<p class="col-span-full text-center text-slate-500 py-12">Nenhum programa encontrado nestas categorias.</p>';
+            endif;
+            ?>
         </div>
     </div>
 </main>
