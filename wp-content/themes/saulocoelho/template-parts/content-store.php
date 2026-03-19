@@ -29,65 +29,46 @@
 
         <!-- Product Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Product 1 -->
+            <?php 
+            for ($i = 1; $i <= 6; $i++) : 
+                $title = get_post_meta(get_the_ID(), "store_prod_{$i}_title", true);
+                if (!$title && $i > 3) continue;
+
+                $img = get_post_meta(get_the_ID(), "store_prod_{$i}_img", true);
+                $badge = get_post_meta(get_the_ID(), "store_prod_{$i}_badge", true);
+                $desc = get_post_meta(get_the_ID(), "store_prod_{$i}_desc", true) ?: 'Descrição do produto ou treinamento de elite.';
+                $price = get_post_meta(get_the_ID(), "store_prod_{$i}_price", true) ?: 'R$ 0,00';
+                $install = get_post_meta(get_the_ID(), "store_prod_{$i}_installments", true) ?: '12x de';
+                $link = get_post_meta(get_the_ID(), "store_prod_{$i}_link", true) ?: '#';
+                $title = $title ?: "Produto $i";
+            ?>
             <div class="group relative flex flex-col bg-background-dark-alt rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all hover:shadow-2xl shadow-primary/10">
                 <div class="aspect-[4/3] bg-slate-800 overflow-hidden relative">
-                    <img class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDRZPL6utRUIp361Kaapafg2sIxgYudkhynMbQBYo7mD1cjyb-F6eysao0SWY4OoCmnrdDgcsv68gLLClMTYUc2uv5h-U_tQ4dfX6-dAjt3mJ9LCjMGj-pJTuQsyEHgDvT_t64PWZ3Rv0XxY11xZTcrNG9XxdN6GlC5zrFeBwhsPsquv1Qq25-UnSQjDdN-BndHUX19cKnnik_g7CJghODLJHC4jcMJmpl00C3fA2pLD3Wpjc8JnhS_3CA0yzk76Izsnssh0JilWY" alt="Método SCCR"/>
-                    <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">Bestseller</div>
+                    <?php if ($img) : ?>
+                        <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700">
+                    <?php else : ?>
+                        <div class="w-full h-full bg-slate-900 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-6xl text-slate-800">shopping_bag</span>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($badge) : ?>
+                        <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg"><?php echo esc_html($badge); ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="p-8 flex flex-col flex-1 gap-4">
-                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Método SCCR: O Guia Definitivo</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">A metodologia completa para transformar sua gestão e alcançar alta performance em tempo recorde.</p>
+                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors"><?php echo esc_html($title); ?></h3>
+                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1"><?php echo esc_html($desc); ?></p>
                     <div class="pt-6 border-t border-white/5 flex items-center justify-between">
                         <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">12x de</span>
-                            <span class="text-xl font-black text-white">R$ 97,00</span>
+                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest"><?php echo esc_html($install); ?></span>
+                            <span class="text-xl font-black text-white"><?php echo esc_html($price); ?></span>
                         </div>
-                        <a href="#" class="bg-primary hover:bg-primary/90 text-white text-xs font-black px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Ver Detalhes</a>
+                        <a href="<?php echo esc_url($link); ?>" class="bg-primary hover:bg-primary/90 text-white text-xs font-black px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Ver Detalhes</a>
                     </div>
                 </div>
             </div>
-
-            <!-- Product 2 -->
-            <div class="group relative flex flex-col bg-background-dark-alt rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all hover:shadow-2xl shadow-primary/10">
-                <div class="aspect-[4/3] bg-slate-800 overflow-hidden relative">
-                    <!-- Placeholder -->
-                    <div class="w-full h-full bg-slate-900 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-6xl text-slate-800">groups</span>
-                    </div>
-                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">Inscrições Abertas</div>
-                </div>
-                <div class="p-8 flex flex-col flex-1 gap-4">
-                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Liderança Alta Performance</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Treinamento intensivo para líderes que buscam consolidar sua autoridade e resultados extraordinários.</p>
-                    <div class="pt-6 border-t border-white/5 flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">12x de</span>
-                            <span class="text-xl font-black text-white">R$ 147,00</span>
-                        </div>
-                        <a href="#" class="bg-primary hover:bg-primary/90 text-white text-xs font-black px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Ver Detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="group relative flex flex-col bg-background-dark-alt rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all hover:shadow-2xl shadow-primary/10 opacity-70">
-                <div class="aspect-[4/3] bg-slate-800 overflow-hidden relative">
-                    <img class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDRZPL6utRUIp361Kaapafg2sIxgYudkhynMbQBYo7mD1cjyb-F6eysao0SWY4OoCmnrdDgcsv68gLLClMTYUc2uv5h-U_tQ4dfX6-dAjt3mJ9LCjMGj-pJTuQsyEHgDvT_t64PWZ3Rv0XxY11xZTcrNG9XxdN6GlC5zrFeBwhsPsquv1Qq25-UnSQjDdN-BndHUX19cKnnik_g7CJghODLJHC4jcMJmpl00C3fA2pLD3Wpjc8JnhS_3CA0yzk76Izsnssh0JilWY" alt="Método SCCR"/>
-                    <div class="absolute top-4 left-4 bg-slate-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">Esgotado</div>
-                </div>
-                <div class="p-8 flex flex-col flex-1 gap-4">
-                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Mentoria Exclusiva Saulo</h3>
-                    <p class="text-sm text-slate-400 font-light leading-relaxed flex-1">Acompanhamento direto com Saulo Coelho para CEOs e Fundadores de alto impacto.</p>
-                    <div class="pt-6 border-t border-white/5 flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Lista de</span>
-                            <span class="text-xl font-black text-white">Espera</span>
-                        </div>
-                        <a href="#" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-black px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Saiba Mais</a>
-                    </div>
-                </div>
-            </div>
+            <?php endfor; ?>
         </div>
     </div>
 </section>

@@ -21,31 +21,32 @@ get_header(); ?>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <?php
-        $courses = array(
-            array( "title" => "Mentoria Business Elite", "desc" => "Desenvolva uma visão estratégica de alto nível e domine o mercado corporativo.", "img" => "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" ),
-            array( "title" => "Formação de Líderes", "desc" => "Liderança moderna focada em gestão de pessoas e resultados exponenciais.", "img" => "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" ),
-            array( "title" => "Estratégia Avançada", "desc" => "Metodologias práticas e frameworks validados para o crescimento acelerado.", "img" => "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=400&q=80" ),
-            array( "title" => "Imersão Comercial", "desc" => "Técnicas de vendas consultivas e negociação de elite para fechar grandes contratos.", "img" => "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=400&q=80" ),
-        );
+        for ($i = 1; $i <= 6; $i++) : 
+            $title = get_post_meta(get_the_ID(), "prog_card_{$i}_title", true);
+            if (!$title && $i > 4) continue;
 
-        foreach ($courses as $course) : ?>
+            $icon = get_post_meta(get_the_ID(), "prog_card_{$i}_icon", true) ?: 'school';
+            $desc = get_post_meta(get_the_ID(), "prog_card_{$i}_desc", true) ?: 'Descrição do programa de treinamento.';
+            $link = get_post_meta(get_the_ID(), "prog_card_{$i}_link", true) ?: '#';
+            $title = $title ?: "Programa $i";
+        ?>
             <div class="group relative flex flex-col bg-slate-800/40 rounded-2xl border border-white/5 p-8 hover:bg-slate-800/60 transition-all hover:border-primary/50">
                 <div class="size-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-primary text-3xl">school</span>
+                    <span class="material-symbols-outlined text-primary text-3xl"><?php echo esc_html($icon); ?></span>
                 </div>
                 <div class="flex flex-1 flex-col">
-                    <h3 class="text-xl font-bold text-white mb-4"><?php echo esc_html($course['title']); ?></h3>
+                    <h3 class="text-xl font-bold text-white mb-4"><?php echo esc_html($title); ?></h3>
                     <p class="text-sm text-slate-400 mb-8 font-light leading-relaxed">
-                        <?php echo esc_html($course['desc']); ?>
+                        <?php echo esc_html($desc); ?>
                     </p>
                     <div class="mt-auto pt-6 border-t border-white/5">
-                        <a href="#" class="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest hover:gap-3 transition-all">
+                        <a href="<?php echo esc_url($link); ?>" class="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest hover:gap-3 transition-all">
                             Saiba Mais <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endfor; ?>
     </div>
 </main>
 
