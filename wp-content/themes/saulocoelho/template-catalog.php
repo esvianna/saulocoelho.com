@@ -19,7 +19,7 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
                 <span class="h-px w-8 bg-primary"></span>
                 Nossas Formações
             </div>
-            <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white uppercase">
+            <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
                 <?php echo esc_html($prog_title_1); ?> <span class="text-primary"><?php echo esc_html($prog_title_2); ?></span>
             </h1>
             <p class="text-lg text-slate-400 font-light leading-relaxed">
