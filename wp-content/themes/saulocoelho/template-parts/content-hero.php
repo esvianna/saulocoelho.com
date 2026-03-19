@@ -17,7 +17,7 @@ $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr
         <div class="max-w-2xl space-y-8 animate-fade-in">
             <div class="space-y-4">
                 <span class="text-primary font-bold tracking-[0.3em] uppercase text-sm block"><?php echo esc_html($hero_eyebrow); ?></span>
-                <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white italic">
+                <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
                     <?php echo $hero_title; ?>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-lg leading-relaxed font-light">

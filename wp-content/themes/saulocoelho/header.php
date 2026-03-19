@@ -50,9 +50,25 @@
         nav ul li a:hover {
             color: #3b82f6 !important; /* text-primary light */
         }
-        /* Mobile menu hide for now if it interferes */
-        @media (max-width: 768px) {
-            nav { display: none; }
+        /* Mobile menu specific styles */
+        @media (max-width: 1023px) {
+            #main-nav.active {
+                display: flex !important;
+                position: fixed;
+                top: 5rem; /* h-20 */
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 5rem);
+                background-color: rgba(16, 25, 34, 0.98); /* background-dark */
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                justify-content: center;
+                z-index: 40;
+            }
+            #main-nav.active ul {
+                flex-direction: column !important;
+                gap: 2rem !important;
+            }
         }
     </style>
 </head>
@@ -72,7 +88,7 @@
             <h2 class="text-xl font-bold tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
         </a>
         
-        <nav class="hidden lg:flex items-center gap-10">
+        <nav id="main-nav" class="hidden lg:flex items-center gap-10">
             <?php
             wp_nav_menu( array(
                 'theme_location' => 'menu-1',
@@ -89,8 +105,41 @@
             </a>
         </div>
         
-        <button class="lg:hidden relative z-50 text-white p-2" aria-label="Toggle menu">
+        <button id="menu-toggle" class="lg:hidden relative z-50 text-white p-2" aria-label="Toggle menu">
             <span class="material-symbols-outlined text-3xl">menu</span>
         </button>
     </div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    const icon = menuToggle.querySelector('.material-symbols-outlined');
+    
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            
+            // Toggle icon between menu and close
+            if (mainNav.classList.contains('active')) {
+                icon.textContent = 'close';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            } else {
+                icon.textContent = 'menu';
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        });
+
+        // Close menu when clicking a link (important for anchor links)
+        const menuLinks = mainNav.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                icon.textContent = 'menu';
+                document.body.style.overflow = '';
+            });
+        });
+    }
+});
+</script>
