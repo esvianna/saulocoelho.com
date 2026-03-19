@@ -1,8 +1,18 @@
+<?php
+$post_id = get_the_ID();
+$about_eyebrow = get_post_meta($post_id, 'about_eyebrow', true) ?: 'Autoridade & Excelência';
+$stat_1_n = get_post_meta($post_id, 'about_stat_1_number', true) ?: '25+';
+$stat_1_l = get_post_meta($post_id, 'about_stat_1_label', true) ?: 'Anos de Carreira';
+$stat_2_n = get_post_meta($post_id, 'about_stat_2_number', true) ?: '500+';
+$stat_2_l = get_post_meta($post_id, 'about_stat_2_label', true) ?: 'Projetos Liderados';
+$about_image = get_post_meta($post_id, 'about_image', true);
+?>
+
 <!-- Hero Section -->
 <section class="relative py-20 lg:py-32 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
         <div class="z-10">
-            <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 rounded-full">Autoridade & Excelência</span>
+            <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 rounded-full"><?php echo esc_html($about_eyebrow); ?></span>
             <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-white mb-8 uppercase">
                 <?php the_title(); ?>
             </h1>
@@ -11,20 +21,24 @@
             </div>
             <div class="flex items-center gap-6">
                 <div class="flex flex-col">
-                    <span class="text-3xl font-bold text-slate-900 dark:text-slate-100">25+</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500">Anos de Carreira</span>
+                    <span class="text-3xl font-bold text-white"><?php echo esc_html($stat_1_n); ?></span>
+                    <span class="text-xs uppercase tracking-wider text-slate-500"><?php echo esc_html($stat_1_l); ?></span>
                 </div>
-                <div class="w-px h-10 bg-slate-200 dark:bg-slate-800"></div>
+                <div class="w-px h-10 bg-slate-800"></div>
                 <div class="flex flex-col">
-                    <span class="text-3xl font-bold text-slate-900 dark:text-slate-100">500+</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500">Projetos Liderados</span>
+                    <span class="text-3xl font-bold text-white"><?php echo esc_html($stat_2_n); ?></span>
+                    <span class="text-xs uppercase tracking-wider text-slate-500"><?php echo esc_html($stat_2_l); ?></span>
                 </div>
             </div>
         </div>
         <div class="relative">
-            <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-slate-800 flex items-center justify-center border border-white/5 relative group">
-                <span class="material-symbols-outlined text-9xl text-slate-700 group-hover:scale-110 transition-transform duration-500">person</span>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent"></div>
+            <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-slate-900/50 flex items-center justify-center border border-white/5 relative group">
+                <?php if ($about_image) : ?>
+                    <img src="<?php echo esc_url($about_image); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover">
+                <?php else : ?>
+                    <span class="material-symbols-outlined text-9xl text-slate-800 group-hover:scale-110 transition-transform duration-500">person</span>
+                <?php endif; ?>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark-alt/60 to-transparent"></div>
             </div>
         </div>
     </div>
@@ -37,46 +51,29 @@
             <h2 class="text-3xl lg:text-4xl font-bold mb-4">Trajetória Institucional</h2>
             <div class="w-20 h-1 bg-primary mx-auto"></div>
         </div>
-        <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 dark:before:via-slate-700 before:to-transparent">
-            <!-- Milestone 1 -->
+        <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-800 before:to-transparent">
+            <?php 
+            for ($i = 1; $i <= 3; $i++) : 
+                $year = get_post_meta($post_id, "about_milestone_{$i}_year", true);
+                if (!$year) continue;
+                $title = get_post_meta($post_id, "about_milestone_{$i}_title", true);
+                $desc = get_post_meta($post_id, "about_milestone_{$i}_desc", true);
+                $icons = ['history_edu', 'trending_up', 'verified'];
+                $icon = $icons[$i-1];
+            ?>
             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-primary font-bold shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                    <span class="material-symbols-outlined text-sm">history_edu</span>
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-800 bg-background-dark-alt text-primary font-bold shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
+                    <span class="material-symbols-outlined text-sm"><?php echo esc_html($icon); ?></span>
                 </div>
-                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl bg-background-dark/40 border border-white/5 shadow-xl hover:bg-background-dark/60 transition-colors">
                     <div class="flex items-center justify-between mb-2">
-                        <time class="font-bold text-primary">1998 — 2005</time>
+                        <time class="font-bold text-primary"><?php echo esc_html($year); ?></time>
                     </div>
-                    <h4 class="text-lg font-bold mb-2">Fundação e Primeiros Passos</h4>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Início da atuação no setor institucional, focando na reestruturação de processos e governança corporativa em grandes organizações.</p>
+                    <h4 class="text-lg font-bold mb-2 text-white"><?php echo esc_html($title); ?></h4>
+                    <p class="text-slate-400 text-sm leading-relaxed"><?php echo esc_html($desc); ?></p>
                 </div>
             </div>
-            <!-- Milestone 2 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-primary font-bold shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                    <span class="material-symbols-outlined text-sm">trending_up</span>
-                </div>
-                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between mb-2">
-                        <time class="font-bold text-primary">2006 — 2015</time>
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Expansão Estratégica</h4>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Liderança de conselhos administrativos e consultoria para fusões de alto impacto no mercado nacional.</p>
-                </div>
-            </div>
-            <!-- Milestone 3 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-primary font-bold shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                    <span class="material-symbols-outlined text-sm">verified</span>
-                </div>
-                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between mb-2">
-                        <time class="font-bold text-primary">2016 — Presente</time>
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Consolidação e Mentoria</h4>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Referência em estratégia pública e privada, dedicando-se a formar novos líderes e influenciar políticas de governança.</p>
-                </div>
-            </div>
+            <?php endfor; ?>
         </div>
     </div>
 </section>
@@ -85,21 +82,19 @@
 <section class="py-24">
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div class="grid md:grid-cols-3 gap-12">
-            <div class="space-y-4">
-                <span class="material-symbols-outlined text-primary text-4xl">visibility</span>
-                <h3 class="text-xl font-bold">Visão Sistêmica</h3>
-                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Capacidade de analisar cenários complexos e identificar oportunidades onde outros veem obstáculos.</p>
+            <?php 
+            for ($i = 1; $i <= 3; $i++) : 
+                $icon = get_post_meta($post_id, "about_value_{$i}_icon", true);
+                if (!$icon) continue;
+                $title = get_post_meta($post_id, "about_value_{$i}_title", true);
+                $desc = get_post_meta($post_id, "about_value_{$i}_desc", true);
+            ?>
+            <div class="space-y-4 p-8 rounded-2xl bg-background-dark/20 border border-white/[0.03] hover:border-primary/20 transition-all group">
+                <span class="material-symbols-outlined text-primary text-4xl group-hover:scale-110 transition-transform duration-300"><?php echo esc_html($icon); ?></span>
+                <h3 class="text-xl font-bold text-white"><?php echo esc_html($title); ?></h3>
+                <p class="text-slate-400 leading-relaxed"><?php echo esc_html($desc); ?></p>
             </div>
-            <div class="space-y-4">
-                <span class="material-symbols-outlined text-primary text-4xl">gavel</span>
-                <h3 class="text-xl font-bold">Integridade</h3>
-                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Compromisso inabalável com a ética e a transparência em todas as esferas de atuação profissional.</p>
-            </div>
-            <div class="space-y-4">
-                <span class="material-symbols-outlined text-primary text-4xl">groups</span>
-                <h3 class="text-xl font-bold">Liderança</h3>
-                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Foco no desenvolvimento humano e na construção de legados institucionais duradouros.</p>
-            </div>
+            <?php endfor; ?>
         </div>
     </div>
 </section>
