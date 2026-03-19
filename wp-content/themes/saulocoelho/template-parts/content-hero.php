@@ -14,12 +14,10 @@ $hero_btn_2_link = get_post_meta($post_id, 'hero_btn_2_link', true) ?: '#contato
 ?>
 <!-- Hero Section -->
 <section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
-    <!-- Gradient Overlay for better text legibility on the left -->
-    <div class="absolute inset-0 bg-gradient-to-r from-background-dark-alt via-background-dark-alt/60 40% to-transparent"></div>
-    <!-- Subtle Blur Overlay -->
-    <div class="absolute inset-0 bg-background-dark/60 backdrop-blur-[2px]"></div>
-    <!-- Focus Mask (Radial Gradient) -->
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,17,24,0.8)_80%)]"></div>
+    <!-- Gradient Scrim (Left-aligned for text clarity) -->
+    <div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/80 35% to-transparent z-1"></div>
+    <!-- Global Subtle Darkening (ensures white text contrast without blurring) -->
+    <div class="absolute inset-0 bg-background-dark/40 z-1"></div>
 
     <div class="w-full max-w-7xl mx-auto px-6 relative z-10">
         <div class="max-w-2xl space-y-8 animate-fade-in">
