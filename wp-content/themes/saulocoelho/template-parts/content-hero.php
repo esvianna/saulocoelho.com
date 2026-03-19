@@ -7,6 +7,10 @@ $hero_eyebrow = get_post_meta($post_id, 'hero_eyebrow', true) ?: 'Alta Performan
 $hero_title = get_post_meta($post_id, 'hero_title', true) ?: 'Desperte o seu <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">potencial máximo</span>';
 $hero_description = get_post_meta($post_id, 'hero_description', true) ?: 'Transforme sua trajetória com as metodologias aplicadas por Saulo Coelho nos maiores ecossistemas corporativos do Brasil.';
 $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr.com.br/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-07-at-12.43.04-1.jpeg';
+$hero_btn_1_text = get_post_meta($post_id, 'hero_btn_1_text', true) ?: 'Conheça os Programas';
+$hero_btn_1_link = get_post_meta($post_id, 'hero_btn_1_link', true) ?: '#programas';
+$hero_btn_2_text = get_post_meta($post_id, 'hero_btn_2_text', true) ?: 'Falar com Consultor';
+$hero_btn_2_link = get_post_meta($post_id, 'hero_btn_2_link', true) ?: '#contato';
 ?>
 <!-- Hero Section -->
 <section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
@@ -25,11 +29,11 @@ $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-6 pt-4">
-                <a href="#programas" class="bg-primary text-white font-black uppercase tracking-widest px-10 py-5 rounded-xl text-sm hover:scale-105 hover:shadow-2xl shadow-primary/20 active:scale-95 transition-all text-center">
-                    Conheça os Programas
+                <a href="<?php echo esc_url($hero_btn_1_link); ?>" class="bg-primary text-white font-black uppercase tracking-widest px-10 py-5 rounded-xl text-sm hover:scale-105 hover:shadow-2xl shadow-primary/20 active:scale-95 transition-all text-center">
+                    <?php echo esc_html($hero_btn_1_text); ?>
                 </a>
-                <a href="#contato" class="border-2 border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-black uppercase tracking-widest px-10 py-5 rounded-xl text-sm transition-all text-center">
-                    Falar com Consultor
+                <a href="<?php echo esc_url($hero_btn_2_link); ?>" class="border-2 border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-black uppercase tracking-widest px-10 py-5 rounded-xl text-sm transition-all text-center">
+                    <?php echo esc_html($hero_btn_2_text); ?>
                 </a>
             </div>
         </div>
