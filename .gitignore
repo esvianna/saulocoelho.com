@@ -1,0 +1,12 @@
+node_modules/
+node_modules_old/
+.DS_Store
+Thumbs.db
+*.log
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+.env
+.vscode/
+.idea/
