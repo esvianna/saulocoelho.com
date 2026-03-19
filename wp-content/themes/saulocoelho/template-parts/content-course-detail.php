@@ -17,7 +17,7 @@ $checkout_link = get_post_meta($pid, 'course_checkout_link', true) ?: '#';
                 <span class="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary ring-1 ring-inset ring-primary/20 w-fit uppercase tracking-widest">
                     <?php echo esc_html($badge); ?>
                 </span>
-                <h1 class="text-4xl lg:text-7xl font-black leading-[1.1] tracking-tight text-white">
+                <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
                     <?php the_title(); ?>
                 </h1>
                 <div class="prose prose-invert text-lg lg:text-xl text-slate-400 max-w-xl font-light leading-relaxed">

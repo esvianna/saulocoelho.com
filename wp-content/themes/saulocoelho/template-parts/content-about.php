@@ -17,7 +17,7 @@ $about_image = get_post_meta($post_id, 'about_image', true);
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
         <div class="z-10">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 rounded-full"><?php echo esc_html($about_eyebrow); ?></span>
-            <h1 class="text-6xl lg:text-8xl font-black leading-[1.05] text-white mb-8">
+            <h1 class="text-4xl md:text-6xl font-black leading-[1.1] text-white mb-8">
                 <?php echo esc_html($about_title_1); ?><br/>
                 <span class="text-primary"><?php echo esc_html($about_title_2); ?></span>
             </h1>

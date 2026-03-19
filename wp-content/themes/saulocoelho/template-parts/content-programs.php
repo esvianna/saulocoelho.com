@@ -4,7 +4,7 @@
         <span class="h-px w-8 bg-primary"></span>
         <?php the_title(); ?>
     </div>
-    <h2 class="max-w-2xl text-4xl font-black leading-tight tracking-tight text-white md:text-5xl uppercase">
+    <h2 class="max-w-2xl text-4xl md:text-6xl font-black leading-tight tracking-tight text-white uppercase">
         Catálogo de <span class="text-primary">Programas</span> e Mentoria
     </h2>
     <div class="prose prose-invert max-w-xl text-lg text-slate-400 font-light leading-relaxed">
