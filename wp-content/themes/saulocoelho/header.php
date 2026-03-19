@@ -79,13 +79,61 @@
 </script>
 <?php wp_body_open(); ?>
 
-<header class="sticky top-0 w-full z-50 border-b border-white/5 bg-background-dark/95 backdrop-blur-md">
+<style>
+    #main-nav.active {
+        display: flex !important;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 17, 24, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 40;
+    }
+    #main-nav.active ul {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    #main-nav.active ul li a {
+        font-size: 1.25rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: white;
+    }
+    #main-nav.active ul li a:hover {
+        color: #137fec;
+    }
+    /* Simple menu styles for desktop */
+    #main-nav ul {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    #main-nav ul li a {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255,255,255,0.7);
+        transition: all 0.3s ease;
+    }
+    #main-nav ul li a:hover {
+        color: white;
+    }
+</style>
+
+<header class="sticky top-0 w-full z-[100] border-b border-white/5 bg-black/10 backdrop-blur-xl transition-all duration-500">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 relative z-50">
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 relative z-[60]">
             <div class="text-primary">
                 <span class="material-symbols-outlined text-3xl">terminal</span>
             </div>
-            <h2 class="text-xl font-bold tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
+            <h2 class="text-xl font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
         </a>
         
         <nav id="main-nav" class="hidden lg:flex items-center gap-10">
@@ -99,13 +147,12 @@
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
-            <!-- CTA Button -->
-            <a href="https://saulo.vtis.com.br/area-do-cliente/" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all">
+            <a href="https://saulo.vtis.com.br/area-do-cliente/" class="bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
                 Área do Cliente
             </a>
         </div>
         
-        <button id="menu-toggle" class="lg:hidden relative z-50 text-white p-2" aria-label="Toggle menu">
+        <button id="menu-toggle" class="lg:hidden relative z-[60] text-white p-2 flex items-center justify-center transition-transform active:scale-90" aria-label="Toggle menu">
             <span class="material-symbols-outlined text-3xl">menu</span>
         </button>
     </div>

@@ -14,21 +14,21 @@ $checkout_link = get_post_meta($pid, 'course_checkout_link', true) ?: '#';
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div class="flex flex-col gap-8">
-                <span class="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary ring-1 ring-inset ring-primary/20 w-fit uppercase tracking-widest">
+                <span class="inline-flex items-center rounded-full bg-primary/10 px-5 py-2 text-[10px] font-black text-primary ring-1 ring-inset ring-primary/20 w-fit uppercase tracking-[0.3em]">
                     <?php echo esc_html($badge); ?>
                 </span>
-                <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
+                <h1 class="text-4xl md:text-6xl font-black leading-[1.05] tracking-tighter text-white">
                     <?php the_title(); ?>
                 </h1>
                 <div class="prose prose-invert text-lg lg:text-xl text-slate-400 max-w-xl font-light leading-relaxed">
                     <?php the_content(); ?>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-6 mt-4">
-                    <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-xl text-lg font-black shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-3">
+                    <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
                         Quero me inscrever agora
-                        <span class="material-symbols-outlined">arrow_forward</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
-                    <a href="#conteudo" class="bg-slate-800 hover:bg-slate-700 text-white px-10 py-5 rounded-xl text-lg font-bold transition-all text-center">
+                    <a href="#conteudo" class="bg-white/5 hover:bg-white/10 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center">
                         Ver currículo
                     </a>
                 </div>

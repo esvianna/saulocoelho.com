@@ -5,20 +5,20 @@
                 <div class="text-primary">
                     <span class="material-symbols-outlined text-2xl">terminal</span>
                 </div>
-                <h2 class="text-lg font-bold tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
+                <h2 class="text-lg font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
             </div>
-            <p class="text-slate-500 max-w-xs text-sm"><?php bloginfo( 'description' ); ?></p>
+            <p class="text-slate-500 max-w-xs text-sm font-light leading-relaxed"><?php bloginfo( 'description' ); ?></p>
             <div class="flex gap-4">
-                <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
+                <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/20 backdrop-blur-sm transition-all">
                     <span class="material-symbols-outlined text-sm">share</span>
                 </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
+                <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/20 backdrop-blur-sm transition-all">
                     <span class="material-symbols-outlined text-sm">mail</span>
                 </a>
             </div>
         </div>
         <div class="space-y-6">
-            <h4 class="text-white text-xs font-bold uppercase tracking-widest">Links</h4>
+            <h4 class="text-white text-[10px] font-black uppercase tracking-[0.3em]">Navegação</h4>
             <ul class="space-y-4 text-sm text-slate-400">
                 <li><a href="#" class="hover:text-primary transition-colors">Programas</a></li>
                 <li><a href="#" class="hover:text-primary transition-colors">Sobre</a></li>
