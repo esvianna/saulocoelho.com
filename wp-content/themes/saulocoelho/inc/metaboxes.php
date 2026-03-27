@@ -127,9 +127,13 @@ function saulocoelho_render_course_metabox($post) {
         'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
         'course_price_full' => 'Preço cheio (ex: R$ 1.997,00)',
         'course_price_install' => 'Valor da Parcela (ex: R$ 97,00)',
-        'course_checkout_link' => 'Link do Checkout',
     ];
     saulocoelho_render_fields($post->ID, $fields);
+
+    echo '<hr><h3>Módulos do Curso (Até 8)</h3>';
+    for ($i=1; $i<=8; $i++) {
+        saulocoelho_render_group($post->ID, "course_mod_$i", ['title' => 'Título do Módulo', 'desc' => 'Descrição do Módulo']);
+    }
 }
 
 /**

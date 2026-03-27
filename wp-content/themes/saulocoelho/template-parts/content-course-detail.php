@@ -6,7 +6,7 @@ $stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '10k+ Alunos';
 $stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.9/5 Avaliação';
 $price_full = get_post_meta($pid, 'course_price_full', true) ?: 'R$ 1.997,00';
 $price_install = get_post_meta($pid, 'course_price_install', true) ?: 'R$ 97,00';
-$checkout_link = get_post_meta($pid, 'course_checkout_link', true) ?: '#';
+$checkout_link = '?add-to-cart=' . $pid;
 ?>
 
 <!-- Course Hero Section -->
@@ -88,15 +88,29 @@ $checkout_link = get_post_meta($pid, 'course_checkout_link', true) ?: '#';
         </div>
         
         <div class="flex flex-col gap-6">
-            <!-- Dynamizing these as individual fields is overkill for now, keeping as structured placeholders -->
-            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl">
-                <h4 class="text-xl font-bold text-white mb-2">Módulo 1: Fundamentos da Estratégia</h4>
-                <p class="text-slate-400 font-light">A base teórica e os primeiros passos estratégicos.</p>
-            </div>
-            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl">
-                <h4 class="text-xl font-bold text-white mb-2">Módulo 2: Implementação e Gestão</h4>
-                <p class="text-slate-400 font-light">Otimização profunda de processos internos.</p>
-            </div>
+            <?php
+            $has_modules = false;
+            for ($i = 1; $i <= 8; $i++) {
+                $mod_title = get_post_meta($pid, "course_mod_{$i}_title", true);
+                $mod_desc = get_post_meta($pid, "course_mod_{$i}_desc", true);
+                
+                if ($mod_title) {
+                    $has_modules = true;
+                    ?>
+                    <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl transition-all hover:bg-white/[0.05]">
+                        <h4 class="text-xl font-bold text-white mb-2"><?php echo esc_html($mod_title); ?></h4>
+                        <?php if ($mod_desc): ?>
+                            <p class="text-slate-400 font-light"><?php echo esc_html($mod_desc); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                }
+            }
+            
+            if (!$has_modules) {
+                echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
+            }
+            ?>
         </div>
     </div>
 </section>
