@@ -121,16 +121,30 @@ function saulocoelho_render_store_metabox($post) {
 function saulocoelho_render_course_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     $fields = [
+        'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
         'course_badge' => 'Selo do Topo (ex: Matrículas Abertas)',
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_stat_1' => 'Destaque 1 (ex: 10k+ Alunos)',
         'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
         'course_price_full' => 'Preço cheio (ex: R$ 1.997,00)',
         'course_price_install' => 'Valor da Parcela (ex: R$ 97,00)',
+        'course_event_location' => '🏢 Local do Evento (P/ Presencial)',
+        'course_event_dates' => '📅 Datas e Horários (Ex: 15 e 16 de Maio das 09h às 18h)',
+        'course_event_dresscode' => '👗 Dresscode / Avisos (Para Presencial)',
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
-    echo '<hr><h3>Módulos do Curso (Até 8)</h3>';
+    echo '<hr><h3>O Que Está Incluso? (Checklist de Benefícios / Materiais)</h3>';
+    for ($i=1; $i<=6; $i++) {
+        saulocoelho_render_group($post->ID, "course_inc_$i", ['title' => 'Item Incluso (Ex: Apostila Impressa)']);
+    }
+    
+    echo '<hr><h3>O Que NÃO Está Incluso? (Para Presencial)</h3>';
+    for ($i=1; $i<=3; $i++) {
+        saulocoelho_render_group($post->ID, "course_notinc_$i", ['title' => 'Item Não Incluso (Ex: Hospedagem)']);
+    }
+
+    echo '<hr><h3>Módulos do Curso (Apenas para cursos que possuem divisão de conteúdo)</h3>';
     for ($i=1; $i<=8; $i++) {
         saulocoelho_render_group($post->ID, "course_mod_$i", ['title' => 'Título do Módulo', 'desc' => 'Descrição do Módulo']);
     }
@@ -141,10 +155,24 @@ function saulocoelho_render_course_metabox($post) {
  */
 
 function saulocoelho_render_fields($post_id, $fields) {
-    foreach ($fields as $key => $label) {
+    foreach ($fields as $key => $field) {
         $val = get_post_meta($post_id, $key, true);
+        
+        $is_array = is_array($field);
+        $label = $is_array ? $field['label'] : $field;
+        $type = $is_array ? ($field['type'] ?? 'text') : 'text';
+
         echo '<p><label><strong>' . esc_html($label) . ':</strong></label><br>';
-        if (strpos($key, 'desc') !== false || strpos($key, 'title') !== false) {
+        
+        if ($type === 'select') {
+             echo '<select name="' . $key . '" style="width: 100%; max-width: 400px; padding: 5px;">';
+             foreach($field['options'] as $opt_val => $opt_label) {
+                 $sel = ($val == $opt_val) ? 'selected' : '';
+                 echo '<option value="'.esc_attr($opt_val).'" '.$sel.'>'.esc_html($opt_label).'</option>';
+             }
+             echo '</select>';
+        }
+        else if (strpos($key, 'desc') !== false || strpos($key, 'title') !== false || strpos($key, 'dresscode') !== false || strpos($key, 'dates') !== false) {
             echo '<textarea name="' . $key . '" rows="2" class="large-text">' . esc_textarea($val) . '</textarea>';
         } elseif (strpos($key, 'image') !== false || strpos($key, 'img') !== false || strpos($key, 'url') !== false) {
             echo '<input type="text" name="' . $key . '" id="' . $key . '" value="' . esc_url($val) . '" class="regular-text"> ';

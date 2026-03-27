@@ -42,7 +42,8 @@ add_action( 'after_setup_theme', 'saulocoelho_setup' );
  */
 function saulocoelho_scripts() {
     // Theme Stylesheet
-    wp_enqueue_style( 'saulocoelho-style', get_stylesheet_uri(), array(), '1.0.1' );
+    $theme_version = wp_get_theme()->get( 'Version' );
+    wp_enqueue_style( 'saulocoelho-style', get_stylesheet_uri(), array(), $theme_version );
 
     // Inter Font
     wp_enqueue_style( 'saulocoelho-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', array(), null );

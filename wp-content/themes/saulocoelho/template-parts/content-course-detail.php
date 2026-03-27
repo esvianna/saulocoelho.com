@@ -7,6 +7,10 @@ $stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.9/5 Avaliação';
 $price_full = get_post_meta($pid, 'course_price_full', true) ?: 'R$ 1.997,00';
 $price_install = get_post_meta($pid, 'course_price_install', true) ?: 'R$ 97,00';
 $checkout_link = '?add-to-cart=' . $pid;
+$course_type = get_post_meta($pid, 'course_type', true) ?: 'online';
+$event_loc = get_post_meta($pid, 'course_event_location', true);
+$event_dates = get_post_meta($pid, 'course_event_dates', true);
+$event_dress = get_post_meta($pid, 'course_event_dresscode', true);
 ?>
 
 <!-- Course Hero Section -->
@@ -79,6 +83,35 @@ $checkout_link = '?add-to-cart=' . $pid;
     </div>
 </section>
 
+<?php if ($course_type === 'presencial') : ?>
+<!-- Event Info (Presencial) -->
+<section class="py-16 border-b border-white/5 bg-slate-900/50 relative overflow-hidden">
+    <div class="mx-auto max-w-5xl px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-black text-white">Logística do Evento</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">location_on</span>
+                <h4 class="text-white font-bold">Local</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_loc ?: 'Local a definir')); ?></p>
+            </div>
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">calendar_month</span>
+                <h4 class="text-white font-bold">Datas e Horários</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dates ?: 'Datas em breve')); ?></p>
+            </div>
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">info</span>
+                <h4 class="text-white font-bold">Avisos Importantes</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dress ?: 'Sem avisos no momento')); ?></p>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Curriculum -->
 <section class="py-24" id="conteudo">
     <div class="mx-auto max-w-3xl px-6 lg:px-8">
@@ -111,6 +144,61 @@ $checkout_link = '?add-to-cart=' . $pid;
                 echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
             }
             ?>
+        </div>
+    </div>
+</section>
+
+<!-- What's Included / Not Included -->
+<section class="py-24 border-t border-white/5 bg-background-dark">
+    <div class="mx-auto max-w-5xl px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-16">
+            <!-- Included -->
+            <div class="<?php echo ($course_type === 'online') ? 'md:col-span-2 md:max-w-2xl md:mx-auto w-full' : ''; ?>">
+                <h3 class="text-2xl font-black text-white mb-8 flex items-center gap-3 <?php echo ($course_type === 'online') ? 'justify-center' : ''; ?>">
+                    <span class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
+                    O Que Está Incluso
+                </h3>
+                <ul class="flex flex-col gap-4">
+                    <?php
+                    $has_inc = false;
+                    for ($i = 1; $i <= 6; $i++) {
+                        $inc_title = get_post_meta($pid, "course_inc_{$i}_title", true);
+                        if ($inc_title) {
+                            $has_inc = true;
+                            echo '<li class="flex items-start gap-3 text-slate-300"><span class="material-symbols-outlined text-green-500 shrink-0 text-xl">check</span> ' . esc_html($inc_title) . '</li>';
+                        }
+                    }
+                    if (!$has_inc) {
+                        echo '<li class="text-slate-500 text-sm italic">Nenhum item adicionado à lista.</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+            
+            <?php if ($course_type === 'presencial') : ?>
+            <!-- Not Included -->
+            <div>
+                <h3 class="text-2xl font-black text-white mb-8 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-red-500/80 text-3xl">cancel</span>
+                    O Que Não Está Incluso
+                </h3>
+                <ul class="flex flex-col gap-4">
+                    <?php
+                    $has_notinc = false;
+                    for ($i = 1; $i <= 3; $i++) {
+                        $notinc_title = get_post_meta($pid, "course_notinc_{$i}_title", true);
+                        if ($notinc_title) {
+                            $has_notinc = true;
+                            echo '<li class="flex items-start gap-3 text-slate-400"><span class="material-symbols-outlined text-slate-500 shrink-0 text-xl">close</span> ' . esc_html($notinc_title) . '</li>';
+                        }
+                    }
+                    if (!$has_notinc) {
+                        echo '<li class="text-slate-500 text-sm italic">Nenhum detalhe informado.</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
