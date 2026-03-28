@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.3
+Version: 1.0.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -16,11 +16,39 @@ Text Domain: saulocoelho
 /* Colunas do Form e Resumo */
 @media(min-width: 1024px) {
     body.woocommerce-checkout form.checkout {
-        display: grid !important;
-        grid-template-columns: 1fr 450px;
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: nowrap;
         gap: 3rem;
-        align-items: start;
+        align-items: flex-start;
     }
+    body.woocommerce-checkout #customer_details {
+        flex: 1;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    body.woocommerce-checkout #order_review_heading {
+        display: none !important; /* Remove o título extra solto para manter apenas a caixa blindada */
+    }
+    body.woocommerce-checkout #order_review {
+        width: 450px !important;
+        flex-shrink: 0;
+    }
+}
+
+/* Matar "Informação Adicional" e forçar Esquerda 100% */
+body.woocommerce-checkout .col2-set {
+    display: block !important;
+    width: 100% !important;
+}
+body.woocommerce-checkout .col2-set .col-1 {
+    width: 100% !important;
+    float: none !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+body.woocommerce-checkout .col2-set .col-2 {
+    display: none !important; /* Aniquila a coluna da direita com o título 'Informação Adicional' */
 }
 
 /* Card do Resumo do Pedido (Lateral) */
@@ -31,16 +59,6 @@ body.woocommerce-checkout #order_review {
     padding: 2rem;
     backdrop-filter: blur(8px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-body.woocommerce-checkout #order_review_heading {
-    margin-top: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #fff;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
 }
 
 /* Tabelas e Linhas Clean */
