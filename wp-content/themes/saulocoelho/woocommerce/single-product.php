@@ -4,7 +4,7 @@
  * Redesigned to follow the "Course Details" high-performance layout.
  */
 
-if ( ! defined( 'ABSOLUTE_PATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
