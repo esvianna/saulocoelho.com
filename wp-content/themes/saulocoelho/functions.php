@@ -78,3 +78,15 @@ function saulocoelho_admin_scripts($hook) {
     wp_enqueue_media();
 }
 add_action('admin_enqueue_scripts', 'saulocoelho_admin_scripts');
+
+/**
+ * WooCommerce - Otimização de Fluxo de Vendas (Skip Cart)
+ * Redireciona diretamente para o Checkout ao invés de enviar para o Carrinho.
+ */
+function saulocoelho_redirect_to_checkout_add_cart() {
+    return wc_get_checkout_url();
+}
+add_filter( 'woocommerce_add_to_cart_redirect', 'saulocoelho_redirect_to_checkout_add_cart' );
+
+// Remove a mensagem genérica de "Item adicionado ao carrinho" que aparece no topo da tela
+add_filter( 'wc_add_to_cart_message_html', '__return_false' );
