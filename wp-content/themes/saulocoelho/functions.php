@@ -90,3 +90,118 @@ add_filter( 'woocommerce_add_to_cart_redirect', 'saulocoelho_redirect_to_checkou
 
 // Remove a mensagem genérica de "Item adicionado ao carrinho" que aparece no topo da tela
 add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+
+/**
+ * WooCommerce - Permitir Editar Quantidade na Tabela de Checkout
+ * Transforma o texto fixo "× 4" em um input type="number"
+ */
+function saulocoelho_checkout_qty_input( $quantity_html, $cart_item, $cart_item_key ) {
+    $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+
+    // Se o produto for vendido individualmente 
+    if ( $_product->is_sold_individually() ) {
+        return sprintf( ' <strong class="product-quantity">&times;&nbsp;%s</strong>', $cart_item['quantity'] );
+    }
+
+    // Cria um input de quantidade do WooCommerce
+    $input_html = woocommerce_quantity_input( array(
+        'input_name'   => "cart[{$cart_item_key}][qty]",
+        'input_value'  => $cart_item['quantity'],
+        'max_value'    => $_product->get_max_purchase_quantity(),
+        'min_value'    => '0', // Se zerar, ele vai remover o item
+        'product_name' => $_product->get_name(),
+    ), $_product, false );
+
+    return '<div class="checkout-qty-wrapper mt-2" data-cart_item_key="' . esc_attr( $cart_item_key ) . '">' . $input_html . '</div>';
+}
+add_filter( 'woocommerce_checkout_cart_item_quantity', 'saulocoelho_checkout_qty_input', 10, 3 );
+
+/**
+ * EndPoint AJAX - Recebe a nova quantidade e recalcula o carrinho
+ */
+function saulocoelho_ajax_update_checkout_qty() {
+    if ( isset( $_POST['cart_item_key'] ) && isset( $_POST['qty'] ) ) {
+        $cart_item_key = sanitize_text_field( wp_unslash( $_POST['cart_item_key'] ) );
+        $quantity      = absint( $_POST['qty'] );
+        
+        WC()->cart->set_quantity( $cart_item_key, $quantity, true );
+        WC()->cart->calculate_totals();
+
+        if ( WC()->cart->is_empty() ) {
+            wp_send_json_success( array( 'empty_cart' => true, 'redirect_url' => wc_get_page_permalink( 'shop' ) ) );
+        } else {
+            wp_send_json_success();
+        }
+    }
+    wp_die();
+}
+add_action( 'wp_ajax_saulocoelho_update_checkout_qty', 'saulocoelho_ajax_update_checkout_qty' );
+add_action( 'wp_ajax_nopriv_saulocoelho_update_checkout_qty', 'saulocoelho_ajax_update_checkout_qty' );
+
+/**
+ * Injetar Javascript no Checkout para Capturar Mundanças e Disparar AJAX 
+ */
+function saulocoelho_checkout_qty_script() {
+    if ( ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) ) return;
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        $(document).on('change', '.checkout-qty-wrapper input.qty', function(e) {
+            e.preventDefault();
+            
+            var $wrapper = $(this).closest('.checkout-qty-wrapper');
+            var qty = $(this).val();
+            var cart_item_key = $wrapper.data('cart_item_key');
+
+            // "Pausa" a tabela colocando o spinner nativo do Woo
+            $('.woocommerce-checkout-payment, .woocommerce-checkout-review-order-table').block({
+                message: null,
+                overlayCSS: { background: '#fff', opacity: 0.6 }
+            });
+
+            // Envia para nosso EndPoint AJAX
+            $.ajax({
+                type: 'POST',
+                url: wc_checkout_params.ajax_url,
+                data: {
+                    action: 'saulocoelho_update_checkout_qty',
+                    cart_item_key: cart_item_key,
+                    qty: qty
+                },
+                success: function(response) {
+                    if (response.success) {
+                        if (response.data && response.data.empty_cart) {
+                            window.location.href = response.data.redirect_url;
+                        } else {
+                            // Essa linha chama as engrenagens do Woo
+                            // ele mesmo busca a tabela "recalculada" na DOM via JS
+                            $('body').trigger('update_checkout');
+                        }
+                    }
+                }
+            });
+        });
+    });
+    </script>
+    <style>
+    /* Deixar o campo bonitinho para temas Dark Premium */
+    .checkout-qty-wrapper input.qty {
+        background: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        color: white !important;
+        padding: 4px 8px !important;
+        border-radius: 8px !important;
+        width: 70px !important;
+        text-align: center;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .checkout-qty-wrapper input.qty:focus {
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 10px rgba(13,110,253,0.3) !important;
+    }
+    .checkout-qty-wrapper { display: inline-block; margin-left: 10px; }
+    </style>
+    <?php
+}
+add_action( 'wp_footer', 'saulocoelho_checkout_qty_script' );
