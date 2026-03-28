@@ -3,8 +3,129 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.2
+Version: 1.0.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
 */
+
+/* ==========================================================================
+   Checkout Premium (Substitui o Visual Feio do Shortcode Antigo)
+   ========================================================================== */
+
+/* Colunas do Form e Resumo */
+@media(min-width: 1024px) {
+    body.woocommerce-checkout form.checkout {
+        display: grid !important;
+        grid-template-columns: 1fr 450px;
+        gap: 3rem;
+        align-items: start;
+    }
+}
+
+/* Card do Resumo do Pedido (Lateral) */
+body.woocommerce-checkout #order_review {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.woocommerce-checkout #order_review_heading {
+    margin-top: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tabelas e Linhas Clean */
+body.woocommerce-checkout table.shop_table {
+    border: none !important;
+    border-radius: 0;
+    width: 100%;
+}
+body.woocommerce-checkout table.shop_table th,
+body.woocommerce-checkout table.shop_table td {
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem 0;
+    color: #e5e7eb;
+}
+
+/* Campos de Preenchimento (Formulário do Cliente) */
+body.woocommerce-checkout form .form-row label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #d1d5db;
+}
+body.woocommerce-checkout form .form-row input.input-text,
+body.woocommerce-checkout form .form-row select,
+body.woocommerce-checkout form .form-row textarea {
+    width: 100%;
+    background: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #111827 !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s;
+}
+body.woocommerce-checkout form .form-row input.input-text:focus,
+body.woocommerce-checkout form .form-row select:focus {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+    outline: none !important;
+}
+
+/* Métodos de Pagamento (Caixas) */
+body.woocommerce-checkout #payment {
+    background: transparent !important;
+    border-radius: 0;
+    padding: 0;
+}
+body.woocommerce-checkout #payment ul.payment_methods {
+    border: none;
+    padding: 0;
+}
+body.woocommerce-checkout #payment div.payment_box {
+    background: rgba(255,255,255,0.05) !important;
+    color: #d1d5db !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+    margin-top: 1rem !important;
+    box-shadow: none;
+}
+body.woocommerce-checkout #payment div.payment_box::before { display: none; }
+
+/* Botão de Finalizar Monstruoso (CTA) */
+body.woocommerce-checkout #place_order {
+    background: #0d6efd !important;
+    color: #fff !important;
+    width: 100% !important;
+    padding: 1rem 2rem !important;
+    border-radius: 8px !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+}
+body.woocommerce-checkout #place_order:hover {
+    background: #0b5ed7 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+}
+
+/* Esconder Labels chatos do Cartão e Deixar Float Padrão */
+.woocommerce form .form-row .required {
+    color: #ef4444;
+}
