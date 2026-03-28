@@ -217,8 +217,61 @@ add_action( 'wp_footer', 'saulocoelho_checkout_qty_script' );
  */
 add_filter( 'woocommerce_checkout_fields', 'saulocoelho_optimize_checkout_fields', 99 );
 function saulocoelho_optimize_checkout_fields( $fields ) {
+    // Esconde itens irrelevantes para cursos
     unset( $fields['billing']['billing_company'] );
+    unset( $fields['order']['order_comments'] ); // Remove Informação adicional
     
     // Se o cliente quiser CPF/CNPJ via plugin Claudio Sanches, deixamos livre.
     return $fields;
 }
+
+/**
+ * Motor Turbo BR: Auto-Preenchimento Assíncrono do ViaCEP no Checkout
+ * Independente de plugins terceiros para garantir funcionamento em 100% dos casos.
+ */
+function saulocoelho_viacep_checkout_script() {
+    if ( ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) ) return;
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        // Escuta quando o usuário sai do campo de CEP ou digita o 8º número
+        $('#billing_postcode').on('keyup blur', function(e) {
+            var cep = $(this).val().replace(/\D/g, '');
+            
+            // Só dispara se tiver 8 números exatos
+            if (cep.length === 8 && $(this).data('last_cep') !== cep) {
+                $(this).data('last_cep', cep); // Evita duplicidade de requisição
+                
+                // Feedback visual de carregamento rápido
+                $('#billing_address_1').val('Buscando rua...');
+                $('#billing_neighborhood').val('...');
+                $('#billing_city').val('...');
+
+                // Chamada na API do Governo
+                $.getJSON('https://viacep.com.br/ws/' + cep + '/json/?callback=?', function(dados) {
+                    if (!("erro" in dados)) {
+                        // Injeta os dados nos campos nativos do WooCommerce e Plugin BR
+                        $('#billing_address_1').val(dados.logradouro);
+                        $('#billing_neighborhood').val(dados.bairro);
+                        $('#billing_city').val(dados.localidade);
+                        
+                        // Atualiza Estado (Select2 do Woo)
+                        $('#billing_state').val(dados.uf).trigger('change'); 
+                        
+                        // Joga o cursor piscando pro campo de Número, induzindo o fechamento!
+                        setTimeout(function(){
+                            $('#billing_number').focus();
+                        }, 100);
+                        
+                    } else {
+                        // Limpa se CEP for inválido
+                        $('#billing_address_1, #billing_neighborhood, #billing_city').val('');
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'saulocoelho_viacep_checkout_script', 30 );
