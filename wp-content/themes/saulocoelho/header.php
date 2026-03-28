@@ -147,7 +147,7 @@
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
-            <a href="https://saulo.vtis.com.br/area-do-cliente/" class="bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
                 Área do Cliente
             </a>
         </div>
