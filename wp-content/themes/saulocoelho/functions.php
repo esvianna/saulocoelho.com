@@ -201,7 +201,24 @@ function saulocoelho_checkout_qty_script() {
         box-shadow: 0 0 10px rgba(13,110,253,0.3) !important;
     }
     .checkout-qty-wrapper { display: inline-block; margin-left: 10px; }
+    
+    /* Ocultar a linha de "País" inteira (Travado no Brasil) */
+    #billing_country_field, #shipping_country_field {
+        display: none !important;
+    }
     </style>
     <?php
 }
 add_action( 'wp_footer', 'saulocoelho_checkout_qty_script' );
+
+/**
+ * Otimização de Formulário Checkout (Remoção de Fricção)
+ * Remove 'Nome da Empresa' que é inútil para compras de info-produto padrão
+ */
+add_filter( 'woocommerce_checkout_fields', 'saulocoelho_optimize_checkout_fields', 99 );
+function saulocoelho_optimize_checkout_fields( $fields ) {
+    unset( $fields['billing']['billing_company'] );
+    
+    // Se o cliente quiser CPF/CNPJ via plugin Claudio Sanches, deixamos livre.
+    return $fields;
+}
