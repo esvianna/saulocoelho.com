@@ -200,9 +200,15 @@ if ($actual_video_url) {
                         if (empty($topic['text'])) continue;
                     ?>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5 transition-all hover:bg-white/[0.04] hover:-translate-y-1">
-                            <?php if (!empty($topic['icon'])) : ?>
-                                <img src="<?php echo esc_url($topic['icon']); ?>" alt="" class="w-12 h-12 rounded-xl object-contain bg-slate-800 p-2 shrink-0 shadow-lg border border-white/10">
-                            <?php else: ?>
+                            <?php if (!empty($topic['icon'])) : 
+                                if (strpos($topic['icon'], 'http') === 0 || strpos($topic['icon'], '/') === 0) : ?>
+                                    <img src="<?php echo esc_url($topic['icon']); ?>" alt="" class="w-12 h-12 rounded-xl object-contain bg-slate-800 p-2 shrink-0 shadow-lg border border-white/10">
+                                <?php else : ?>
+                                    <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20">
+                                        <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;"><?php echo esc_html($topic['icon']); ?></span>
+                                    </div>
+                                <?php endif;
+                            else: ?>
                                 <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20">
                                     <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
                                 </div>

@@ -41,6 +41,23 @@ function saulocoelho_register_metaboxes() {
 }
 add_action('add_meta_boxes', 'saulocoelho_register_metaboxes');
 
+function saulocoelho_admin_head() {
+    echo '<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />';
+    echo '<style>
+        .icon-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+        .icon-modal-content { background: #fff; width: 90%; max-width: 800px; max-height: 80vh; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .icon-modal-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .icon-modal-body { padding: 20px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+        .icon-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 5px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; text-align: center; }
+        .icon-item:hover { background: #f0f6fc; border-color: #007cba; color: #007cba; }
+        .icon-item .material-symbols-outlined { font-size: 32px; margin-bottom: 8px; }
+        .icon-item span.label { font-size: 10px; opacity: 0.7; pointer-events: none; word-break: break-all; }
+        .preview-icon-box { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: #eee; border-radius: 6px; border: 1px solid #ddd; vertical-align: middle; margin-right: 10px; overflow: hidden; }
+        .preview-icon-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    </style>';
+}
+add_action('admin_head', 'saulocoelho_admin_head');
+
 /**
  * RENDER FUNCTIONS
  */
@@ -160,9 +177,21 @@ function saulocoelho_render_course_metabox($post) {
         $icon = esc_url($topic['icon'] ?? '');
         $text = esc_attr($topic['text'] ?? '');
         echo "<div class='topic-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
-        echo "<label style='font-size:11px; color:#666'>Ícone (Imagem)</label><br>";
-        echo "<input type='text' name='course_learning_topics[$index][icon]' id='topic_icon_$index' value='$icon' style='width:70%'> ";
-        echo "<button type='button' class='button button-small media-uploader' data-target='#topic_icon_$index'>Mídia</button><br><br>";
+        echo "<label style='font-size:11px; color:#666'>Ícone (Visual / Mídia)</label><br>";
+        echo "<div style='display:flex; align-items:center; margin-bottom:15px; margin-top:5px;'>";
+        echo "<div class='preview-icon-box' id='preview_topic_icon_$index'>";
+        if ($icon) {
+            if (strpos($icon, 'http') === 0 || strpos($icon, '/') === 0) {
+                echo "<img src='$icon' />";
+            } else {
+                echo "<span class='material-symbols-outlined' style='font-variation-settings: \"FILL\" 1;'>$icon</span>";
+            }
+        }
+        echo "</div>";
+        echo "<input type='text' name='course_learning_topics[$index][icon]' id='topic_icon_$index' value='$icon' style='width:50%; margin-right:5px;'> ";
+        echo "<button type='button' class='button button-small js-open-icon-modal' data-target='#topic_icon_$index' data-preview='#preview_topic_icon_$index' style='margin-right:5px;'>Ícones Mágicos</button>";
+        echo "<button type='button' class='button button-small media-uploader' data-target='#topic_icon_$index' data-preview='#preview_topic_icon_$index'>Subir Imagem</button>";
+        echo "</div>";
         echo "<label style='font-size:11px; color:#666'>Texto do Tópico</label><br>";
         echo "<input type='text' name='course_learning_topics[$index][text]' value='$text' style='width:100%;'><br><br>";
         echo "<button type='button' class='button js-remove-topic' style='color:#a00; border-color:#a00;'>Remover Tópico</button>";
@@ -293,13 +322,73 @@ function saulocoelho_render_metabox_js() {
     ?>
     <script>
     jQuery(document).ready(function($){
+        // Modal HTML creation
+        $('body').append(`
+        <div class="icon-modal-overlay" id="custom-icon-modal">
+            <div class="icon-modal-content">
+                <div class="icon-modal-header">
+                    <h2 style="margin:0;">Catálogo de Ícones</h2>
+                    <button type="button" class="button js-close-icon-modal">Fechar</button>
+                </div>
+                <div class="icon-modal-body" id="icon-modal-grid"></div>
+            </div>
+        </div>
+        `);
+
+        // Popular icons list
+        var iconList = [
+            'visibility', 'psychology', 'group', 'target', 'lightbulb', 'trending_up', 'star', 'military_tech',
+            'handshake', 'rocket_launch', 'shield_locked', 'work', 'bolt', 'public', 'balance', 'diamond',
+            'school', 'menu_book', 'flag', 'verified', 'forum', 'emoji_events', 'check_circle', 'cancel',
+            'arrow_forward', 'location_on', 'calendar_month', 'info', 'play_circle', 'assignment_return',
+            'verified_user', 'video_library', 'task_alt', 'auto_awesome', 'workspace_premium', 'mindfulness',
+            'psychiatry', 'healing', 'self_improvement', 'hub', 'diversity_3', 'thumb_up'
+        ];
+        
+        var iconGridHtml = '';
+        iconList.forEach(function(iconName) {
+            iconGridHtml += '<div class="icon-item" data-icon="'+iconName+'"><span class="material-symbols-outlined" style="font-variation-settings: \\\'FILL\\\' 1;">'+iconName+'</span><span class="label">'+iconName+'</span></div>';
+        });
+        $('#icon-modal-grid').html(iconGridHtml);
+
+        var currentIconTarget = null;
+        var currentPreviewTarget = null;
+
+        $(document).on('click', '.js-open-icon-modal', function(e){
+            e.preventDefault();
+            currentIconTarget = $(this).data('target');
+            currentPreviewTarget = $(this).data('preview');
+            $('#custom-icon-modal').css('display', 'flex').hide().fadeIn(200);
+        });
+
+        $(document).on('click', '.js-close-icon-modal, .icon-modal-overlay', function(e){
+            if (e.target !== this) return;
+            $('#custom-icon-modal').fadeOut(200);
+        });
+
+        $(document).on('click', '.icon-item', function(e){
+            var selectedIcon = $(this).data('icon');
+            if (currentIconTarget) {
+                $(currentIconTarget).val(selectedIcon);
+            }
+            if (currentPreviewTarget) {
+                $(currentPreviewTarget).html('<span class="material-symbols-outlined" style="font-variation-settings: \\\'FILL\\\' 1;">'+selectedIcon+'</span>');
+            }
+            $('#custom-icon-modal').fadeOut(200);
+        });
+
         $(document).on('click', '.media-uploader', function(e) {
             e.preventDefault();
             var target = $(this).data('target');
+            var preview = $(this).data('preview');
             var image = wp.media({ title: 'Escolher Imagem', multiple: false }).open()
             .on('select', function(e){
                 var uploaded_image = image.state().get('selection').first();
-                $(target).val(uploaded_image.toJSON().url);
+                var uri = uploaded_image.toJSON().url;
+                $(target).val(uri);
+                if (preview && $(preview).length) {
+                    $(preview).html('<img src="'+uri+'" />');
+                }
             });
         });
 
@@ -308,9 +397,13 @@ function saulocoelho_render_metabox_js() {
         $('.js-add-topic').on('click', function(e){
             e.preventDefault();
             var html = '<div class="topic-row" style="background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;">' +
-                       '<label style="font-size:11px; color:#666">Ícone (Imagem)</label><br>' +
-                       '<input type="text" name="course_learning_topics['+topicIndex+'][icon]" id="topic_icon_'+topicIndex+'" value="" style="width:70%"> ' +
-                       '<button type="button" class="button button-small media-uploader" data-target="#topic_icon_'+topicIndex+'">Mídia</button><br><br>' +
+                       '<label style="font-size:11px; color:#666">Ícone (Visual / Mídia)</label><br>' +
+                       '<div style="display:flex; align-items:center; margin-bottom:15px; margin-top:5px;">' +
+                       '<div class="preview-icon-box" id="preview_topic_icon_'+topicIndex+'"></div>' +
+                       '<input type="text" name="course_learning_topics['+topicIndex+'][icon]" id="topic_icon_'+topicIndex+'" value="" style="width:50%; margin-right:5px;"> ' +
+                       '<button type="button" class="button button-small js-open-icon-modal" data-target="#topic_icon_'+topicIndex+'" data-preview="#preview_topic_icon_'+topicIndex+'" style="margin-right:5px;">Ícones Mágicos</button>' +
+                       '<button type="button" class="button button-small media-uploader" data-target="#topic_icon_'+topicIndex+'" data-preview="#preview_topic_icon_'+topicIndex+'">Subir Imagem</button>' +
+                       '</div>' +
                        '<label style="font-size:11px; color:#666">Texto do Tópico</label><br>' +
                        '<input type="text" name="course_learning_topics['+topicIndex+'][text]" value="" style="width:100%;"><br><br>' +
                        '<button type="button" class="button js-remove-topic" style="color:#a00; border-color:#a00;">Remover Tópico</button>' +
