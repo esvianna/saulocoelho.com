@@ -140,6 +140,13 @@ function saulocoelho_render_course_metabox($post) {
         'course_event_location' => '🏢 Local do Evento (P/ Presencial)',
         'course_event_dates' => '📅 Datas e Horários (Ex: 15 e 16 de Maio das 09h às 18h)',
         'course_event_dresscode' => '👗 Dresscode / Avisos (Para Presencial)',
+        'course_learning_title' => 'Título da Seção de Aprendizado (Ex: O que você vai aprender)',
+        'course_learning_subtitle_desc' => 'Subtítulo do Aprendizado (Ex: Conteúdo estruturado...)',
+        'course_learning_mode' => ['type' => 'select', 'label' => 'Modo de Exibição do Aprendizado', 'options' => ['modules' => 'Separado por Módulos (Preencha os cards abaixo)', 'freetext' => 'Texto Livre (Ideal para formato Presencial)']],
+        'course_learning_freetext_desc' => 'Texto Livre (Insira toda a ementa/cronograma aqui, se usou a opção Texto Livre acima)',
+        'course_benefits_title' => 'Seção Bônus 1: Título de Benefícios (Ex: Quais os Benefícios? - Deixe vazio p/ ocultar)',
+        'course_benefits_desc' => 'Texto de Benefícios (Lado Esquerdo)',
+        'course_benefits_media_url' => 'Mídia de Benefícios (Lado Direito - Envie link de Imagem ou YouTube/Vimeo)',
     ];
     saulocoelho_render_fields($post->ID, $fields);
 

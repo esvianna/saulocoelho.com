@@ -21,6 +21,15 @@ $event_loc = get_post_meta($pid, 'course_event_location', true);
 $event_dates = get_post_meta($pid, 'course_event_dates', true);
 $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
 
+$learning_title = get_post_meta($pid, 'course_learning_title', true) ?: 'O que você vai aprender';
+$learning_subtitle = get_post_meta($pid, 'course_learning_subtitle_desc', true) ?: 'Conteúdo estruturado para sua evolução.';
+$learning_mode = get_post_meta($pid, 'course_learning_mode', true) ?: 'modules';
+$learning_freetext = get_post_meta($pid, 'course_learning_freetext_desc', true);
+
+$benefits_title = get_post_meta($pid, 'course_benefits_title', true);
+$benefits_desc = get_post_meta($pid, 'course_benefits_desc', true);
+$benefits_media = get_post_meta($pid, 'course_benefits_media_url', true);
+
 // Video Logic
 $actual_video_url = get_post_meta($pid, 'course_actual_video_url', true);
 $video_mode = get_post_meta($pid, 'course_video_mode', true) ?: 'inline';
@@ -158,37 +167,104 @@ if ($actual_video_url) {
 <section class="py-24" id="conteudo">
     <div class="mx-auto max-w-3xl px-6 lg:px-8">
         <div class="text-center mb-20 text-balance">
-            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-6">O que você vai aprender</h2>
-            <p class="text-lg text-slate-400 font-light leading-relaxed">Conteúdo estruturado para sua evolução.</p>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-6"><?php echo esc_html($learning_title); ?></h2>
+            <?php if ($learning_subtitle) : ?>
+                <p class="text-lg text-slate-400 font-light leading-relaxed"><?php echo esc_html($learning_subtitle); ?></p>
+            <?php endif; ?>
         </div>
         
         <div class="flex flex-col gap-6">
-            <?php
-            $has_modules = false;
-            for ($i = 1; $i <= 8; $i++) {
-                $mod_title = get_post_meta($pid, "course_mod_{$i}_title", true);
-                $mod_desc = get_post_meta($pid, "course_mod_{$i}_desc", true);
-                
-                if ($mod_title) {
-                    $has_modules = true;
-                    ?>
-                    <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl transition-all hover:bg-white/[0.05]">
-                        <h4 class="text-xl font-bold text-white mb-2"><?php echo esc_html($mod_title); ?></h4>
-                        <?php if ($mod_desc): ?>
-                            <p class="text-slate-400 font-light"><?php echo esc_html($mod_desc); ?></p>
-                        <?php endif; ?>
-                    </div>
-                    <?php
+            <?php if ($learning_mode === 'freetext' && !empty($learning_freetext)) : ?>
+                <div class="bg-white/[0.03] border border-white/10 p-8 md:p-12 rounded-3xl text-slate-300 font-light leading-relaxed prose prose-invert prose-p:mb-6 prose-ul:mb-6 prose-li:my-2 custom-list">
+                    <?php echo wpautop(wp_kses_post($learning_freetext)); ?>
+                </div>
+            <?php else : ?>
+                <?php
+                $has_modules = false;
+                for ($i = 1; $i <= 8; $i++) {
+                    $mod_title = get_post_meta($pid, "course_mod_{$i}_title", true);
+                    $mod_desc = get_post_meta($pid, "course_mod_{$i}_desc", true);
+                    
+                    if ($mod_title) {
+                        $has_modules = true;
+                        ?>
+                        <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl transition-all hover:bg-white/[0.05]">
+                            <h4 class="text-xl font-bold text-white mb-2"><?php echo esc_html($mod_title); ?></h4>
+                            <?php if ($mod_desc): ?>
+                                <p class="text-slate-400 font-light leading-relaxed"><?php echo esc_html($mod_desc); ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <?php
+                    }
                 }
-            }
-            
-            if (!$has_modules) {
-                echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
-            }
-            ?>
+                
+                if (!$has_modules) {
+                    echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
+                }
+                ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>
+
+<?php if ($benefits_title) : ?>
+<!-- Benefits Section (Split Screen) -->
+<section class="py-24 bg-slate-900/50 border-t border-white/5 relative overflow-hidden" id="beneficios">
+    <!-- Glow effect behind benefits -->
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-primary/10 blur-[150px] pointer-events-none rounded-full transform translate-x-1/2"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            
+            <!-- Left: Text -->
+            <div class="space-y-8">
+                <h2 class="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight scale-fade-in"><?php echo esc_html($benefits_title); ?></h2>
+                <?php if ($benefits_desc) : ?>
+                    <div class="text-lg text-slate-300 font-light leading-relaxed space-y-4 prose prose-invert prose-p:text-slate-300 prose-ul:text-slate-300 prose-li:marker:text-primary custom-list">
+                        <?php echo wpautop(wp_kses_post($benefits_desc)); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Right: Media -->
+            <div class="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-background-dark flex items-center justify-center group">
+                <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none z-10"></div>
+                <?php if (strpos($benefits_media, 'youtube.com') !== false || strpos($benefits_media, 'youtu.be') !== false || strpos($benefits_media, 'vimeo.com') !== false) : 
+                    // Video Iframe Logic
+                    $embed_url = '';
+                    if (strpos($benefits_media, 'youtube.com') !== false || strpos($benefits_media, 'youtu.be') !== false) {
+                        preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $benefits_media, $video_match);
+                        if (!empty($video_match[1])) {
+                            $embed_url = 'https://www.youtube.com/embed/' . $video_match[1] . '?modestbranding=1&rel=0';
+                        }
+                    } elseif (strpos($benefits_media, 'vimeo.com') !== false) {
+                        preg_match('/vimeo\.com\/([0-9]+)/i', $benefits_media, $video_match);
+                        if (!empty($video_match[1])) {
+                            $embed_url = 'https://player.vimeo.com/video/' . $video_match[1];
+                        }
+                    }
+                    if ($embed_url) : ?>
+                        <iframe src="<?php echo esc_url($embed_url); ?>" class="w-full h-full object-cover" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    <?php else : ?>
+                        <p class="text-slate-500 text-sm">Formato de vídeo inválido.</p>
+                    <?php endif;
+                elseif ($benefits_media) : ?>
+                    <!-- Image -->
+                    <img src="<?php echo esc_url($benefits_media); ?>" alt="Benefícios" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                <?php else : ?>
+                    <!-- Placeholder if left empty but title exists -->
+                    <div class="flex flex-col items-center justify-center text-slate-600 gap-4">
+                        <span class="material-symbols-outlined text-5xl">image</span>
+                        <p class="text-sm font-light">Nenhuma mídia informada.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 
 <!-- What's Included / Not Included -->
 <section class="py-24 border-t border-white/5 bg-background-dark">
