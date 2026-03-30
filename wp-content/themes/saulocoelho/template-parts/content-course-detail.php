@@ -248,7 +248,10 @@ if ($actual_video_url) {
                     <?php else : ?>
                         <p class="text-slate-500 text-sm">Formato de vídeo inválido.</p>
                     <?php endif;
-                elseif ($benefits_media) : ?>
+                elseif (preg_match('/\.mp4$|\.webm$|\.ogg$/i', $benefits_media)) : ?>
+                    <!-- Native Hosted Video -->
+                    <video src="<?php echo esc_url($benefits_media); ?>" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
+                <?php elseif ($benefits_media) : ?>
                     <!-- Image -->
                     <img src="<?php echo esc_url($benefits_media); ?>" alt="Benefícios" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                 <?php else : ?>
