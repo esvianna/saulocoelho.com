@@ -1,6 +1,14 @@
 <?php
 $pid = get_the_ID();
 $badge = get_post_meta($pid, 'course_badge', true) ?: 'Matrículas Abertas';
+$sec_btn_text = get_post_meta($pid, 'course_sec_btn_text', true);
+if (empty($sec_btn_text) && !metadata_exists('post', $pid, 'course_sec_btn_text')) {
+    $sec_btn_text = 'Ver currículo';
+}
+$sec_btn_link = get_post_meta($pid, 'course_sec_btn_link', true);
+if (empty($sec_btn_link) && !metadata_exists('post', $pid, 'course_sec_btn_link')) {
+    $sec_btn_link = '#conteudo';
+}
 $video_img = get_post_meta($pid, 'course_video_url', true);
 $stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '10k+ Alunos';
 $stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.9/5 Avaliação';
@@ -66,9 +74,11 @@ if ($actual_video_url) {
                         Quero me inscrever agora
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
-                    <a href="#conteudo" class="bg-white/5 hover:bg-white/10 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center">
-                        Ver currículo
+                    <?php if (!empty($sec_btn_text)) : ?>
+                    <a href="<?php echo esc_url($sec_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center">
+                        <?php echo esc_html($sec_btn_text); ?>
                     </a>
+                    <?php endif; ?>
                 </div>
             </div>
             

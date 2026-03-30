@@ -131,6 +131,8 @@ function saulocoelho_render_course_metabox($post) {
     $fields = [
         'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
         'course_badge' => 'Selo do Topo (ex: Matrículas Abertas)',
+        'course_sec_btn_text' => 'Botão Secundário: Texto (Ex: Ver currículo - vazio p/ ocultar)',
+        'course_sec_btn_link' => 'Botão Secundário: Link (Ex: #conteudo)',
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
         'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
