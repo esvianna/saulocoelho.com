@@ -53,7 +53,7 @@ if ($actual_video_url) {
                 </div>
             </div>
             
-            <div class="relative group h-full">
+            <div class="relative group w-full">
                 <div class="absolute -inset-2 bg-gradient-to-r from-primary to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                 <!-- ID adcionado para referenciar via JS e classes ajustadas -->
                 <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl aspect-video border border-white/10" id="video-container">
