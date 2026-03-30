@@ -4,9 +4,18 @@ $badge = get_post_meta($pid, 'course_badge', true) ?: 'Matrículas Abertas';
 $video_img = get_post_meta($pid, 'course_video_url', true);
 $stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '10k+ Alunos';
 $stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.9/5 Avaliação';
-$price_full = get_post_meta($pid, 'course_price_full', true) ?: 'R$ 1.997,00';
 $price_install = get_post_meta($pid, 'course_price_install', true) ?: 'R$ 97,00';
 $checkout_link = '?add-to-cart=' . $pid;
+
+// WooCommerce Price Logic
+$product = function_exists('wc_get_product') ? wc_get_product($pid) : null;
+$regular_price_val = $product ? $product->get_regular_price() : '';
+$sale_price_val = $product ? $product->get_sale_price() : '';
+if (!$regular_price_val && $product) {
+    $regular_price_val = $product->get_price(); // Fallback
+}
+$regular_price_formatted = $regular_price_val ? wc_price($regular_price_val) : '';
+$sale_price_formatted = $sale_price_val ? wc_price($sale_price_val) : '';
 $course_type = get_post_meta($pid, 'course_type', true) ?: 'online';
 $event_loc = get_post_meta($pid, 'course_event_location', true);
 $event_dates = get_post_meta($pid, 'course_event_dates', true);
@@ -247,9 +256,18 @@ if ($actual_video_url) {
             
             <div class="flex flex-col items-center gap-8 relative z-10">
                 <div class="flex flex-col items-center gap-2">
-                    <span class="text-slate-500 line-through text-lg">De <?php echo esc_html($price_full); ?></span>
-                    <div class="flex items-center gap-4">
-                        <span class="text-white text-3xl font-bold">12x de</span>
+                    <?php if ($sale_price_val) : ?>
+                        <span class="text-slate-400 text-lg">
+                            Valor à vista de <span class="line-through text-slate-500 mr-1"><?php echo wp_kses_post($regular_price_formatted); ?></span> por <strong class="text-white"><?php echo wp_kses_post($sale_price_formatted); ?></strong>
+                        </span>
+                    <?php else : ?>
+                        <span class="text-slate-400 text-lg">
+                            Valor à vista <strong class="text-white"><?php echo wp_kses_post($regular_price_formatted); ?></strong>
+                        </span>
+                    <?php endif; ?>
+                    
+                    <div class="flex items-center gap-4 mt-2">
+                        <span class="text-white text-3xl font-bold">ou 12x de</span>
                         <span class="text-primary text-7xl font-black"><?php echo esc_html($price_install); ?></span>
                     </div>
                 </div>
