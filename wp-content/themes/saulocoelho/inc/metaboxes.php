@@ -124,6 +124,8 @@ function saulocoelho_render_course_metabox($post) {
         'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
         'course_badge' => 'Selo do Topo (ex: Matrículas Abertas)',
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
+        'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
+        'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
         'course_stat_1' => 'Destaque 1 (ex: 10k+ Alunos)',
         'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
         'course_price_full' => 'Preço cheio (ex: R$ 1.997,00)',

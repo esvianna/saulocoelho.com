@@ -11,6 +11,21 @@ $course_type = get_post_meta($pid, 'course_type', true) ?: 'online';
 $event_loc = get_post_meta($pid, 'course_event_location', true);
 $event_dates = get_post_meta($pid, 'course_event_dates', true);
 $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
+
+// Video Logic
+$actual_video_url = get_post_meta($pid, 'course_actual_video_url', true);
+$video_mode = get_post_meta($pid, 'course_video_mode', true) ?: 'inline';
+
+$embed_url = '';
+if ($actual_video_url) {
+    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $actual_video_url, $match)) {
+        $embed_url = 'https://www.youtube.com/embed/' . $match[1] . '?autoplay=1&rel=0';
+    } elseif (preg_match('/vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)/i', $actual_video_url, $match)) {
+        $embed_url = 'https://player.vimeo.com/video/' . $match[1] . '?autoplay=1&autopause=0&title=0&byline=0&portrait=0';
+    } else {
+        $embed_url = esc_url($actual_video_url); // Fallback to raw URL
+    }
+}
 ?>
 
 <!-- Course Hero Section -->
@@ -38,14 +53,29 @@ $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
                 </div>
             </div>
             
-            <div class="relative group">
+            <div class="relative group h-full">
                 <div class="absolute -inset-2 bg-gradient-to-r from-primary to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl aspect-video border border-white/10">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
-                        <a href="<?php echo esc_url($checkout_link); ?>" class="size-24 bg-primary/90 hover:bg-primary text-white rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform hover:scale-110">
-                            <span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1">play_arrow</span>
-                        </a>
-                    </div>
+                <!-- ID adcionado para referenciar via JS e classes ajustadas -->
+                <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl aspect-video border border-white/10" id="video-container">
+                    
+                    <?php if ($embed_url) : ?>
+                        <!-- Capa do Vídeo (Será substituída ou abrirá o lightbox no clique) -->
+                        <div id="video-cover" class="absolute inset-0 z-20 cursor-pointer flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-300"
+                             onclick="playCourseVideo('<?php echo esc_js($video_mode); ?>', '<?php echo esc_js($embed_url); ?>')">
+                            
+                            <div class="size-24 bg-primary/90 text-white rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform hover:scale-110">
+                                <span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <!-- Fallback: vai para o checkout -->
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+                            <a href="<?php echo esc_url($checkout_link); ?>" class="size-24 bg-primary/90 hover:bg-primary text-white rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform hover:scale-110">
+                                <span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+
                     <?php if ($video_img) : ?>
                         <img src="<?php echo esc_url($video_img); ?>" alt="Preview" class="w-full h-full object-cover">
                     <?php else : ?>
@@ -53,6 +83,9 @@ $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
                              <span class="material-symbols-outlined text-8xl text-slate-700">video_library</span>
                         </div>
                     <?php endif; ?>
+                    
+                    <!-- Container vazio para o iFrame inline -->
+                    <div id="video-player-inline" class="absolute inset-0 z-10 hidden"></div>
                 </div>
             </div>
         </div>
@@ -243,3 +276,63 @@ $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
         </div>
     </div>
 </section>
+
+<!-- Lightbox Modal -->
+<div id="course-video-lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300 mx-4" id="video-lightbox-content">
+        <button onclick="closeCourseLightbox()" class="absolute top-4 right-4 z-50 text-white bg-black/50 hover:bg-primary rounded-full p-2 backdrop-blur-md transition-colors shadow-lg">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div id="lightbox-player-container" class="w-full h-full"></div>
+    </div>
+</div>
+
+<script>
+function playCourseVideo(mode, url) {
+    if (mode === 'lightbox') {
+        const lightbox = document.getElementById('course-video-lightbox');
+        const content = document.getElementById('video-lightbox-content');
+        const player = document.getElementById('lightbox-player-container');
+        
+        player.innerHTML = `<iframe src="${url}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        
+        // Exibir modal
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        
+        // Aplicar transições
+        setTimeout(() => {
+            lightbox.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+        }, 10);
+        
+    } else {
+        // Modo Inline (Na própria caixa do Hero)
+        const cover = document.getElementById('video-cover');
+        const player = document.getElementById('video-player-inline');
+        
+        player.innerHTML = `<iframe src="${url}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        player.classList.remove('hidden');
+        
+        // Sumir com a cover suavemente
+        cover.style.opacity = '0';
+        setTimeout(() => cover.classList.add('hidden'), 300);
+    }
+}
+
+function closeCourseLightbox() {
+    const lightbox = document.getElementById('course-video-lightbox');
+    const content = document.getElementById('video-lightbox-content');
+    const player = document.getElementById('lightbox-player-container');
+    
+    // Ocultar com transição
+    lightbox.classList.add('opacity-0');
+    content.classList.add('scale-95');
+    
+    setTimeout(() => {
+        lightbox.classList.remove('flex');
+        lightbox.classList.add('hidden');
+        player.innerHTML = ''; // Parar o vídeo
+    }, 300);
+}
+</script>
