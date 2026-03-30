@@ -35,6 +35,10 @@ $learning_subtitle = get_post_meta($pid, 'course_learning_subtitle_desc', true) 
 $learning_mode = get_post_meta($pid, 'course_learning_mode', true) ?: 'modules';
 $learning_freetext = get_post_meta($pid, 'course_learning_freetext_desc', true);
 
+$learning_topics = get_post_meta($pid, 'course_learning_topics', true);
+if (!is_array($learning_topics)) $learning_topics = [];
+$has_topics = count($learning_topics) > 0;
+
 $benefits_title = get_post_meta($pid, 'course_benefits_title', true);
 $benefits_desc = get_post_meta($pid, 'course_benefits_desc', true);
 $benefits_media = get_post_meta($pid, 'course_benefits_media_url', true);
@@ -147,43 +151,68 @@ if ($actual_video_url) {
 
 <!-- Curriculum -->
 <section class="py-24" id="conteudo">
-    <div class="mx-auto max-w-3xl px-6 lg:px-8">
-        <div class="text-center mb-20 text-balance">
+    <div class="mx-auto <?php echo $has_topics ? 'max-w-6xl' : 'max-w-3xl'; ?> px-6 lg:px-8">
+        <div class="text-center mb-12 text-balance">
             <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-6"><?php echo esc_html($learning_title); ?></h2>
             <?php if ($learning_subtitle) : ?>
                 <p class="text-lg text-slate-400 font-light leading-relaxed"><?php echo esc_html($learning_subtitle); ?></p>
             <?php endif; ?>
         </div>
         
-        <div class="flex flex-col gap-6">
-            <?php if ($learning_mode === 'freetext' && !empty($learning_freetext)) : ?>
-                <div class="bg-white/[0.03] border border-white/10 p-8 md:p-12 rounded-3xl text-slate-300 font-light leading-relaxed prose prose-invert prose-p:mb-6 prose-ul:mb-6 prose-li:my-2 custom-list">
-                    <?php echo wpautop(wp_kses_post($learning_freetext)); ?>
-                </div>
-            <?php else : ?>
-                <?php
-                $has_modules = false;
-                for ($i = 1; $i <= 8; $i++) {
-                    $mod_title = get_post_meta($pid, "course_mod_{$i}_title", true);
-                    $mod_desc = get_post_meta($pid, "course_mod_{$i}_desc", true);
-                    
-                    if ($mod_title) {
-                        $has_modules = true;
-                        ?>
-                        <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl transition-all hover:bg-white/[0.05]">
-                            <h4 class="text-xl font-bold text-white mb-2"><?php echo esc_html($mod_title); ?></h4>
-                            <?php if ($mod_desc): ?>
-                                <p class="text-slate-400 font-light leading-relaxed"><?php echo esc_html($mod_desc); ?></p>
-                            <?php endif; ?>
-                        </div>
-                        <?php
+        <div class="<?php echo $has_topics ? 'grid lg:grid-cols-5 gap-12 items-start' : 'flex flex-col gap-6'; ?>">
+            <!-- Coluna Esquerda: Texto ou Módulos -->
+            <div class="<?php echo $has_topics ? 'lg:col-span-3 flex flex-col gap-6' : 'w-full flex flex-col gap-6'; ?>">
+                <?php if ($learning_mode === 'freetext' && !empty($learning_freetext)) : ?>
+                    <div class="bg-white/[0.03] border border-white/10 p-8 md:p-12 rounded-3xl text-slate-300 font-light leading-relaxed prose prose-invert prose-p:mb-6 prose-ul:mb-6 prose-li:my-2 custom-list h-full">
+                        <?php echo wpautop(wp_kses_post($learning_freetext)); ?>
+                    </div>
+                <?php else : ?>
+                    <?php
+                    $has_modules = false;
+                    for ($i = 1; $i <= 8; $i++) {
+                        $mod_title = get_post_meta($pid, "course_mod_{$i}_title", true);
+                        $mod_desc = get_post_meta($pid, "course_mod_{$i}_desc", true);
+                        
+                        if ($mod_title) {
+                            $has_modules = true;
+                            ?>
+                            <div class="bg-white/[0.03] border border-white/10 p-8 rounded-2xl transition-all hover:bg-white/[0.05]">
+                                <h4 class="text-xl font-bold text-white mb-2"><?php echo esc_html($mod_title); ?></h4>
+                                <?php if ($mod_desc): ?>
+                                    <p class="text-slate-400 font-light leading-relaxed"><?php echo esc_html($mod_desc); ?></p>
+                                <?php endif; ?>
+                            </div>
+                            <?php
+                        }
                     }
-                }
-                
-                if (!$has_modules) {
-                    echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
-                }
-                ?>
+                    
+                    if (!$has_modules) {
+                        echo '<p class="text-slate-400 font-light text-center">Nenhum módulo cadastrado ainda.</p>';
+                    }
+                    ?>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Coluna Direita: Tópicos Dinâmicos -->
+            <?php if ($has_topics) : ?>
+                <div class="lg:col-span-2 flex flex-col gap-4">
+                    <?php foreach ($learning_topics as $topic) : 
+                        if (empty($topic['text'])) continue;
+                    ?>
+                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5 transition-all hover:bg-white/[0.04] hover:-translate-y-1">
+                            <?php if (!empty($topic['icon'])) : ?>
+                                <img src="<?php echo esc_url($topic['icon']); ?>" alt="" class="w-12 h-12 rounded-xl object-contain bg-slate-800 p-2 shrink-0 shadow-lg border border-white/10">
+                            <?php else: ?>
+                                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20">
+                                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                </div>
+                            <?php endif; ?>
+                            <p class="text-slate-300 font-light leading-relaxed self-center">
+                                <?php echo esc_html($topic['text']); ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
         </div>
     </div>

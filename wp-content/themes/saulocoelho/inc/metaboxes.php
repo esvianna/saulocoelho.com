@@ -149,6 +149,28 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
+    echo '<hr><h3>Tópicos de Aprendizado (Lista Lateral para acompanhar o Texto Livre da seção)</h3>';
+    echo '<p style="color:#666; font-size:12px; margin-top:-10px;">Adicione quantos tópicos desejar. Eles aparecerão na seção "O que você vai aprender".</p>';
+    echo '<input type="hidden" name="course_learning_topics_present" value="1">';
+    echo '<div id="course_topics_container">';
+    $topics = get_post_meta($post->ID, 'course_learning_topics', true);
+    if (!is_array($topics)) $topics = [];
+
+    foreach ($topics as $index => $topic) {
+        $icon = esc_url($topic['icon'] ?? '');
+        $text = esc_attr($topic['text'] ?? '');
+        echo "<div class='topic-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
+        echo "<label style='font-size:11px; color:#666'>Ícone (Imagem)</label><br>";
+        echo "<input type='text' name='course_learning_topics[$index][icon]' id='topic_icon_$index' value='$icon' style='width:70%'> ";
+        echo "<button type='button' class='button button-small media-uploader' data-target='#topic_icon_$index'>Mídia</button><br><br>";
+        echo "<label style='font-size:11px; color:#666'>Texto do Tópico</label><br>";
+        echo "<input type='text' name='course_learning_topics[$index][text]' value='$text' style='width:100%;'><br><br>";
+        echo "<button type='button' class='button js-remove-topic' style='color:#a00; border-color:#a00;'>Remover Tópico</button>";
+        echo "</div>";
+    }
+    echo '</div>';
+    echo '<button type="button" class="button button-primary js-add-topic">+ Adicionar Tópico</button><br><br>';
+
     echo '<hr><h3>O Que Está Incluso? (Checklist de Benefícios / Materiais)</h3>';
     for ($i=1; $i<=6; $i++) {
         saulocoelho_render_group($post->ID, "course_inc_$i", ['title' => 'Item Incluso (Ex: Apostila Impressa)']);
@@ -280,6 +302,29 @@ function saulocoelho_render_metabox_js() {
                 $(target).val(uploaded_image.toJSON().url);
             });
         });
+
+        // Repeater Logic for Topics
+        var topicIndex = $('#course_topics_container .topic-row').length;
+        $('.js-add-topic').on('click', function(e){
+            e.preventDefault();
+            var html = '<div class="topic-row" style="background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;">' +
+                       '<label style="font-size:11px; color:#666">Ícone (Imagem)</label><br>' +
+                       '<input type="text" name="course_learning_topics['+topicIndex+'][icon]" id="topic_icon_'+topicIndex+'" value="" style="width:70%"> ' +
+                       '<button type="button" class="button button-small media-uploader" data-target="#topic_icon_'+topicIndex+'">Mídia</button><br><br>' +
+                       '<label style="font-size:11px; color:#666">Texto do Tópico</label><br>' +
+                       '<input type="text" name="course_learning_topics['+topicIndex+'][text]" value="" style="width:100%;"><br><br>' +
+                       '<button type="button" class="button js-remove-topic" style="color:#a00; border-color:#a00;">Remover Tópico</button>' +
+                       '</div>';
+            $('#course_topics_container').append(html);
+            topicIndex++;
+        });
+
+        $(document).on('click', '.js-remove-topic', function(e){
+            e.preventDefault();
+            if(confirm('Remover este tópico?')) {
+                $(this).closest('.topic-row').remove();
+            }
+        });
     });
     </script>
     <?php
@@ -294,6 +339,11 @@ function saulocoelho_save_metaboxes($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_page', $post_id)) return;
 
+    // Handle array deletions if they were completely removed by the user in the DOM
+    if (isset($_POST['course_learning_topics_present']) && !isset($_POST['course_learning_topics'])) {
+        delete_post_meta($post_id, 'course_learning_topics');
+    }
+
     // Loop through all POST data and save keys starting with our prefixes
     $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_'];
     foreach ($_POST as $key => $value) {
@@ -302,7 +352,12 @@ function saulocoelho_save_metaboxes($post_id) {
             if (strpos($key, $p) === 0) { $should_save = true; break; }
         }
         if ($should_save) {
-            update_post_meta($post_id, $key, wp_kses_post($value));
+            if (is_array($value)) {
+                $sanitized = map_deep($value, 'wp_kses_post');
+                update_post_meta($post_id, $key, $sanitized);
+            } else {
+                update_post_meta($post_id, $key, wp_kses_post($value));
+            }
         }
     }
 }
