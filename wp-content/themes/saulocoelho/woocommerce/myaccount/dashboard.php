@@ -111,7 +111,7 @@ if ( $has_ama ) {
         
         $title = get_the_title( $course_id );
         $thumb_url = get_the_post_thumbnail_url( $course_id, 'medium' ) ?: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80';
-        $player_url = esc_url( home_url( '/player/?course_id=' . $course_id ) );
+        $player_url = esc_url( get_permalink( $course_id ) );
         
         // Verifica se completou
         $is_completed = ($status === 'completed' || $progress >= 100);

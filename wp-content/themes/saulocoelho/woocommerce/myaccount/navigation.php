@@ -19,10 +19,9 @@ do_action( 'woocommerce_before_account_navigation' );
         
         <?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : 
             
-            // Map WooCommerce Endpoints to Material Icons
             $icon = 'chevron_right';
-            if ($endpoint === 'dashboard') $icon = 'dashboard';
-            if ($endpoint === 'orders') { $icon = 'school'; $label = 'Meus Cursos'; }
+            if ($endpoint === 'dashboard') { $icon = 'school'; $label = 'Meus Cursos'; }
+            if ($endpoint === 'orders') { $icon = 'receipt_long'; $label = 'Meus Pedidos'; }
             if ($endpoint === 'downloads') { $icon = 'workspace_premium'; $label = 'Certificados (Downloads)'; }
             if ($endpoint === 'edit-address' || $endpoint === 'edit-account') $icon = 'settings';
             if ($endpoint === 'customer-logout') $icon = 'logout';
