@@ -212,6 +212,42 @@ function saulocoelho_render_group($post_id, $prefix, $fields) {
         } elseif ($key === 'img' || $key === 'image') {
             echo "<input type='text' name='$field_name' id='$field_name' value='".esc_url($val)."' style='width:70%'> ";
             echo "<button type='button' class='button button-small media-uploader' data-target='#$field_name'>Midia</button>";
+        } elseif ($key === 'icon') {
+            $icons = [
+                '' => '- Selecione um Ícone -',
+                'visibility' => 'Visão Sistêmica (Olho)',
+                'psychology' => 'Liderança / Mente (Cérebro)',
+                'group' => 'Equipe / Integração (Pessoas)',
+                'target' => 'Foco / Objetivo (Alvo)',
+                'lightbulb' => 'Ideia / Inovação (Lâmpada)',
+                'trending_up' => 'Crescimento (Gráfico)',
+                'star' => 'Excelência (Estrela)',
+                'military_tech' => 'Autoridade (Medalha)',
+                'handshake' => 'Parceria / Acordo (Aperto de Mão)',
+                'rocket_launch' => 'Lançamento / Aceleração (Foguete)',
+                'shield_locked' => 'Segurança / Integridade (Escudo)',
+                'work' => 'Profissionalismo (Maleta)',
+                'bolt' => 'Energia / Agilidade (Raio)',
+                'public' => 'Alcance Global / Mundo (Globo)',
+                'balance' => 'Equilíbrio / Justiça (Balança)',
+                'diamond' => 'Valor / Premium (Diamante)',
+                'school' => 'Educação / Formação (Capelo)',
+                'menu_book' => 'Conhecimento (Livro)',
+                'flag' => 'Meta / Marco (Bandeira)',
+                'verified' => 'Verificado / Check',
+                'forum' => 'Comunicação / Chat (Balões)',
+                'emoji_events' => 'Vitória / Troféu'
+            ];
+            echo "<select name='$field_name' style='width:100%; margin-bottom:8px;'>";
+            // Check if current value exists in our list. If not and not empty, add it temporarily so it's not lost.
+            if ($val && !array_key_exists($val, $icons)) {
+                echo "<option value='".esc_attr($val)."' selected>Personalizado: ".esc_html($val)."</option>";
+            }
+            foreach ($icons as $icon_val => $icon_label) {
+                $sel = ($val == $icon_val) ? 'selected' : '';
+                echo "<option value='".esc_attr($icon_val)."' $sel>".esc_html($icon_label)."</option>";
+            }
+            echo "</select>";
         } else {
             echo "<input type='text' name='$field_name' value='".esc_attr($val)."' style='width:100%; margin-bottom:8px;'>";
         }
