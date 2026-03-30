@@ -137,9 +137,6 @@ function saulocoelho_render_course_metabox($post) {
         'course_stat_1' => 'Destaque 1 (ex: 10k+ Alunos)',
         'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
         'course_price_install' => 'Valor da Parcela (ex: 12x de R$ 97,00)',
-        'course_event_location' => '🏢 Local do Evento (P/ Presencial)',
-        'course_event_dates' => '📅 Datas e Horários (Ex: 15 e 16 de Maio das 09h às 18h)',
-        'course_event_dresscode' => '👗 Dresscode / Avisos (Para Presencial)',
         'course_learning_title' => 'Título da Seção de Aprendizado (Ex: O que você vai aprender)',
         'course_learning_subtitle_desc' => 'Subtítulo do Aprendizado (Ex: Conteúdo estruturado...)',
         'course_learning_mode' => ['type' => 'select', 'label' => 'Modo de Exibição do Aprendizado', 'options' => ['modules' => 'Separado por Módulos (Preencha os cards abaixo)', 'freetext' => 'Texto Livre (Ideal para formato Presencial)']],
@@ -159,6 +156,15 @@ function saulocoelho_render_course_metabox($post) {
     for ($i=1; $i<=3; $i++) {
         saulocoelho_render_group($post->ID, "course_notinc_$i", ['title' => 'Item Não Incluso (Ex: Hospedagem)']);
     }
+
+    echo '<hr><h3>Logística do Evento (Para Presencial)</h3>';
+    $logistics_fields = [
+        'course_event_section_title' => 'Título da Seção de Evento (Ex: Logística do Evento)',
+        'course_event_location' => '🏢 Local do Evento (P/ Presencial)',
+        'course_event_dates' => '📅 Datas e Horários (Ex: 15 e 16 de Maio das 09h às 18h)',
+        'course_event_dresscode' => '👗 Dresscode / Avisos (Para Presencial)',
+    ];
+    saulocoelho_render_fields($post->ID, $logistics_fields);
 
     echo '<hr><h3>Módulos do Curso (Apenas para cursos que possuem divisão de conteúdo)</h3>';
     for ($i=1; $i<=8; $i++) {

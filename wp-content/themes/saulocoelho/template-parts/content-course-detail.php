@@ -17,6 +17,7 @@ if (!$regular_price_val && $product) {
 $regular_price_formatted = $regular_price_val ? wc_price($regular_price_val) : '';
 $sale_price_formatted = $sale_price_val ? wc_price($sale_price_val) : '';
 $course_type = get_post_meta($pid, 'course_type', true) ?: 'online';
+$event_section_title = get_post_meta($pid, 'course_event_section_title', true) ?: 'Logística do Evento';
 $event_loc = get_post_meta($pid, 'course_event_location', true);
 $event_dates = get_post_meta($pid, 'course_event_dates', true);
 $event_dress = get_post_meta($pid, 'course_event_dresscode', true);
@@ -133,35 +134,6 @@ if ($actual_video_url) {
         </div>
     </div>
 </section>
-
-<?php if ($course_type === 'presencial') : ?>
-<!-- Event Info (Presencial) -->
-<section class="py-16 border-b border-white/5 bg-slate-900/50 relative overflow-hidden">
-    <div class="mx-auto max-w-5xl px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-black text-white">Logística do Evento</h2>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
-                <span class="material-symbols-outlined text-4xl text-primary">location_on</span>
-                <h4 class="text-white font-bold">Local</h4>
-                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_loc ?: 'Local a definir')); ?></p>
-            </div>
-            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
-                <span class="material-symbols-outlined text-4xl text-primary">calendar_month</span>
-                <h4 class="text-white font-bold">Datas e Horários</h4>
-                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dates ?: 'Datas em breve')); ?></p>
-            </div>
-            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
-                <span class="material-symbols-outlined text-4xl text-primary">info</span>
-                <h4 class="text-white font-bold">Avisos Importantes</h4>
-                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dress ?: 'Sem avisos no momento')); ?></p>
-            </div>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
 
 <!-- Curriculum -->
 <section class="py-24" id="conteudo">
@@ -323,6 +295,35 @@ if ($actual_video_url) {
         </div>
     </div>
 </section>
+
+<?php if ($course_type === 'presencial') : ?>
+<!-- Event Info (Presencial) -->
+<section class="py-16 border-b border-white/5 bg-slate-900/50 relative overflow-hidden">
+    <div class="mx-auto max-w-5xl px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-black text-white"><?php echo esc_html($event_section_title); ?></h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">location_on</span>
+                <h4 class="text-white font-bold">Local</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_loc ?: 'Local a definir')); ?></p>
+            </div>
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">calendar_month</span>
+                <h4 class="text-white font-bold">Datas e Horários</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dates ?: 'Datas em breve')); ?></p>
+            </div>
+            <div class="bg-background-dark p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center gap-4 hover:-translate-y-1 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary">info</span>
+                <h4 class="text-white font-bold">Avisos Importantes</h4>
+                <p class="text-slate-400 text-sm"><?php echo nl2br(esc_html($event_dress ?: 'Sem avisos no momento')); ?></p>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Pricing -->
 <section class="py-24 relative overflow-hidden" id="checkout">
