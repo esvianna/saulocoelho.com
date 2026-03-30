@@ -11,14 +11,27 @@ $hero_btn_1_text = get_post_meta($post_id, 'hero_btn_1_text', true) ?: 'Conheça
 $hero_btn_1_link = get_post_meta($post_id, 'hero_btn_1_link', true) ?: '#programas';
 $hero_btn_2_text = get_post_meta($post_id, 'hero_btn_2_text', true) ?: 'Falar com Consultor';
 $hero_btn_2_link = get_post_meta($post_id, 'hero_btn_2_link', true) ?: '#contato';
+
+$hero_bg_image_mobile = get_post_meta($post_id, 'hero_bg_image_mobile', true) ?: '';
+$hero_mobile_overlay = get_post_meta($post_id, 'hero_mobile_overlay', true) ?: '0';
 ?>
 <!-- Hero Section -->
-<section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-right md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px]" style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
-    <!-- Gradient Scrim (Left-aligned for text clarity) 
-    <div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/95 35% to-transparent 48% z-1"></div>
-    -->
-
-
+<style>
+    .hero-dynamic-bg {
+        background-image: url('<?php echo esc_url($hero_bg_image_mobile ?: $hero_bg_image); ?>');
+    }
+    @media (min-width: 768px) {
+        .hero-dynamic-bg {
+            background-image: url('<?php echo esc_url($hero_bg_image); ?>');
+        }
+    }
+</style>
+<section class="relative min-h-screen flex items-start pt-48 pb-32 overflow-hidden bg-cover bg-no-repeat bg-center md:bg-[right_-200px_top_80px] lg:bg-[right_top_80px] hero-dynamic-bg">
+    
+    <?php if ($hero_mobile_overlay > 0) : ?>
+    <!-- Mobile Dark Overlay -->
+    <div class="absolute inset-0 bg-black md:hidden pointer-events-none" style="opacity: <?php echo esc_attr($hero_mobile_overlay / 100); ?>; z-index: 1;"></div>
+    <?php endif; ?>
     <div class="w-full max-w-7xl mx-auto px-6 relative z-10">
         <div class="max-w-2xl space-y-8 animate-fade-in">
             <div class="space-y-4">
