@@ -60,6 +60,12 @@ function saulocoelho_render_home_metabox($post) {
         'hero_btn_2_text' => 'Botão 2: Texto',
         'hero_btn_2_link' => 'Botão 2: Link',
         'trusted_label' => 'Título da Seção de Logos',
+        'trusted_image_1' => 'Logo da Empresa 1',
+        'trusted_image_2' => 'Logo da Empresa 2',
+        'trusted_image_3' => 'Logo da Empresa 3',
+        'trusted_image_4' => 'Logo da Empresa 4',
+        'trusted_image_5' => 'Logo da Empresa 5',
+        'trusted_image_6' => 'Logo da Empresa 6',
         'features_title' => 'Título de Autoridade',
         'features_description' => 'Descrição de Autoridade',
     ];
