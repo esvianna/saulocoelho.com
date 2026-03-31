@@ -369,3 +369,286 @@ function alumni_save_metabox( $post_id, $post ) {
         }
     }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FASE 2 — ABA "MINHAS TURMAS" NO MINHA CONTA
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── 4. ENDPOINT WooCommerce ─────────────────────────────────────────────────
+
+add_action( 'init', 'alumni_register_endpoint' );
+function alumni_register_endpoint() {
+    add_rewrite_endpoint( 'minhas-turmas', EP_ROOT | EP_PAGES );
+}
+
+// ─── 5. MENU DA CONTA ────────────────────────────────────────────────────────
+
+add_filter( 'woocommerce_account_menu_items', 'alumni_add_menu_item' );
+function alumni_add_menu_item( $items ) {
+    $logout = [];
+    if ( isset( $items['customer-logout'] ) ) {
+        $logout = [ 'customer-logout' => $items['customer-logout'] ];
+        unset( $items['customer-logout'] );
+    }
+    $items['minhas-turmas'] = '🎓 Minhas Turmas';
+    return array_merge( $items, $logout );
+}
+
+// ─── 6. CONTEÚDO DA ABA ──────────────────────────────────────────────────────
+
+add_action( 'woocommerce_account_minhas-turmas_endpoint', 'alumni_render_my_account_tab' );
+function alumni_render_my_account_tab() {
+    $user_id = get_current_user_id();
+    if ( ! $user_id ) {
+        echo '<p>Por favor, faça login para ver suas turmas.</p>';
+        return;
+    }
+
+    // Cursos em que o aluno está matriculado
+    global $wpdb;
+    $lms_table = $wpdb->prefix . 'lms_enrollments';
+    $enrolled_course_ids = $wpdb->get_col( $wpdb->prepare(
+        "SELECT course_id FROM $lms_table WHERE user_id = %d AND status IN ('active','completed') ORDER BY enrolled_at DESC",
+        $user_id
+    ) );
+    $enrolled_course_ids = array_map( 'intval', (array) $enrolled_course_ids );
+
+    // Produtos com galerias alumni
+    $products_with_galleries = get_posts( [
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'meta_query'     => [ [ 'key' => '_alumni_turmas', 'compare' => 'EXISTS' ] ],
+    ] );
+
+    // Montar galerias filtradas pelas matrículas do aluno
+    $galerias = [];
+    foreach ( $products_with_galleries as $product_post ) {
+        $pid             = $product_post->ID;
+        $selected_turmas = get_post_meta( $pid, '_alumni_turmas', true );
+        if ( ! is_array( $selected_turmas ) || empty( $selected_turmas ) ) continue;
+
+        $turmas_do_aluno = array_intersect( array_map( 'intval', $selected_turmas ), $enrolled_course_ids );
+        if ( empty( $turmas_do_aluno ) ) continue;
+
+        $turmas_data = [];
+        foreach ( $turmas_do_aluno as $course_id ) {
+            $course = get_post( $course_id );
+            if ( ! $course || $course->post_status !== 'publish' ) continue;
+
+            $fotos_ids = get_post_meta( $pid, '_alumni_fotos_' . $course_id, true );
+            if ( ! is_array( $fotos_ids ) ) $fotos_ids = [];
+
+            $fotos = [];
+            foreach ( $fotos_ids as $img_id ) {
+                $full  = wp_get_attachment_image_src( $img_id, 'large' );
+                $thumb = wp_get_attachment_image_src( $img_id, 'medium' );
+                if ( $full ) {
+                    $fotos[] = [
+                        'full'  => $full[0],
+                        'thumb' => $thumb ? $thumb[0] : $full[0],
+                        'alt'   => get_post_meta( $img_id, '_wp_attachment_image_alt', true ) ?: esc_html( $course->post_title ),
+                    ];
+                }
+            }
+
+            if ( ! empty( $fotos ) ) {
+                $turmas_data[] = [
+                    'id'    => $course_id,
+                    'title' => $course->post_title,
+                    'fotos' => $fotos,
+                ];
+            }
+        }
+
+        if ( ! empty( $turmas_data ) ) {
+            $galerias[] = [
+                'product_id'    => $pid,
+                'product_title' => get_the_title( $pid ),
+                'product_url'   => get_permalink( $pid ),
+                'turmas'        => $turmas_data,
+            ];
+        }
+    }
+    ?>
+
+    <style>
+    .alumni-mytab-header { margin-bottom: 28px; }
+    .alumni-mytab-header h2 { font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+    .alumni-mytab-header p  { font-size: 13px; color: #64748b; margin: 0; }
+    .alumni-mytab-product   { margin-bottom: 48px; }
+    .alumni-mytab-product-name {
+        font-size: 15px; font-weight: 700; margin: 0 0 14px;
+        display: flex; align-items: center; gap: 8px;
+        border-bottom: 1px solid rgba(100,116,139,.15); padding-bottom: 12px;
+    }
+    .alumni-mytab-product-name a { color: #3b82f6; text-decoration: none; transition: color .2s; }
+    .alumni-mytab-product-name a:hover { color: #2563eb; }
+    .alumni-mytab-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .alumni-mytab-tab {
+        background: rgba(59,130,246,.07); border: 1px solid rgba(59,130,246,.2);
+        color: #3b82f6; padding: 7px 18px; border-radius: 999px;
+        font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s;
+    }
+    .alumni-mytab-tab:hover,
+    .alumni-mytab-tab.active { background: #3b82f6; color: #fff; box-shadow: 0 0 14px rgba(59,130,246,.3); }
+    .alumni-mytab-panel { display: none; }
+    .alumni-mytab-panel.active { display: block; }
+    .alumni-mytab-grid {
+        display: grid; gap: 8px;
+        grid-template-columns: repeat(2,1fr);
+    }
+    @media(min-width:480px){ .alumni-mytab-grid{ grid-template-columns:repeat(3,1fr); } }
+    @media(min-width:768px){ .alumni-mytab-grid{ grid-template-columns:repeat(4,1fr); } }
+    .alumni-mytab-foto {
+        position: relative; aspect-ratio: 1; border-radius: 10px;
+        overflow: hidden; cursor: pointer; background: #1e293b;
+    }
+    .alumni-mytab-foto img { width:100%; height:100%; object-fit:cover; transition:transform .4s; display:block; }
+    .alumni-mytab-foto:hover img { transform: scale(1.07); }
+    .alumni-mytab-foto-ov {
+        position:absolute; inset:0; background:rgba(0,0,0,0);
+        display:flex; align-items:center; justify-content:center; transition:background .25s;
+    }
+    .alumni-mytab-foto:hover .alumni-mytab-foto-ov { background:rgba(0,0,0,.4); }
+    .alumni-mytab-zoom {
+        width:40px; height:40px; background:rgba(59,130,246,.9); border-radius:50%;
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; transform:scale(.6); transition:opacity .2s,transform .2s;
+    }
+    .alumni-mytab-foto:hover .alumni-mytab-zoom { opacity:1; transform:scale(1); }
+    .alumni-mytab-zoom svg { width:20px; height:20px; fill:#fff; }
+    .alumni-mytab-empty {
+        border: 2px dashed rgba(100,116,139,.2); border-radius: 16px;
+        padding: 48px; text-align: center; color: #64748b;
+    }
+    </style>
+
+    <div id="alumni-mytab-root">
+        <div class="alumni-mytab-header">
+            <h2>🎓 Minhas Turmas</h2>
+            <p>Reviva os momentos das turmas em que você participou.</p>
+        </div>
+
+        <?php if ( empty( $galerias ) ) : ?>
+            <div class="alumni-mytab-empty">
+                <span class="material-symbols-outlined" style="font-size:48px;display:block;margin-bottom:12px;color:#94a3b8;">photo_library</span>
+                <strong style="display:block;margin-bottom:8px;">Nenhuma galeria disponível</strong>
+                <p style="font-size:13px;margin:0;">As fotos das suas turmas aparecerão aqui assim que forem publicadas.</p>
+            </div>
+        <?php else : ?>
+            <?php foreach ( $galerias as $galeria ) :
+                $pid_g = $galeria['product_id'];
+            ?>
+                <div class="alumni-mytab-product">
+                    <p class="alumni-mytab-product-name">
+                        <span class="material-symbols-outlined" style="font-size:18px;color:#3b82f6;">collections</span>
+                        <a href="<?php echo esc_url( $galeria['product_url'] ); ?>"><?php echo esc_html( $galeria['product_title'] ); ?></a>
+                    </p>
+
+                    <div class="alumni-mytab-tabs">
+                        <?php foreach ( $galeria['turmas'] as $ti => $turma ) : ?>
+                            <button type="button"
+                                class="alumni-mytab-tab <?php echo $ti === 0 ? 'active' : ''; ?>"
+                                onclick="alumniMytabSwitch(this,'<?php echo esc_attr( $pid_g ); ?>')"
+                                data-target="alumni-mytab-panel-<?php echo esc_attr( $pid_g ); ?>-<?php echo esc_attr( $turma['id'] ); ?>"
+                            ><?php echo esc_html( $turma['title'] ); ?></button>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php foreach ( $galeria['turmas'] as $ti => $turma ) : ?>
+                        <div class="alumni-mytab-panel <?php echo $ti === 0 ? 'active' : ''; ?>"
+                             id="alumni-mytab-panel-<?php echo esc_attr( $pid_g ); ?>-<?php echo esc_attr( $turma['id'] ); ?>">
+                            <div class="alumni-mytab-grid">
+                                <?php foreach ( $turma['fotos'] as $fi => $foto ) : ?>
+                                    <div class="alumni-mytab-foto"
+                                         onclick="alumniMytabLb(<?php echo esc_js( wp_json_encode( array_column( $turma['fotos'], 'full' ) ) ); ?>,<?php echo esc_js( wp_json_encode( array_column( $turma['fotos'], 'alt' ) ) ); ?>,<?php echo esc_attr( $fi ); ?>,'<?php echo esc_js( $turma['title'] ); ?>')"
+                                         role="button" tabindex="0">
+                                        <img src="<?php echo esc_url( $foto['thumb'] ); ?>" alt="<?php echo esc_attr( $foto['alt'] ); ?>" loading="lazy">
+                                        <div class="alumni-mytab-foto-ov">
+                                            <div class="alumni-mytab-zoom">
+                                                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 1 0 14 15.5c0-.29-.02-.58-.07-.86L15.5 14zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14zm2.5-4.5h-2.5V7H8.5v2.5H6V11h2.5v2.5H10V11h2.5z"/></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- Lightbox inline (reutilizável) -->
+    <div id="alumni-lb2" onclick="if(event.target===this)alumniLb2Close()" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.95);align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+        <button onclick="alumniLb2Close()" style="position:fixed;top:20px;right:20px;width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke="#fff" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button onclick="alumniLb2Nav(-1)" style="position:fixed;left:16px;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.5" fill="none"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-width:90vw;">
+            <img id="alumni-lb2-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,.8);">
+            <div id="alumni-lb2-cap" style="font-size:13px;color:rgba(255,255,255,.45);letter-spacing:.05em;"></div>
+        </div>
+        <button onclick="alumniLb2Nav(1)" style="position:fixed;right:16px;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.5" fill="none"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div id="alumni-lb2-cnt" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.1em;font-weight:600;"></div>
+    </div>
+
+    <script>
+    (function(){
+        var _imgs=[],_alts=[],_idx=0,_turma='';
+
+        window.alumniMytabSwitch=function(btn,pid){
+            btn.closest('.alumni-mytab-tabs').querySelectorAll('.alumni-mytab-tab').forEach(function(b){b.classList.remove('active');});
+            btn.classList.add('active');
+            document.querySelectorAll('[id^="alumni-mytab-panel-'+pid+'-"]').forEach(function(p){p.classList.remove('active');});
+            var t=document.getElementById(btn.getAttribute('data-target'));
+            if(t)t.classList.add('active');
+        };
+
+        window.alumniMytabLb=function(imgs,alts,idx,turma){
+            _imgs=typeof imgs==='string'?JSON.parse(imgs):imgs;
+            _alts=typeof alts==='string'?JSON.parse(alts):alts;
+            _idx=parseInt(idx,10)||0; _turma=turma||'';
+            _render();
+            var lb=document.getElementById('alumni-lb2');
+            lb.style.display='flex';
+            document.body.style.overflow='hidden';
+            document.addEventListener('keydown',_key);
+        };
+
+        window.alumniLb2Close=function(){
+            document.getElementById('alumni-lb2').style.display='none';
+            document.body.style.overflow='';
+            document.removeEventListener('keydown',_key);
+        };
+
+        window.alumniLb2Nav=function(dir){
+            _idx=(_idx+dir+_imgs.length)%_imgs.length; _render();
+        };
+
+        function _render(){
+            var img=document.getElementById('alumni-lb2-img');
+            var cap=document.getElementById('alumni-lb2-cap');
+            var cnt=document.getElementById('alumni-lb2-cnt');
+            if(!img)return;
+            var n=new Image();
+            n.onload=function(){img.src=n.src;img.alt=_alts[_idx]||'';};
+            n.src=_imgs[_idx];
+            if(cap)cap.textContent=_turma+(_alts[_idx]?' — '+_alts[_idx]:'');
+            if(cnt)cnt.textContent=(_idx+1)+' / '+_imgs.length;
+        }
+
+        function _key(e){
+            if(e.key==='Escape')alumniLb2Close();
+            if(e.key==='ArrowLeft')alumniLb2Nav(-1);
+            if(e.key==='ArrowRight')alumniLb2Nav(1);
+        }
+    })();
+    </script>
+    <?php
+}

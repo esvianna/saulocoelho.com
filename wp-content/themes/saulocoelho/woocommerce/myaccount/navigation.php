@@ -23,6 +23,7 @@ do_action( 'woocommerce_before_account_navigation' );
             if ($endpoint === 'dashboard') { $icon = 'school'; $label = 'Meus Cursos'; }
             if ($endpoint === 'orders') { $icon = 'receipt_long'; $label = 'Meus Pedidos'; }
             if ($endpoint === 'downloads') { $icon = 'workspace_premium'; $label = 'Certificados (Downloads)'; }
+            if ($endpoint === 'minhas-turmas') { $icon = 'photo_library'; }
             if ($endpoint === 'edit-address' || $endpoint === 'edit-account') $icon = 'settings';
             if ($endpoint === 'customer-logout') $icon = 'logout';
             
