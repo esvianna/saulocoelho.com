@@ -14,7 +14,7 @@ get_header();
         ?>
 
         <!-- Post Hero -->
-        <header class="relative py-32 md:py-48 overflow-hidden bg-background-dark-alt border-b border-white/5">
+        <header class="relative pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-background-dark-alt border-b border-white/5">
             <div class="absolute inset-0 z-0">
                 <?php if ( has_post_thumbnail() ) : ?>
                     <?php the_post_thumbnail('full', array('class' => 'w-full h-full object-cover opacity-20 blur-sm scale-105')); ?>
@@ -47,7 +47,7 @@ get_header();
         </header>
 
         <!-- Post Content -->
-        <article id="post-<?php the_ID(); ?>" <?php post_class('py-24'); ?>>
+        <article id="post-<?php the_ID(); ?>" <?php post_class('pt-12 pb-24'); ?>>
             <div class="max-w-3xl mx-auto px-6 prose-premium">
                 <?php
                 the_content(
@@ -76,20 +76,29 @@ get_header();
         </article>
 
         <!-- Post Footer / CTA -->
+        <?php
+        $cta_subtitle = get_theme_mod('blog_cta_subtitle', 'Próximo Passo');
+        $cta_title = get_theme_mod('blog_cta_title', 'Gostou deste Insight?');
+        $cta_description = get_theme_mod('blog_cta_description', 'Leve este conhecimento para a prática com os nossos programas de mentoria e treinamento.');
+        $cta_btn1_text = get_theme_mod('blog_cta_btn1_text', 'Ver Programas');
+        $cta_btn1_url = get_theme_mod('blog_cta_btn1_url', '/programas');
+        $cta_btn2_text = get_theme_mod('blog_cta_btn2_text', 'Falar com Especialista');
+        $cta_btn2_url = get_theme_mod('blog_cta_btn2_url', '/contato');
+        ?>
         <footer class="py-24 border-t border-white/5 bg-background-dark-alt">
             <div class="max-w-4xl mx-auto px-6 text-center space-y-12">
                 <div class="space-y-4">
-                    <h4 class="text-primary text-[10px] font-black uppercase tracking-[0.4em]">Próximo Passo</h4>
-                    <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">Gostou deste Insight?</h2>
-                    <p class="text-slate-400 text-lg font-light max-w-xl mx-auto">Leve este conhecimento para a prática com os nossos programas de mentoria e treinamento.</p>
+                    <h4 class="text-primary text-[10px] font-black uppercase tracking-[0.4em]"><?php echo esc_html($cta_subtitle); ?></h4>
+                    <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter"><?php echo esc_html($cta_title); ?></h2>
+                    <p class="text-slate-400 text-lg font-light max-w-xl mx-auto"><?php echo esc_html($cta_description); ?></p>
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-6 justify-center">
-                    <a href="/programas" class="px-10 py-5 bg-primary text-white rounded-xl font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-xl shadow-primary/20">
-                        Ver Programas
+                    <a href="<?php echo esc_url($cta_btn1_url); ?>" class="px-10 py-5 bg-primary text-white rounded-xl font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-xl shadow-primary/20">
+                        <?php echo esc_html($cta_btn1_text); ?>
                     </a>
-                    <a href="/contato" class="px-10 py-5 bg-white/5 text-white rounded-xl font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-white/10 hover:-translate-y-1 transition-all border border-white/10">
-                        Falar com Especialista
+                    <a href="<?php echo esc_url($cta_btn2_url); ?>" class="px-10 py-5 bg-white/5 text-white rounded-xl font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-white/10 hover:-translate-y-1 transition-all border border-white/10">
+                        <?php echo esc_html($cta_btn2_text); ?>
                     </a>
                 </div>
             </div>

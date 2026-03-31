@@ -115,8 +115,130 @@ function saulocoelho_customize_register( $wp_customize ) {
         'type'     => 'text',
     ) );
 
+    // Add Blog Section
+    $wp_customize->add_section( 'saulocoelho_blog_section', array(
+        'title'    => __( 'Blog (Home e Posts)', 'saulocoelho' ),
+        'priority' => 110,
+    ) );
+
+    // --- BLOG ARCHIVE (HOME) ---
+
+    // 10. Blog Archive Title
+    $wp_customize->add_setting( 'blog_archive_title', array(
+        'default'           => 'Insights <span class="text-primary">&</span> Estratégia',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'blog_archive_title', array(
+        'label'    => __( 'Título da Home do Blog', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 11. Blog Archive Description
+    $wp_customize->add_setting( 'blog_archive_description', array(
+        'default'           => 'Perspectivas exclusivas sobre liderança, alta performance e a construção de organizações antifrágeis por Saulo Coelho.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'blog_archive_description', array(
+        'label'    => __( 'Descrição da Home do Blog', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'textarea',
+    ) );
+
+    // --- BLOG SINGLE (CTA) ---
+
+    // 12. Blog CTA Subtitle
+    $wp_customize->add_setting( 'blog_cta_subtitle', array(
+        'default'           => 'Próximo Passo',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'blog_cta_subtitle', array(
+        'label'    => __( 'CTA Blog: Sub-título', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
+    // 13. Blog CTA Title
+    $wp_customize->add_setting( 'blog_cta_title', array(
+        'default'           => 'Gostou deste Insight?',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'blog_cta_title', array(
+        'label'    => __( 'CTA Blog: Título', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
+    // 14. Blog CTA Description
+    $wp_customize->add_setting( 'blog_cta_description', array(
+        'default'           => 'Leve este conhecimento para a prática com os nossos programas de mentoria e treinamento.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'blog_cta_description', array(
+        'label'    => __( 'CTA Blog: Descrição', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 15. CTA Button 1 Text
+    $wp_customize->add_setting( 'blog_cta_btn1_text', array(
+        'default'           => 'Ver Programas',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'blog_cta_btn1_text', array(
+        'label'    => __( 'CTA Blog: Botão 1 (Texto)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
+    // 16. CTA Button 1 URL
+    $wp_customize->add_setting( 'blog_cta_btn1_url', array(
+        'default'           => '/programas',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'blog_cta_btn1_url', array(
+        'label'    => __( 'CTA Blog: Botão 1 (Link)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
+    // 17. CTA Button 2 Text
+    $wp_customize->add_setting( 'blog_cta_btn2_text', array(
+        'default'           => 'Falar com Especialista',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'blog_cta_btn2_text', array(
+        'label'    => __( 'CTA Blog: Botão 2 (Texto)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
+    // 18. CTA Button 2 URL
+    $wp_customize->add_setting( 'blog_cta_btn2_url', array(
+        'default'           => '/contato',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'blog_cta_btn2_url', array(
+        'label'    => __( 'CTA Blog: Botão 2 (Link)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
     // Selective Refresh for better UX
     if ( isset( $wp_customize->selective_refresh ) ) {
+        $wp_customize->selective_refresh->add_partial( 'blog_archive_title', array(
+            'selector'        => 'section.relative h1',
+            'render_callback' => function() { return get_theme_mod( 'blog_archive_title' ); },
+        ) );
+        $wp_customize->selective_refresh->add_partial( 'blog_cta_title', array(
+            'selector'        => 'footer h2.text-3xl',
+            'render_callback' => function() { return get_theme_mod( 'blog_cta_title' ); },
+        ) );
         $wp_customize->selective_refresh->add_partial( 'footer_bio', array(
             'selector'        => 'footer p.max-w-xs',
             'render_callback' => function() { return get_theme_mod( 'footer_bio' ); },

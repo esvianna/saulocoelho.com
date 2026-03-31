@@ -15,9 +15,13 @@ get_header(); ?>
     <section class="py-24 md:py-32 border-b border-white/5 bg-background-dark-alt relative overflow-hidden">
         <div class="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -top-1/2 -left-1/4 pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <h1 class="text-4xl md:text-7xl font-black tracking-tighter text-white uppercase leading-none">Insights <span class="text-primary">&</span> Estratégia</h1>
+            <?php 
+            $blog_title = get_theme_mod('blog_archive_title', 'Insights <span class="text-primary">&</span> Estratégia');
+            $blog_desc = get_theme_mod('blog_archive_description', 'Perspectivas exclusivas sobre liderança, alta performance e a construção de organizações antifrágeis por Saulo Coelho.');
+            ?>
+            <h1 class="text-4xl md:text-7xl font-black tracking-tighter text-white uppercase leading-none"><?php echo wp_kses_post($blog_title); ?></h1>
             <div class="h-1 w-24 bg-primary my-8"></div>
-            <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-light leading-relaxed">Perspectivas exclusivas sobre liderança, alta performance e a construção de organizações antifrágeis por Saulo Coelho.</p>
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-light leading-relaxed"><?php echo esc_html($blog_desc); ?></p>
         </div>
     </section>
 
