@@ -51,6 +51,11 @@ function alumni_render_metabox( $post ) {
         $selected_turmas = [];
     }
 
+    // Textos editáveis da seção
+    $alumni_badge     = get_post_meta( $post->ID, '_alumni_badge', true );
+    $alumni_titulo    = get_post_meta( $post->ID, '_alumni_titulo', true );
+    $alumni_subtitulo = get_post_meta( $post->ID, '_alumni_subtitulo', true );
+
     ?>
     <div id="alumni-metabox-wrap" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
 
@@ -60,6 +65,26 @@ function alumni_render_metabox( $post ) {
                 Acesse <strong>Cursos → Adicionar Novo</strong> no AmaEducacional para criar turmas antes de configurar a galeria.
             </div>
         <?php else : ?>
+
+            <!-- Textos da Seção -->
+            <div style="background:#e8f0fe;border:1px solid #c2d3f8;border-radius:8px;padding:16px;margin-bottom:20px;">
+                <strong style="font-size:13px;color:#1a1a2e;display:block;margin-bottom:14px;">✏️ Textos da Seção (visíveis no site)</strong>
+                <div style="display:grid;gap:12px;">
+                    <label style="display:flex;flex-direction:column;gap:4px;">
+                        <span style="font-size:12px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.05em;">Badge (etiqueta acima do título)</span>
+                        <input type="text" name="alumni_badge" value="<?php echo esc_attr( $alumni_badge ); ?>" placeholder="Memórias das Turmas" style="border:1px solid #c2d3f8;border-radius:6px;padding:8px 12px;font-size:13px;width:100%;box-sizing:border-box;">
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:4px;">
+                        <span style="font-size:12px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.05em;">Título principal</span>
+                        <input type="text" name="alumni_titulo" value="<?php echo esc_attr( $alumni_titulo ); ?>" placeholder="Momentos que ficam para sempre" style="border:1px solid #c2d3f8;border-radius:6px;padding:8px 12px;font-size:13px;width:100%;box-sizing:border-box;">
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:4px;">
+                        <span style="font-size:12px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.05em;">Subtítulo</span>
+                        <input type="text" name="alumni_subtitulo" value="<?php echo esc_attr( $alumni_subtitulo ); ?>" placeholder="Reviva os melhores momentos das nossas turmas" style="border:1px solid #c2d3f8;border-radius:6px;padding:8px 12px;font-size:13px;width:100%;box-sizing:border-box;">
+                    </label>
+                </div>
+                <p style="color:#666;font-size:11px;margin:10px 0 0;">💡 Deixe em branco para usar o texto padrão (exibido como placeholder acima).</p>
+            </div>
 
             <p style="color:#666;font-size:13px;margin:0 0 16px;">
                 Selecione as turmas que deseja exibir na galeria desta página de produto e faça o upload das fotos de cada uma.
@@ -300,6 +325,14 @@ function alumni_save_metabox( $post_id, $post ) {
     if ( ! wp_verify_nonce( $_POST['alumni_nonce'], 'alumni_save_metabox' ) ) return;
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    // Textos da seção
+    $alumni_badge     = isset( $_POST['alumni_badge'] )     ? sanitize_text_field( $_POST['alumni_badge'] )     : '';
+    $alumni_titulo    = isset( $_POST['alumni_titulo'] )    ? sanitize_text_field( $_POST['alumni_titulo'] )    : '';
+    $alumni_subtitulo = isset( $_POST['alumni_subtitulo'] ) ? sanitize_text_field( $_POST['alumni_subtitulo'] ) : '';
+    update_post_meta( $post_id, '_alumni_badge',     $alumni_badge );
+    update_post_meta( $post_id, '_alumni_titulo',    $alumni_titulo );
+    update_post_meta( $post_id, '_alumni_subtitulo', $alumni_subtitulo );
 
     // Turmas selecionadas
     $selected_turmas = isset( $_POST['alumni_turmas'] ) ? array_map( 'intval', (array) $_POST['alumni_turmas'] ) : [];

@@ -18,6 +18,11 @@ if ( ! is_array( $selected_turmas ) || empty( $selected_turmas ) ) {
     return; // Nada a exibir
 }
 
+// Textos editáveis (com fallback para os padrões)
+$alumni_badge     = get_post_meta( $pid, '_alumni_badge', true )     ?: 'Memórias das Turmas';
+$alumni_titulo    = get_post_meta( $pid, '_alumni_titulo', true )    ?: 'Momentos que ficam para sempre';
+$alumni_subtitulo = get_post_meta( $pid, '_alumni_subtitulo', true ) ?: 'Reviva os melhores momentos das nossas turmas';
+
 // Montar dados das turmas com suas fotos
 $turmas_data = [];
 foreach ( $selected_turmas as $course_id ) {
@@ -451,10 +456,10 @@ $first_id = $turmas_data[0]['id'];
         <div class="alumni-header" id="alumni-header-<?php echo esc_attr( $pid ); ?>">
             <span class="alumni-eyebrow">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                Memórias das Turmas
+                <?php echo esc_html( $alumni_badge ); ?>
             </span>
-            <h2 class="alumni-title">Momentos que ficam para sempre</h2>
-            <p class="alumni-subtitle">Reviva os melhores momentos das nossas turmas</p>
+            <h2 class="alumni-title"><?php echo esc_html( $alumni_titulo ); ?></h2>
+            <p class="alumni-subtitle"><?php echo esc_html( $alumni_subtitulo ); ?></p>
         </div>
 
         <!-- Tabs de turmas -->
