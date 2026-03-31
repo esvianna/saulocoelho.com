@@ -17,6 +17,7 @@ if ( ! function_exists( 'saulocoelho_setup' ) ) :
         // This theme uses wp_nav_menu() in one location.
         register_nav_menus( array(
             'menu-1' => esc_html__( 'Primary', 'saulocoelho' ),
+            'footer-menu' => esc_html__( 'Footer Navigation', 'saulocoelho' ),
         ) );
 
         // Switch default core markup for search form, comment form, and comments to output valid HTML5.
@@ -289,3 +290,10 @@ function saulocoelho_viacep_checkout_script() {
     <?php
 }
 add_action( 'wp_footer', 'saulocoelho_viacep_checkout_script', 30 );
+
+/**
+ * Theme Customizer
+ */
+if ( file_exists( __DIR__ . '/inc/customizer.php' ) ) {
+    require_once __DIR__ . '/inc/customizer.php';
+}
