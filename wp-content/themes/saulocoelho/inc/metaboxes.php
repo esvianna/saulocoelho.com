@@ -36,9 +36,9 @@ function saulocoelho_register_metaboxes() {
         add_meta_box('store_settings', 'Configurações da Loja', 'saulocoelho_render_store_metabox', 'page', 'normal', 'high');
     }
 
-    // 5. Course Detail (Sales Page)
-    if ($template === 'page-course-detail.php' || get_post_type($post_id) === 'product') {
-        add_meta_box('course_settings', 'Configurações da Página de Vendas', 'saulocoelho_render_course_metabox', ['page', 'product'], 'normal', 'high');
+    // 6. Contact Page
+    if ($template === 'template-contact.php') {
+        add_meta_box('contact_settings', 'Configurações da Página de Contato Premium', 'saulocoelho_render_contact_metabox', 'page', 'normal', 'high');
     }
 }
 add_action('add_meta_boxes', 'saulocoelho_register_metaboxes');
@@ -408,6 +408,19 @@ function saulocoelho_render_course_metabox($post) {
     }
 }
 
+// Contact Page
+function saulocoelho_render_contact_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    $fields = [
+        'contact_hero_subtitle' => 'Subtítulo do Hero (Eyebrow)',
+        'contact_hero_title' => 'Título Principal do Hero',
+        'contact_form_title' => 'Título do Formulário',
+        'contact_form_desc' => 'Descrição do Formulário',
+        'contact_form_shortcode' => 'Shortcode do Formulário (ex: [contact-form-7 id="..."])',
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
+}
+
 /**
  * HELPER RENDERERS
  */
@@ -694,7 +707,7 @@ function saulocoelho_save_metaboxes($post_id) {
     }
 
     // Loop through all POST data and save keys starting with our prefixes
-    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_', 'home_'];
+    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_', 'home_', 'contact_'];
     foreach ($_POST as $key => $value) {
         $should_save = false;
         foreach ($prefixes as $p) {

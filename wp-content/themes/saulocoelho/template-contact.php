@@ -12,11 +12,13 @@ $phone = get_theme_mod('footer_phone', '+55 (11) 99999-9999');
 $linkedin = get_theme_mod('footer_social_linkedin', '#');
 $whatsapp_link = "https://wa.me/" . preg_replace('/[^0-9]/', '', $phone);
 
-// Fetch customizer contact page settings
-$hero_title = get_theme_mod('contact_hero_title', 'Prepare-se para o Próximo Nível');
-$form_title = get_theme_mod('contact_form_title', 'Envie uma Mensagem');
-$form_desc = get_theme_mod('contact_form_desc', 'Preencha os campos abaixo para iniciarmos uma conversa estratégica sobre seus objetivos.');
-$form_shortcode = get_theme_mod('contact_form_shortcode', '');
+// Fetch dynamic content from Metaboxes with Customizer Fallbacks
+$post_id = get_the_ID();
+$hero_subtitle = get_post_meta($post_id, 'contact_hero_subtitle', true) ?: 'Direct Access';
+$hero_title = get_post_meta($post_id, 'contact_hero_title', true) ?: get_theme_mod('contact_hero_title', 'Prepare-se para o Próximo Nível');
+$form_title = get_post_meta($post_id, 'contact_form_title', true) ?: get_theme_mod('contact_form_title', 'Envie uma Mensagem');
+$form_desc = get_post_meta($post_id, 'contact_form_desc', true) ?: get_theme_mod('contact_form_desc', 'Preencha os campos abaixo para iniciarmos uma conversa estratégica sobre seus objetivos.');
+$form_shortcode = get_post_meta($post_id, 'contact_form_shortcode', true) ?: get_theme_mod('contact_form_shortcode', '');
 
 ?>
 
@@ -24,7 +26,7 @@ $form_shortcode = get_theme_mod('contact_form_shortcode', '');
     <!-- Hero Section -->
     <section class="contact-hero relative pt-48 pb-32 overflow-hidden border-b border-white/5 bg-background-dark-alt/50">
         <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center">
-            <span class="text-primary font-black tracking-[0.4em] uppercase text-[10px] mb-6 block animate-fade-in">Direct Access</span>
+            <span class="text-primary font-black tracking-[0.4em] uppercase text-[10px] mb-6 block animate-fade-in"><?php echo esc_html($hero_subtitle); ?></span>
             <h1 class="text-5xl md:text-8xl font-black leading-[0.95] tracking-tighter text-white uppercase drop-shadow-2xl">
                 <?php echo esc_html($hero_title); ?>
             </h1>
