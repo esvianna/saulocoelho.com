@@ -229,8 +229,66 @@ function saulocoelho_customize_register( $wp_customize ) {
         'type'     => 'text',
     ) );
 
+    // Add Contact Section
+    $wp_customize->add_section( 'saulocoelho_contact_section', array(
+        'title'    => __( 'Página de Contato', 'saulocoelho' ),
+        'priority' => 115,
+    ) );
+
+    // 19. Contact Hero Title
+    $wp_customize->add_setting( 'contact_hero_title', array(
+        'default'           => 'Prepare-se para o Próximo Nível',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'contact_hero_title', array(
+        'label'    => __( 'Título do Hero', 'saulocoelho' ),
+        'section'  => 'saulocoelho_contact_section',
+        'type'     => 'text',
+    ) );
+
+    // 20. Contact Form Title
+    $wp_customize->add_setting( 'contact_form_title', array(
+        'default'           => 'Envie uma Mensagem',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'contact_form_title', array(
+        'label'    => __( 'Título do Formulário', 'saulocoelho' ),
+        'section'  => 'saulocoelho_contact_section',
+        'type'     => 'text',
+    ) );
+
+    // 21. Contact Form Description
+    $wp_customize->add_setting( 'contact_form_desc', array(
+        'default'           => 'Preencha os campos abaixo para iniciarmos uma conversa estratégica sobre seus objetivos.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'contact_form_desc', array(
+        'label'    => __( 'Descrição do Formulário', 'saulocoelho' ),
+        'section'  => 'saulocoelho_contact_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 22. Contact Form Shortcode
+    $wp_customize->add_setting( 'contact_form_shortcode', array(
+        'default'           => '',
+        'sanitize_callback' => 'wp_kses_post',
+    ) );
+    $wp_customize->add_control( 'contact_form_shortcode', array(
+        'label'    => __( 'Shortcode do Formulário (CF7, WPForms, etc)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_contact_section',
+        'type'     => 'text',
+        'description' => 'Cole aqui o shortcode (ex: [contact-form-7 id="..."])'
+    ) );
+
     // Selective Refresh for better UX
     if ( isset( $wp_customize->selective_refresh ) ) {
+        $wp_customize->selective_refresh->add_partial( 'contact_hero_title', array(
+            'selector'        => '.contact-hero h1',
+            'render_callback' => function() { return get_theme_mod( 'contact_hero_title' ); },
+        ) );
         $wp_customize->selective_refresh->add_partial( 'blog_archive_title', array(
             'selector'        => 'section.relative h1',
             'render_callback' => function() { return get_theme_mod( 'blog_archive_title' ); },
