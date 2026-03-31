@@ -159,6 +159,8 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .page-description, 
-.archive-description {
+.archive-description,
+.ama-archive-meta,
+.ama-archive-meta span {
     color: rgba(255, 255, 255, 0.6) !important;
 }
