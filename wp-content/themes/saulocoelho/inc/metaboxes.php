@@ -36,6 +36,11 @@ function saulocoelho_register_metaboxes() {
         add_meta_box('store_settings', 'Configurações da Loja', 'saulocoelho_render_store_metabox', 'page', 'normal', 'high');
     }
 
+    // 5. Course Detail (Sales Page)
+    if ($template === 'page-course-detail.php' || get_post_type($post_id) === 'product') {
+        add_meta_box('course_settings', 'Configurações da Página de Vendas', 'saulocoelho_render_course_metabox', ['page', 'product'], 'normal', 'high');
+    }
+
     // 6. Contact Page
     if ($template === 'template-contact.php') {
         add_meta_box('contact_settings', 'Configurações da Página de Contato Premium', 'saulocoelho_render_contact_metabox', 'page', 'normal', 'high');
