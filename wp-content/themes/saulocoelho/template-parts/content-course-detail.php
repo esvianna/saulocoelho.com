@@ -9,6 +9,12 @@ $sec_btn_link = get_post_meta($pid, 'course_sec_btn_link', true);
 if (empty($sec_btn_link) && !metadata_exists('post', $pid, 'course_sec_btn_link')) {
     $sec_btn_link = '#conteudo';
 }
+$primary_btn_text = get_post_meta($pid, 'course_btn_1_text', true) ?: 'Quero me inscrever agora';
+$instructor_name = get_post_meta($pid, 'course_instructor_name', true);
+$ter_btn_text = get_post_meta($pid, 'course_ter_btn_text', true);
+$ter_btn_link = get_post_meta($pid, 'course_ter_btn_link', true);
+$qua_btn_text = get_post_meta($pid, 'course_qua_btn_text', true);
+$qua_btn_link = get_post_meta($pid, 'course_qua_btn_link', true);
 $video_img = get_post_meta($pid, 'course_video_url', true);
 $stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '6k+ Alunos';
 $stat_1_label = get_post_meta($pid, 'course_stat_1_label', true) ?: 'Instituições';
@@ -87,14 +93,32 @@ if ($actual_video_url) {
                 <div class="prose prose-invert text-lg lg:text-xl text-slate-400 max-w-xl font-light leading-relaxed">
                     <?php the_content(); ?>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-6 mt-4">
-                    <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
-                        Quero me inscrever agora
+                <?php if ($instructor_name) : ?>
+                    <div class="text-white/60 text-sm font-bold uppercase tracking-wider -mt-4">
+                        — <?php echo esc_html($instructor_name); ?>
+                    </div>
+                <?php endif; ?>
+                <div class="flex flex-wrap gap-4 mt-4">
+                    <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <?php echo esc_html($primary_btn_text); ?>
                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
+                    
                     <?php if (!empty($sec_btn_text)) : ?>
-                    <a href="<?php echo esc_url($sec_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center">
+                    <a href="<?php echo esc_url($sec_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
                         <?php echo esc_html($sec_btn_text); ?>
+                    </a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($ter_btn_text)) : ?>
+                    <a href="<?php echo esc_url($ter_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
+                        <?php echo esc_html($ter_btn_text); ?>
+                    </a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($qua_btn_text)) : ?>
+                    <a href="<?php echo esc_url($qua_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
+                        <?php echo esc_html($qua_btn_text); ?>
                     </a>
                     <?php endif; ?>
                 </div>

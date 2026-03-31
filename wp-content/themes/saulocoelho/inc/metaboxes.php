@@ -269,11 +269,22 @@ function saulocoelho_render_course_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     
     echo '<h3>1. Configurações Iniciais (Hero e Preço)</h3>';
+    echo '<p style="background: #f0f6fc; padding: 10px; border-left: 4px solid #007cba; font-size: 12px;">';
+    echo '<strong>Dica de Âncoras:</strong> Use os IDs abaixo para criar links internos nos botões:<br>';
+    echo '<code>#conteudo</code> (Módulos), <code>#beneficios</code> (Vídeo/Benefícios), <code>#alumni-galeria</code> (Fotos), <code>#checkout</code> (Preços).';
+    echo '</p>';
+    
     $fields_hero = [
         'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
         'course_badge' => 'Selo do Topo (ex: Matrículas Abertas)',
-        'course_sec_btn_text' => 'Botão Secundário: Texto (Ex: Ver currículo - vazio p/ ocultar)',
-        'course_sec_btn_link' => 'Botão Secundário: Link (Ex: #conteudo)',
+        'course_instructor_name' => 'Nome/Assinatura abaixo da descrição principal',
+        'course_btn_1_text' => 'Botão 1 (Azul): Texto (Link fixo p/ Preços)',
+        'course_sec_btn_text' => 'Botão 2: Texto (Vazio p/ ocultar)',
+        'course_sec_btn_link' => 'Botão 2: Link (Ex: #conteudo)',
+        'course_ter_btn_text' => 'Botão 3: Texto',
+        'course_ter_btn_link' => 'Botão 3: Link',
+        'course_qua_btn_text' => 'Botão 4: Texto',
+        'course_qua_btn_link' => 'Botão 4: Link',
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
         'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
