@@ -129,6 +129,8 @@ function saulocoelho_render_home_features_metabox($post) {
         $icon = esc_attr($feature['icon'] ?? 'present_to_all');
         $title = esc_attr($feature['title'] ?? '');
         $desc = esc_textarea($feature['desc'] ?? '');
+        $link_text = esc_attr($feature['link_text'] ?? '');
+        $link_url = esc_attr($feature['link_url'] ?? '');
         
         echo "<div class='feature-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
         echo "<label style='font-size:11px; color:#666'>Ícone (Visual / Mídia)</label><br>";
@@ -145,6 +147,10 @@ function saulocoelho_render_home_features_metabox($post) {
         echo "<input type='text' name='home_features[$index][title]' value='$title' style='width:100%; margin-bottom:8px;'>";
         echo "<label style='font-size:11px; color:#666'>Descrição</label><br>";
         echo "<textarea name='home_features[$index][desc]' rows='2' style='width:100%; margin-bottom:8px;'>$desc</textarea><br>";
+        echo "<div style='display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;'>";
+        echo "<div><label style='font-size:11px; color:#666'>Texto do Link (Ex: Saiba Mais)</label><br><input type='text' name='home_features[$index][link_text]' value='$link_text' style='width:100%'></div>";
+        echo "<div><label style='font-size:11px; color:#666'>URL do Link (Ex: /saulo-coelho)</label><br><input type='text' name='home_features[$index][link_url]' value='$link_url' style='width:100%'></div>";
+        echo "</div>";
         
         echo "<button type='button' class='button js-remove-feature' style='color:#a00; border-color:#a00;'>Remover Item</button>";
         echo "</div>";
@@ -645,6 +651,10 @@ function saulocoelho_render_metabox_js() {
                        '<input type="text" name="home_features['+featureIndex+'][title]" value="" style="width:100%; margin-bottom:8px;">' +
                        '<label style="font-size:11px; color:#666">Descrição</label><br>' +
                        '<textarea name="home_features['+featureIndex+'][desc]" rows="2" style="width:100%; margin-bottom:8px;"></textarea><br>' +
+                       '<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">' +
+                       '<div><label style="font-size:11px; color:#666">Texto do Link</label><br><input type="text" name="home_features['+featureIndex+'][link_text]" value="" style="width:100%"></div>' +
+                       '<div><label style="font-size:11px; color:#666">URL do Link</label><br><input type="text" name="home_features['+featureIndex+'][link_url]" value="" style="width:100%"></div>' +
+                       '</div>' +
                        '<button type="button" class="button js-remove-feature" style="color:#a00; border-color:#a00;">Remover Item</button>' +
                        '</div>';
             $('#home_features_container').append(html);

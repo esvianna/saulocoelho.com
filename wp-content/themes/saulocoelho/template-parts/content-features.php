@@ -41,6 +41,8 @@ if (empty($features)) {
                     $icon = !empty($feature['icon']) ? $feature['icon'] : 'present_to_all';
                     $title = !empty($feature['title']) ? $feature['title'] : '';
                     $desc = !empty($feature['desc']) ? $feature['desc'] : '';
+                    $link_text = !empty($feature['link_text']) ? $feature['link_text'] : '';
+                    $link_url = !empty($feature['link_url']) ? $feature['link_url'] : '';
                     ?>
                     <div class="glass-card p-10 rounded-xl space-y-6 hover:border-primary/50 transition-colors group">
                         <div class="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
@@ -50,6 +52,15 @@ if (empty($features)) {
                             <h3 class="text-xl font-bold text-white uppercase tracking-wider"><?php echo esc_html($title); ?></h3>
                             <p class="text-slate-400 text-sm leading-relaxed"><?php echo nl2br(esc_html($desc)); ?></p>
                         </div>
+
+                        <?php if ($link_text && $link_url) : ?>
+                            <div class="pt-4">
+                                <a href="<?php echo esc_url($link_url); ?>" class="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest hover:gap-4 transition-all duration-300">
+                                    <?php echo esc_html($link_text); ?>
+                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
