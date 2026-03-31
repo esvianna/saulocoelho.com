@@ -244,7 +244,7 @@ if ($actual_video_url) {
 <section class="py-12 bg-background-dark border-t border-white/5 relative z-20 shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.5)]">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <?php if ($mid_cta_1_text) : ?>
-            <p class="text-slate-300 text-lg mb-6 font-light leading-relaxed"><?php echo esc_html($mid_cta_1_text); ?></p>
+            <p class="text-white text-xl md:text-2xl mb-8 font-black leading-tight tracking-tight"><?php echo esc_html($mid_cta_1_text); ?></p>
         <?php endif; ?>
         <a href="<?php echo esc_url($mid_cta_1_link); ?>" class="inline-block bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/30 transition-all hover:-translate-y-1">
             <?php echo esc_html($mid_cta_1_btn); ?>
