@@ -213,9 +213,16 @@ if ($actual_video_url) {
                                     <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
                                 </div>
                             <?php endif; ?>
-                            <p class="text-slate-300 font-light leading-relaxed self-center">
-                                <?php echo esc_html($topic['text']); ?>
-                            </p>
+                            <div class="flex flex-col self-center">
+                                <p class="text-slate-200 font-medium leading-relaxed">
+                                    <?php echo esc_html($topic['text']); ?>
+                                </p>
+                                <?php if (!empty($topic['desc'])) : ?>
+                                    <p class="text-slate-400 text-sm font-light leading-relaxed mt-1">
+                                        <?php echo nl2br(esc_html($topic['desc'])); ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>

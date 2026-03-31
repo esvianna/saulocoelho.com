@@ -233,8 +233,9 @@ function saulocoelho_render_course_metabox($post) {
     if (!is_array($topics)) $topics = [];
 
     foreach ($topics as $index => $topic) {
-        $icon = esc_url($topic['icon'] ?? '');
+        $icon = esc_attr($topic['icon'] ?? '');
         $text = esc_attr($topic['text'] ?? '');
+        $desc = esc_textarea($topic['desc'] ?? '');
         echo "<div class='topic-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
         echo "<label style='font-size:11px; color:#666'>Ícone (Visual / Mídia)</label><br>";
         echo "<div style='display:flex; align-items:center; margin-bottom:15px; margin-top:5px;'>";
@@ -251,8 +252,11 @@ function saulocoelho_render_course_metabox($post) {
         echo "<button type='button' class='button button-small js-open-icon-modal' data-target='#topic_icon_$index' data-preview='#preview_topic_icon_$index' style='margin-right:5px;'>Ícones Mágicos</button>";
         echo "<button type='button' class='button button-small media-uploader' data-target='#topic_icon_$index' data-preview='#preview_topic_icon_$index'>Subir Imagem</button>";
         echo "</div>";
-        echo "<label style='font-size:11px; color:#666'>Texto do Tópico</label><br>";
-        echo "<input type='text' name='course_learning_topics[$index][text]' value='$text' style='width:100%;'><br><br>";
+        echo "<label style='font-size:11px; color:#666'>Título do Tópico</label><br>";
+        echo "<input type='text' name='course_learning_topics[$index][text]' value='$text' style='width:100%; margin-bottom:8px;'>";
+        echo "<label style='font-size:11px; color:#666'>Descrição (Opcional)</label><br>";
+        echo "<textarea name='course_learning_topics[$index][desc]' rows='2' style='width:100%; margin-bottom:8px;'>$desc</textarea><br>";
+        
         echo "<button type='button' class='button js-remove-topic' style='color:#a00; border-color:#a00;'>Remover Tópico</button>";
         echo "</div>";
     }
@@ -495,8 +499,10 @@ function saulocoelho_render_metabox_js() {
                        '<button type="button" class="button button-small js-open-icon-modal" data-target="#topic_icon_'+topicIndex+'" data-preview="#preview_topic_icon_'+topicIndex+'" style="margin-right:5px;">Ícones Mágicos</button>' +
                        '<button type="button" class="button button-small media-uploader" data-target="#topic_icon_'+topicIndex+'" data-preview="#preview_topic_icon_'+topicIndex+'">Subir Imagem</button>' +
                        '</div>' +
-                       '<label style="font-size:11px; color:#666">Texto do Tópico</label><br>' +
-                       '<input type="text" name="course_learning_topics['+topicIndex+'][text]" value="" style="width:100%;"><br><br>' +
+                       '<label style="font-size:11px; color:#666">Título do Tópico</label><br>' +
+                       '<input type="text" name="course_learning_topics['+topicIndex+'][text]" value="" style="width:100%; margin-bottom:8px;">' +
+                       '<label style="font-size:11px; color:#666">Descrição (Opcional)</label><br>' +
+                       '<textarea name="course_learning_topics['+topicIndex+'][desc]" rows="2" style="width:100%; margin-bottom:8px;"></textarea><br>' +
                        '<button type="button" class="button js-remove-topic" style="color:#a00; border-color:#a00;">Remover Tópico</button>' +
                        '</div>';
             $('#course_topics_container').append(html);
