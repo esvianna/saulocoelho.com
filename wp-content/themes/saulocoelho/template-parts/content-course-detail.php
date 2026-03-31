@@ -43,6 +43,14 @@ $benefits_title = get_post_meta($pid, 'course_benefits_title', true);
 $benefits_desc = get_post_meta($pid, 'course_benefits_desc', true);
 $benefits_media = get_post_meta($pid, 'course_benefits_media_url', true);
 
+$mid_cta_1_text = get_post_meta($pid, 'course_mid_cta_1_text', true);
+$mid_cta_1_btn = get_post_meta($pid, 'course_mid_cta_1_btn', true);
+$mid_cta_1_link = get_post_meta($pid, 'course_mid_cta_1_link', true) ?: '#checkout';
+
+$mid_cta_2_text = get_post_meta($pid, 'course_mid_cta_2_text', true);
+$mid_cta_2_btn = get_post_meta($pid, 'course_mid_cta_2_btn', true);
+$mid_cta_2_link = get_post_meta($pid, 'course_mid_cta_2_link', true) ?: '#checkout';
+
 // Video Logic
 $actual_video_url = get_post_meta($pid, 'course_actual_video_url', true);
 $video_mode = get_post_meta($pid, 'course_video_mode', true) ?: 'inline';
@@ -231,6 +239,20 @@ if ($actual_video_url) {
     </div>
 </section>
 
+<?php if ($mid_cta_1_btn) : ?>
+<!-- CTA 1 (Pós-Currículo) -->
+<section class="py-12 bg-background-dark border-t border-white/5 relative z-20 shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.5)]">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <?php if ($mid_cta_1_text) : ?>
+            <p class="text-slate-300 text-lg mb-6 font-light leading-relaxed"><?php echo esc_html($mid_cta_1_text); ?></p>
+        <?php endif; ?>
+        <a href="<?php echo esc_url($mid_cta_1_link); ?>" class="inline-block bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/30 transition-all hover:-translate-y-1">
+            <?php echo esc_html($mid_cta_1_btn); ?>
+        </a>
+    </div>
+</section>
+<?php endif; ?>
+
 <?php if ($benefits_title) : ?>
 <!-- Benefits Section (Split Screen) -->
 <section class="py-24 bg-slate-900/50 border-t border-white/5 relative overflow-hidden" id="beneficios">
@@ -288,6 +310,20 @@ if ($actual_video_url) {
             </div>
             
         </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if ($mid_cta_2_btn) : ?>
+<!-- CTA 2 (Pós-Benefícios) -->
+<section class="py-16 bg-slate-900/80 border-t border-white/5 relative z-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <?php if ($mid_cta_2_text) : ?>
+            <p class="text-white text-2xl font-black mb-8 leading-tight"><?php echo wp_kses_post($mid_cta_2_text); ?></p>
+        <?php endif; ?>
+        <a href="<?php echo esc_url($mid_cta_2_link); ?>" class="inline-block bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/30 transition-all hover:-translate-y-1">
+            <?php echo esc_html($mid_cta_2_btn); ?>
+        </a>
     </div>
 </section>
 <?php endif; ?>

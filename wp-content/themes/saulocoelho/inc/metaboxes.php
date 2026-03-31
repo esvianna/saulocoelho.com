@@ -204,7 +204,9 @@ function saulocoelho_render_store_metabox($post) {
 // Course Detail
 function saulocoelho_render_course_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
-    $fields = [
+    
+    echo '<h3>1. Configurações Iniciais (Hero e Preço)</h3>';
+    $fields_hero = [
         'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
         'course_badge' => 'Selo do Topo (ex: Matrículas Abertas)',
         'course_sec_btn_text' => 'Botão Secundário: Texto (Ex: Ver currículo - vazio p/ ocultar)',
@@ -212,18 +214,49 @@ function saulocoelho_render_course_metabox($post) {
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
         'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
+        'course_price_install' => 'Valor da Parcela (ex: 12x de R$ 97,00)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_hero);
+
+    echo '<hr><h3>2. Estatísticas de Destaque</h3>';
+    $fields_stats = [
         'course_stat_1' => 'Destaque 1 (ex: 10k+ Alunos)',
         'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
-        'course_price_install' => 'Valor da Parcela (ex: 12x de R$ 97,00)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_stats);
+
+    echo '<hr><h3>3. O Que Você Vai Aprender (Currículo)</h3>';
+    $fields_learning = [
         'course_learning_title' => 'Título da Seção de Aprendizado (Ex: O que você vai aprender)',
         'course_learning_subtitle_desc' => 'Subtítulo do Aprendizado (Ex: Conteúdo estruturado...)',
         'course_learning_mode' => ['type' => 'select', 'label' => 'Modo de Exibição do Aprendizado', 'options' => ['modules' => 'Separado por Módulos (Preencha os cards abaixo)', 'freetext' => 'Texto Livre (Ideal para formato Presencial)']],
         'course_learning_freetext_desc' => 'Texto Livre (Insira toda a ementa/cronograma aqui, se usou a opção Texto Livre acima)',
-        'course_benefits_title' => 'Seção Bônus 1: Título de Benefícios (Ex: Quais os Benefícios? - Deixe vazio p/ ocultar)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_learning);
+
+    echo '<hr><h3>4. CTA Intermediário 1 (Pós-Currículo)</h3>';
+    $fields_cta1 = [
+        'course_mid_cta_1_text' => 'Texto de Apoio (Ex: Preparado para dominar essas habilidades?)',
+        'course_mid_cta_1_btn' => 'Texto do Botão (Ex: Quero começar agora - Deixe vazio para ocultar este CTA)',
+        'course_mid_cta_1_link' => 'Link do Botão (Ex: #checkout)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_cta1);
+
+    echo '<hr><h3>5. Seção de Benefícios (Vídeo Emocional)</h3>';
+    $fields_benefits = [
+        'course_benefits_title' => 'Título de Benefícios (Ex: Quais os Benefícios? - Deixe vazio p/ ocultar essa seção)',
         'course_benefits_desc' => 'Texto de Benefícios (Lado Esquerdo)',
         'course_benefits_media_url' => 'Mídia de Benefícios (Lado Direito - Envie link de Imagem ou YouTube/Vimeo)',
     ];
-    saulocoelho_render_fields($post->ID, $fields);
+    saulocoelho_render_fields($post->ID, $fields_benefits);
+
+    echo '<hr><h3>6. CTA Intermediário 2 (Pós-Benefícios)</h3>';
+    $fields_cta2 = [
+        'course_mid_cta_2_text' => 'Texto Forte (Ex: Você merece dar esse próximo passo na sua carreira.)',
+        'course_mid_cta_2_btn' => 'Texto do Botão (Ex: Sim, eu quero garantir minha vaga - Deixe vazio p/ ocultar)',
+        'course_mid_cta_2_link' => 'Link do Botão (Ex: #checkout)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_cta2);
 
     echo '<hr><h3>Tópicos de Aprendizado (Lista Lateral para acompanhar o Texto Livre da seção)</h3>';
     echo '<p style="color:#666; font-size:12px; margin-top:-10px;">Adicione quantos tópicos desejar. Eles aparecerão na seção "O que você vai aprender".</p>';
