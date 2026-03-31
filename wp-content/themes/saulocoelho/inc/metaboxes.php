@@ -103,6 +103,7 @@ function saulocoelho_render_home_features_metabox($post) {
     $fields = [
         'features_title' => 'Título de Autoridade (ex: Autoridade e Experiência)',
         'features_description' => 'Descrição de Autoridade',
+        'features_image' => 'Imagem de Destaque da Seção (Ao Lado do Título)',
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
