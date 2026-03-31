@@ -381,6 +381,17 @@ function alumni_register_endpoint() {
     add_rewrite_endpoint( 'minhas-turmas', EP_ROOT | EP_PAGES );
 }
 
+// Auto-flush das rewrite rules quando o endpoint ainda não foi registrado
+add_action( 'init', 'alumni_maybe_flush_rewrite_rules', 99 );
+function alumni_maybe_flush_rewrite_rules() {
+    $stamp = 'alumni_endpoint_v1';
+    if ( get_option( 'alumni_rewrite_stamp', '' ) === $stamp ) {
+        return;
+    }
+    flush_rewrite_rules( false );
+    update_option( 'alumni_rewrite_stamp', $stamp );
+}
+
 // ─── 5. MENU DA CONTA ────────────────────────────────────────────────────────
 
 add_filter( 'woocommerce_account_menu_items', 'alumni_add_menu_item' );
