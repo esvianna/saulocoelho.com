@@ -143,7 +143,22 @@ body.woocommerce-checkout #place_order:hover {
     box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
 }
 
-/* Esconder Labels chatos do Cartão e Deixar Float Padrão */
 .woocommerce form .form-row .required {
     color: #ef4444;
+}
+
+/* ==========================================================================
+   Global Typography Fixes (Para Títulos de Plugins e Arquivos)
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6, 
+.page-title, 
+.entry-title, 
+.archive-title {
+    color: #ffffff !important;
+}
+
+.page-description, 
+.archive-description {
+    color: rgba(255, 255, 255, 0.6) !important;
 }
