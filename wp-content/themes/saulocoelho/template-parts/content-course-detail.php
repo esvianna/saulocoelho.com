@@ -522,3 +522,9 @@ function closeCourseLightbox() {
     }, 300);
 }
 </script>
+
+<?php
+// ── Módulo Alumni: Galeria de Turmas ──────────────────────────────────────
+// Renderiza a seção de fotos das turmas passadas (se configuradas no admin).
+get_template_part( 'template-parts/alumni/gallery-section' );
+?>

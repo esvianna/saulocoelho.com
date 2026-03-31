@@ -71,6 +71,13 @@ if ( file_exists( __DIR__ . '/inc/metaboxes.php' ) ) {
     require_once __DIR__ . '/inc/metaboxes.php';
 }
 
+/**
+ * Módulo Alumni — Galerias de Turmas
+ */
+if ( file_exists( __DIR__ . '/inc/module-alumni.php' ) ) {
+    require_once __DIR__ . '/inc/module-alumni.php';
+}
+
 function saulocoelho_admin_scripts($hook) {
     // Only load on post edit pages
     if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
