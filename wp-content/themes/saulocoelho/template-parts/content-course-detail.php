@@ -10,8 +10,14 @@ if (empty($sec_btn_link) && !metadata_exists('post', $pid, 'course_sec_btn_link'
     $sec_btn_link = '#conteudo';
 }
 $video_img = get_post_meta($pid, 'course_video_url', true);
-$stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '10k+ Alunos';
-$stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.9/5 Avaliação';
+$stat_1 = get_post_meta($pid, 'course_stat_1', true) ?: '6k+ Alunos';
+$stat_1_label = get_post_meta($pid, 'course_stat_1_label', true) ?: 'Instituições';
+$stat_2 = get_post_meta($pid, 'course_stat_2', true) ?: '4.95/5 Avaliação';
+$stat_2_label = get_post_meta($pid, 'course_stat_2_label', true) ?: 'Feedback';
+$stat_3 = get_post_meta($pid, 'course_stat_3', true) ?: '40h+';
+$stat_3_label = get_post_meta($pid, 'course_stat_3_label', true) ?: 'Conteúdo';
+$stat_4 = get_post_meta($pid, 'course_stat_4', true) ?: 'Vitalício';
+$stat_4_label = get_post_meta($pid, 'course_stat_4_label', true) ?: 'Acesso';
 $price_install = get_post_meta($pid, 'course_price_install', true) ?: 'R$ 97,00';
 $checkout_link = '?add-to-cart=' . $pid;
 
@@ -139,19 +145,19 @@ if ($actual_video_url) {
         <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
             <div class="flex flex-col items-center text-center gap-2">
                 <span class="text-4xl font-black text-primary"><?php echo esc_html($stat_1); ?></span>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Instituições</span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><?php echo esc_html($stat_1_label); ?></span>
             </div>
             <div class="flex flex-col items-center text-center gap-2">
                 <span class="text-4xl font-black text-primary"><?php echo esc_html($stat_2); ?></span>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Feedback</span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><?php echo esc_html($stat_2_label); ?></span>
             </div>
             <div class="flex flex-col items-center text-center gap-2">
-                <span class="text-4xl font-black text-primary">40h+</span>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Conteúdo</span>
+                <span class="text-4xl font-black text-primary"><?php echo esc_html($stat_3); ?></span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><?php echo esc_html($stat_3_label); ?></span>
             </div>
             <div class="flex flex-col items-center text-center gap-2">
-                <span class="text-4xl font-black text-primary">Vitalício</span>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Acesso</span>
+                <span class="text-4xl font-black text-primary"><?php echo esc_html($stat_4); ?></span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><?php echo esc_html($stat_4_label); ?></span>
             </div>
         </div>
     </div>

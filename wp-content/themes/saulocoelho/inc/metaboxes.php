@@ -283,8 +283,14 @@ function saulocoelho_render_course_metabox($post) {
 
     echo '<hr><h3>2. Estatísticas de Destaque</h3>';
     $fields_stats = [
-        'course_stat_1' => 'Destaque 1 (ex: 10k+ Alunos)',
-        'course_stat_2' => 'Destaque 2 (ex: 4.9/5 Avaliação)',
+        'course_stat_1' => 'Destaque 1: Valor (ex: 6k+ Alunos)',
+        'course_stat_1_label' => 'Destaque 1: Legenda (ex: INSTITUIÇÕES)',
+        'course_stat_2' => 'Destaque 2: Valor (ex: 4.95/5)',
+        'course_stat_2_label' => 'Destaque 2: Legenda (ex: FEEDBACK)',
+        'course_stat_3' => 'Destaque 3: Valor (ex: 40h+)',
+        'course_stat_3_label' => 'Destaque 3: Legenda (ex: CONTEÚDO)',
+        'course_stat_4' => 'Destaque 4: Valor (ex: Vitalício)',
+        'course_stat_4_label' => 'Destaque 4: Legenda (ex: ACESSO)',
     ];
     saulocoelho_render_fields($post->ID, $fields_stats);
 
