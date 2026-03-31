@@ -52,23 +52,42 @@ $about_image = get_post_meta($post_id, 'about_image', true);
 <!-- Institutional History -->
 <section class="py-24 bg-background-dark/30">
     <div class="max-w-4xl mx-auto px-6 lg:px-12">
+        <?php
+        $ms_title = get_post_meta($post_id, 'about_milestones_title', true) ?: 'Trajetória Institucional';
+        $milestones = get_post_meta($post_id, 'about_milestones', true);
+        if (empty($milestones) && !metadata_exists('post', $post_id, 'about_milestones')) {
+            $milestones = [];
+            for ($i = 1; $i <= 3; $i++) {
+                $year = get_post_meta($post_id, "about_milestone_{$i}_year", true);
+                if ($year) {
+                    $icons = ['history_edu', 'trending_up', 'verified'];
+                    $milestones[] = [
+                        'year' => $year,
+                        'title' => get_post_meta($post_id, "about_milestone_{$i}_title", true),
+                        'desc' => get_post_meta($post_id, "about_milestone_{$i}_desc", true),
+                        'icon' => $icons[$i-1] ?? 'verified'
+                    ];
+                }
+            }
+        }
+        if (!is_array($milestones)) $milestones = [];
+        ?>
         <div class="text-center mb-20">
-            <h2 class="text-3xl lg:text-4xl font-bold mb-4">Trajetória Institucional</h2>
+            <h2 class="text-3xl lg:text-4xl font-bold mb-4"><?php echo esc_html($ms_title); ?></h2>
             <div class="w-20 h-1 bg-primary mx-auto"></div>
         </div>
         <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-800 before:to-transparent">
             <?php 
-            for ($i = 1; $i <= 3; $i++) : 
-                $year = get_post_meta($post_id, "about_milestone_{$i}_year", true);
+            foreach ($milestones as $ms) : 
+                $year = $ms['year'] ?? '';
                 if (!$year) continue;
-                $title = get_post_meta($post_id, "about_milestone_{$i}_title", true);
-                $desc = get_post_meta($post_id, "about_milestone_{$i}_desc", true);
-                $icons = ['history_edu', 'trending_up', 'verified'];
-                $icon = $icons[$i-1];
+                $title = $ms['title'] ?? '';
+                $desc = $ms['desc'] ?? '';
+                $icon = $ms['icon'] ?? 'history_edu';
             ?>
             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                 <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-800 bg-background-dark-alt text-primary font-bold shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
-                    <span class="material-symbols-outlined text-sm"><?php echo esc_html($icon); ?></span>
+                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;"><?php echo esc_html($icon); ?></span>
                 </div>
                 <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl bg-background-dark/40 border border-white/5 shadow-xl hover:bg-background-dark/60 transition-colors">
                     <div class="flex items-center justify-between mb-2">
@@ -78,7 +97,7 @@ $about_image = get_post_meta($post_id, 'about_image', true);
                     <p class="text-slate-400 text-sm leading-relaxed"><?php echo esc_html($desc); ?></p>
                 </div>
             </div>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>

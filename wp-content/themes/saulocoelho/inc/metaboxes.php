@@ -105,10 +105,69 @@ function saulocoelho_render_about_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
-    echo '<hr><h3>Linha do Tempo (3 Marcos)</h3>';
-    for ($i=1; $i<=3; $i++) {
-        saulocoelho_render_group($post->ID, "about_milestone_$i", ['year' => 'Ano/Período', 'title' => 'Título', 'desc' => 'Descrição']);
+    echo '<hr><h3>Linha do Tempo (Marcos da Carreira)</h3>';
+    $ms_title = get_post_meta($post->ID, 'about_milestones_title', true);
+    if (empty($ms_title) && !metadata_exists('post', $post->ID, 'about_milestones_title')) {
+        $ms_title = 'Trajetória Institucional'; // Default
     }
+    echo '<p><label><strong>Título da Seção de Linha do Tempo:</strong></label><br>';
+    echo '<input type="text" name="about_milestones_title" value="' . esc_attr($ms_title) . '" class="large-text"></p>';
+    
+    echo '<p style="color:#666; font-size:12px; margin-top:5px;">Adicione quantos marcos desejar.</p>';
+    echo '<input type="hidden" name="about_milestones_present" value="1">';
+    echo '<div id="about_milestones_container">';
+    
+    $milestones = get_post_meta($post->ID, 'about_milestones', true);
+    // Backward compatibility loading old 3 items if new repeater is empty and has never been saved
+    if (empty($milestones) && !metadata_exists('post', $post->ID, 'about_milestones')) {
+        $milestones = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $year = get_post_meta($post->ID, "about_milestone_{$i}_year", true);
+            if ($year) {
+                $icons = ['history_edu', 'trending_up', 'verified'];
+                $milestones[] = [
+                    'year' => $year,
+                    'title' => get_post_meta($post->ID, "about_milestone_{$i}_title", true),
+                    'desc' => get_post_meta($post->ID, "about_milestone_{$i}_desc", true),
+                    'icon' => $icons[$i-1] ?? 'verified'
+                ];
+            }
+        }
+    }
+    if (!is_array($milestones)) $milestones = [];
+    
+    foreach ($milestones as $index => $ms) {
+        $year = esc_attr($ms['year'] ?? '');
+        $title = esc_attr($ms['title'] ?? '');
+        $desc = esc_textarea($ms['desc'] ?? '');
+        $icon = esc_attr($ms['icon'] ?? 'history_edu');
+        
+        echo "<div class='milestone-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
+        // Icon picker (using the general icon modal)
+        echo "<label style='font-size:11px; color:#666'>Ícone do Marco (Ícones Mágicos)</label><br>";
+        echo "<div style='display:flex; align-items:center; margin-bottom:15px; margin-top:5px;'>";
+        echo "<div class='preview-icon-box' id='preview_ms_icon_$index'>";
+        if ($icon) {
+            echo "<span class='material-symbols-outlined' style='font-variation-settings: \"FILL\" 1;'>$icon</span>";
+        }
+        echo "</div>";
+        echo "<input type='text' name='about_milestones[$index][icon]' id='ms_icon_$index' value='$icon' style='width:50%; margin-right:5px;'> ";
+        echo "<button type='button' class='button button-small js-open-icon-modal' data-target='#ms_icon_$index' data-preview='#preview_ms_icon_$index' style='margin-right:5px;'>Ícones Mágicos</button>";
+        echo "</div>";
+        
+        // Year, Title, Desc
+        echo "<label style='font-size:11px; color:#666'>Ano/Período</label><br>";
+        echo "<input type='text' name='about_milestones[$index][year]' value='$year' style='width:100%; margin-bottom:8px;'>";
+        echo "<label style='font-size:11px; color:#666'>Título do Marco</label><br>";
+        echo "<input type='text' name='about_milestones[$index][title]' value='$title' style='width:100%; margin-bottom:8px;'>";
+        echo "<label style='font-size:11px; color:#666'>Breve Descrição</label><br>";
+        echo "<textarea name='about_milestones[$index][desc]' rows='2' style='width:100%; margin-bottom:8px;'>$desc</textarea><br>";
+        
+        echo "<button type='button' class='button js-remove-milestone' style='color:#a00; border-color:#a00;'>Remover Marco</button>";
+        echo "</div>";
+    }
+    echo '</div>';
+    echo '<button type="button" class="button button-primary js-add-milestone">+ Adicionar Novo Marco</button><br><br>';
     
     echo '<hr><h3>Valores (3 Itens)</h3>';
     for ($i=1; $i<=3; $i++) {
@@ -392,6 +451,38 @@ function saulocoelho_render_metabox_js() {
             });
         });
 
+        // Repeater Logic for Milestones
+        var msIndex = $('#about_milestones_container .milestone-row').length;
+        $('.js-add-milestone').on('click', function(e){
+            e.preventDefault();
+            var html = '<div class="milestone-row" style="background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;">' +
+                       '<label style="font-size:11px; color:#666">Ícone do Marco (Ícones Mágicos)</label><br>' +
+                       '<div style="display:flex; align-items:center; margin-bottom:15px; margin-top:5px;">' +
+                       '<div class="preview-icon-box" id="preview_ms_icon_'+msIndex+'"></div>' +
+                       '<input type="text" name="about_milestones['+msIndex+'][icon]" id="ms_icon_'+msIndex+'" value="history_edu" style="width:50%; margin-right:5px;"> ' +
+                       '<button type="button" class="button button-small js-open-icon-modal" data-target="#ms_icon_'+msIndex+'" data-preview="#preview_ms_icon_'+msIndex+'" style="margin-right:5px;">Ícones Mágicos</button>' +
+                       '</div>' +
+                       '<label style="font-size:11px; color:#666">Ano/Período</label><br>' +
+                       '<input type="text" name="about_milestones['+msIndex+'][year]" value="" style="width:100%; margin-bottom:8px;">' +
+                       '<label style="font-size:11px; color:#666">Título do Marco</label><br>' +
+                       '<input type="text" name="about_milestones['+msIndex+'][title]" value="" style="width:100%; margin-bottom:8px;">' +
+                       '<label style="font-size:11px; color:#666">Breve Descrição</label><br>' +
+                       '<textarea name="about_milestones['+msIndex+'][desc]" rows="2" style="width:100%; margin-bottom:8px;"></textarea><br>' +
+                       '<button type="button" class="button js-remove-milestone" style="color:#a00; border-color:#a00;">Remover Marco</button>' +
+                       '</div>';
+            $('#about_milestones_container').append(html);
+            // Default preview update
+            $('#preview_ms_icon_'+msIndex).html('<span class="material-symbols-outlined" style="font-variation-settings: \\\'FILL\\\' 1;">history_edu</span>');
+            msIndex++;
+        });
+
+        $(document).on('click', '.js-remove-milestone', function(e){
+            e.preventDefault();
+            if(confirm('Remover este marco cronológico?')) {
+                $(this).closest('.milestone-row').remove();
+            }
+        });
+
         // Repeater Logic for Topics
         var topicIndex = $('#course_topics_container .topic-row').length;
         $('.js-add-topic').on('click', function(e){
@@ -435,6 +526,9 @@ function saulocoelho_save_metaboxes($post_id) {
     // Handle array deletions if they were completely removed by the user in the DOM
     if (isset($_POST['course_learning_topics_present']) && !isset($_POST['course_learning_topics'])) {
         delete_post_meta($post_id, 'course_learning_topics');
+    }
+    if (isset($_POST['about_milestones_present']) && !isset($_POST['about_milestones'])) {
+        delete_post_meta($post_id, 'about_milestones');
     }
 
     // Loop through all POST data and save keys starting with our prefixes
