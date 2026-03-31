@@ -199,7 +199,7 @@ if ($actual_video_url) {
         
         <div class="<?php echo $has_topics ? 'grid lg:grid-cols-5 gap-12 items-start' : 'flex flex-col gap-6'; ?>">
             <!-- Coluna Esquerda: Texto ou Módulos -->
-            <div class="<?php echo $has_topics ? 'lg:col-span-3 flex flex-col gap-6' : 'w-full flex flex-col gap-6'; ?>">
+            <div class="<?php echo $has_topics ? 'lg:col-span-3 flex flex-col gap-6' : 'w-full flex flex-col gap-6'; ?>" id="modulos">
                 <?php if ($learning_mode === 'freetext' && !empty($learning_freetext)) : ?>
                     <div class="bg-white/[0.03] border border-white/10 p-8 md:p-12 rounded-3xl text-slate-300 font-light leading-relaxed prose prose-invert prose-p:mb-6 prose-ul:mb-6 prose-li:my-2 custom-list h-full">
                         <?php echo wpautop(wp_kses_post($learning_freetext)); ?>
@@ -360,7 +360,7 @@ if ($actual_video_url) {
 
 
 <!-- What's Included / Not Included -->
-<section class="py-24 border-t border-white/5 bg-background-dark">
+<section class="py-24 border-t border-white/5 bg-background-dark" id="incluso">
     <div class="mx-auto max-w-5xl px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-16">
             <!-- Included -->
@@ -416,7 +416,7 @@ if ($actual_video_url) {
 
 <?php if ($course_type === 'presencial') : ?>
 <!-- Event Info (Presencial) -->
-<section class="py-16 border-b border-white/5 bg-slate-900/50 relative overflow-hidden">
+<section class="py-16 border-b border-white/5 bg-slate-900/50 relative overflow-hidden" id="logistica">
     <div class="mx-auto max-w-5xl px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-black text-white"><?php echo esc_html($event_section_title); ?></h2>

@@ -271,7 +271,7 @@ function saulocoelho_render_course_metabox($post) {
     echo '<h3>1. Configurações Iniciais (Hero e Preço) [#checkout]</h3>';
     echo '<p style="background: #f0f6fc; padding: 10px; border-left: 4px solid #007cba; font-size: 12px;">';
     echo '<strong>Dica de Âncoras:</strong> Use os IDs abaixo para criar links internos nos botões:<br>';
-    echo '<code>#conteudo</code> (Módulos), <code>#beneficios</code> (Vídeo/Benefícios), <code>#alumni-galeria</code> (Fotos), <code>#checkout</code> (Preços).';
+    echo '<code>#conteudo</code> (Ementa), <code>#modulos</code> (Módulos), <code>#beneficios</code> (Vídeo), <code>#alumni-galeria</code> (Galeria), <code>#incluso</code> (Itens Inclusos), <code>#logistica</code> (Logística), <code>#checkout</code> (Preços).';
     echo '</p>';
     
     $fields_hero = [
@@ -305,7 +305,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_stats);
 
-    echo '<hr><h3>3. O Que Você Vai Aprender (Currículo) [#conteudo]</h3>';
+    echo '<hr><h3>3. O Que Você Vai Aprender (Currículo) <code style="font-size:12px; float:right;">#conteudo</code></h3>';
     $fields_learning = [
         'course_learning_title' => 'Título da Seção de Aprendizado (Ex: O que você vai aprender)',
         'course_learning_subtitle_desc' => 'Subtítulo do Aprendizado (Ex: Conteúdo estruturado...)',
@@ -322,7 +322,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_cta1);
 
-    echo '<hr><h3>5. Seção de Benefícios (Vídeo Emocional) [#beneficios]</h3>';
+    echo '<hr><h3>5. Seção de Benefícios (Vídeo Emocional) <code style="font-size:12px; float:right;">#beneficios</code></h3>';
     $fields_benefits = [
         'course_benefits_title' => 'Título de Benefícios (Ex: Quais os Benefícios? - Deixe vazio p/ ocultar essa seção)',
         'course_benefits_desc' => 'Texto de Benefícios (Lado Esquerdo)',
@@ -376,7 +376,7 @@ function saulocoelho_render_course_metabox($post) {
     echo '</div>';
     echo '<button type="button" class="button button-primary js-add-topic">+ Adicionar Tópico</button><br><br>';
 
-    echo '<hr><h3>O Que Está Incluso? (Checklist de Benefícios / Materiais)</h3>';
+    echo '<hr><h3>O Que Está Incluso? (Checklist de Benefícios / Materiais) <code style="font-size:12px; float:right;">#incluso</code></h3>';
     for ($i=1; $i<=6; $i++) {
         saulocoelho_render_group($post->ID, "course_inc_$i", ['title' => 'Item Incluso (Ex: Apostila Impressa)']);
     }
@@ -386,7 +386,7 @@ function saulocoelho_render_course_metabox($post) {
         saulocoelho_render_group($post->ID, "course_notinc_$i", ['title' => 'Item Não Incluso (Ex: Hospedagem)']);
     }
 
-    echo '<hr><h3>Logística do Evento (Para Presencial)</h3>';
+    echo '<hr><h3>Logística do Evento (Para Presencial) <code style="font-size:12px; float:right;">#logistica</code></h3>';
     $logistics_fields = [
         'course_event_section_title' => 'Título da Seção de Evento (Ex: Logística do Evento)',
         'course_event_location' => '🏢 Local do Evento (P/ Presencial)',
@@ -395,7 +395,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $logistics_fields);
 
-    echo '<hr><h3>Módulos do Curso (Apenas para cursos que possuem divisão de conteúdo)</h3>';
+    echo '<hr><h3>Módulos do Curso (Apenas para cursos que possuem divisão de conteúdo) <code style="font-size:12px; float:right;">#modulos</code></h3>';
     for ($i=1; $i<=8; $i++) {
         saulocoelho_render_group($post->ID, "course_mod_$i", ['title' => 'Título do Módulo', 'desc' => 'Descrição do Módulo']);
     }
