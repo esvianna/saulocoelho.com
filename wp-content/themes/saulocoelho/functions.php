@@ -78,6 +78,13 @@ if ( file_exists( __DIR__ . '/inc/module-alumni.php' ) ) {
     require_once __DIR__ . '/inc/module-alumni.php';
 }
 
+/**
+ * Gate de Checkout (Login/Cadastro antes do Checkout)
+ */
+if ( file_exists( __DIR__ . '/inc/module-checkout-gate.php' ) ) {
+    require_once __DIR__ . '/inc/module-checkout-gate.php';
+}
+
 function saulocoelho_admin_scripts($hook) {
     // Only load on post edit pages
     if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
