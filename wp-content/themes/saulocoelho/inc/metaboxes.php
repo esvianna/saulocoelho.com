@@ -14,9 +14,11 @@ function saulocoelho_register_metaboxes() {
     $template = get_post_meta($post_id, '_wp_page_template', true);
     $is_front_page = ($post_id === (int) get_option('page_on_front'));
 
-    // 1. Home Page Settings
+    // 1. Home Page Settings (Dividida por Seções)
     if ($is_front_page) {
-        add_meta_box('home_settings', 'Configurações da Home (Hero & Destaques)', 'saulocoelho_render_home_metabox', 'page', 'normal', 'high');
+        add_meta_box('home_hero_settings', '1. Configurações da Home: Hero', 'saulocoelho_render_home_hero_metabox', 'page', 'normal', 'high');
+        add_meta_box('home_trusted_settings', '2. Configurações da Home: Parceiros (Trusted Logos)', 'saulocoelho_render_home_trusted_metabox', 'page', 'normal', 'high');
+        add_meta_box('home_features_settings', '3. Configurações da Home: Autoridade e Serviços', 'saulocoelho_render_home_features_metabox', 'page', 'normal', 'high');
     }
 
     // 2. About Page (Quem é)
@@ -62,8 +64,8 @@ add_action('admin_head', 'saulocoelho_admin_head');
  * RENDER FUNCTIONS
  */
 
-// Home
-function saulocoelho_render_home_metabox($post) {
+// Home: Hero
+function saulocoelho_render_home_hero_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     $fields = [
         'hero_eyebrow' => 'Texto Superior (Eyebrow)',
@@ -76,6 +78,14 @@ function saulocoelho_render_home_metabox($post) {
         'hero_btn_1_link' => 'Botão 1: Link',
         'hero_btn_2_text' => 'Botão 2: Texto',
         'hero_btn_2_link' => 'Botão 2: Link',
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
+}
+
+// Home: Trusted Logos
+function saulocoelho_render_home_trusted_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    $fields = [
         'trusted_label' => 'Título da Seção de Logos',
         'trusted_image_1' => 'Logo da Empresa 1',
         'trusted_image_2' => 'Logo da Empresa 2',
@@ -83,10 +93,63 @@ function saulocoelho_render_home_metabox($post) {
         'trusted_image_4' => 'Logo da Empresa 4',
         'trusted_image_5' => 'Logo da Empresa 5',
         'trusted_image_6' => 'Logo da Empresa 6',
-        'features_title' => 'Título de Autoridade',
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
+}
+
+// Home: Features/Services
+function saulocoelho_render_home_features_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    $fields = [
+        'features_title' => 'Título de Autoridade (ex: Autoridade e Experiência)',
         'features_description' => 'Descrição de Autoridade',
     ];
     saulocoelho_render_fields($post->ID, $fields);
+
+    echo '<hr><h3>Características / Serviços (Destaques)</h3>';
+    echo '<p style="color:#666; font-size:12px; margin-top:-10px;">Adicione quantos itens desejar. Eles aparecerão na seção "Autoridade e Experiência".</p>';
+    echo '<input type="hidden" name="home_features_present" value="1">';
+    echo '<div id="home_features_container">';
+    
+    $features = get_post_meta($post->ID, 'home_features', true);
+    
+    // Migration: if empty and hasn't been saved yet, add "Palestras" as first item
+    if (empty($features) && !metadata_exists('post', $post->ID, 'home_features')) {
+        $features = [[
+            'icon' => 'present_to_all',
+            'title' => 'Palestras',
+            'desc' => 'Conteúdo disruptivo, inspiração e estratégia prática para grandes convenções e públicos corporativos.'
+        ]];
+    }
+    
+    if (!is_array($features)) $features = [];
+
+    foreach ($features as $index => $feature) {
+        $icon = esc_attr($feature['icon'] ?? 'present_to_all');
+        $title = esc_attr($feature['title'] ?? '');
+        $desc = esc_textarea($feature['desc'] ?? '');
+        
+        echo "<div class='feature-row' style='background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;'>";
+        echo "<label style='font-size:11px; color:#666'>Ícone (Visual / Mídia)</label><br>";
+        echo "<div style='display:flex; align-items:center; margin-bottom:15px; margin-top:5px;'>";
+        echo "<div class='preview-icon-box' id='preview_feature_icon_$index'>";
+        if ($icon) {
+            echo "<span class='material-symbols-outlined' style='font-variation-settings: \"FILL\" 1;'>$icon</span>";
+        }
+        echo "</div>";
+        echo "<input type='text' name='home_features[$index][icon]' id='feature_icon_$index' value='$icon' style='width:50%; margin-right:5px;'> ";
+        echo "<button type='button' class='button button-small js-open-icon-modal' data-target='#feature_icon_$index' data-preview='#preview_feature_icon_$index' style='margin-right:5px;'>Ícones Mágicos</button>";
+        echo "</div>";
+        echo "<label style='font-size:11px; color:#666'>Título do Item</label><br>";
+        echo "<input type='text' name='home_features[$index][title]' value='$title' style='width:100%; margin-bottom:8px;'>";
+        echo "<label style='font-size:11px; color:#666'>Descrição</label><br>";
+        echo "<textarea name='home_features[$index][desc]' rows='2' style='width:100%; margin-bottom:8px;'>$desc</textarea><br>";
+        
+        echo "<button type='button' class='button js-remove-feature' style='color:#a00; border-color:#a00;'>Remover Item</button>";
+        echo "</div>";
+    }
+    echo '</div>';
+    echo '<button type="button" class="button button-primary js-add-feature">+ Adicionar Novo Item</button><br><br>';
 }
 
 // About
@@ -548,6 +611,35 @@ function saulocoelho_render_metabox_js() {
                 $(this).closest('.topic-row').remove();
             }
         });
+
+        // Repeater Logic for Home Features
+        var featureIndex = $('#home_features_container .feature-row').length;
+        $('.js-add-feature').on('click', function(e){
+            e.preventDefault();
+            var html = '<div class="feature-row" style="background:#f9f9f9; padding:15px; margin-bottom:15px; border: 1px solid #eee; border-radius:8px; position:relative;">' +
+                       '<label style="font-size:11px; color:#666">Ícone (Visual / Mídia)</label><br>' +
+                       '<div style="display:flex; align-items:center; margin-bottom:15px; margin-top:5px;">' +
+                       '<div class="preview-icon-box" id="preview_feature_icon_'+featureIndex+'"></div>' +
+                       '<input type="text" name="home_features['+featureIndex+'][icon]" id="feature_icon_'+featureIndex+'" value="present_to_all" style="width:50%; margin-right:5px;"> ' +
+                       '<button type="button" class="button button-small js-open-icon-modal" data-target="#feature_icon_'+featureIndex+'" data-preview="#preview_feature_icon_'+featureIndex+'" style="margin-right:5px;">Ícones Mágicos</button>' +
+                       '</div>' +
+                       '<label style="font-size:11px; color:#666">Título do Item</label><br>' +
+                       '<input type="text" name="home_features['+featureIndex+'][title]" value="" style="width:100%; margin-bottom:8px;">' +
+                       '<label style="font-size:11px; color:#666">Descrição</label><br>' +
+                       '<textarea name="home_features['+featureIndex+'][desc]" rows="2" style="width:100%; margin-bottom:8px;"></textarea><br>' +
+                       '<button type="button" class="button js-remove-feature" style="color:#a00; border-color:#a00;">Remover Item</button>' +
+                       '</div>';
+            $('#home_features_container').append(html);
+            $('#preview_feature_icon_'+featureIndex).html('<span class="material-symbols-outlined" style="font-variation-settings: \\\'FILL\\\' 1;">present_to_all</span>');
+            featureIndex++;
+        });
+
+        $(document).on('click', '.js-remove-feature', function(e){
+            e.preventDefault();
+            if(confirm('Remover este item de destaque?')) {
+                $(this).closest('.feature-row').remove();
+            }
+        });
     });
     </script>
     <?php
@@ -569,9 +661,12 @@ function saulocoelho_save_metaboxes($post_id) {
     if (isset($_POST['about_milestones_present']) && !isset($_POST['about_milestones'])) {
         delete_post_meta($post_id, 'about_milestones');
     }
+    if (isset($_POST['home_features_present']) && !isset($_POST['home_features'])) {
+        delete_post_meta($post_id, 'home_features');
+    }
 
     // Loop through all POST data and save keys starting with our prefixes
-    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_'];
+    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_', 'home_'];
     foreach ($_POST as $key => $value) {
         $should_save = false;
         foreach ($prefixes as $p) {
