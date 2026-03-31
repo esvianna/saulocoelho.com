@@ -98,30 +98,6 @@ if ($actual_video_url) {
                         — <?php echo esc_html($instructor_name); ?>
                     </div>
                 <?php endif; ?>
-                <div class="flex flex-wrap gap-3 mt-4">
-                    <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 flex items-center justify-center gap-2">
-                        <?php echo esc_html($primary_btn_text); ?>
-                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                    
-                    <?php if (!empty($sec_btn_text)) : ?>
-                    <a href="<?php echo esc_url($sec_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-6 py-4 rounded-xl text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
-                        <?php echo esc_html($sec_btn_text); ?>
-                    </a>
-                    <?php endif; ?>
-
-                    <?php if (!empty($ter_btn_text)) : ?>
-                    <a href="<?php echo esc_url($ter_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-6 py-4 rounded-xl text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
-                        <?php echo esc_html($ter_btn_text); ?>
-                    </a>
-                    <?php endif; ?>
-
-                    <?php if (!empty($qua_btn_text)) : ?>
-                    <a href="<?php echo esc_url($qua_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-6 py-4 rounded-xl text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
-                        <?php echo esc_html($qua_btn_text); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
             </div>
             
             <div class="relative group w-full">
@@ -159,6 +135,32 @@ if ($actual_video_url) {
                     <div id="video-player-inline" class="absolute inset-0 z-10 hidden"></div>
                 </div>
             </div>
+        </div>
+
+        <!-- Hero Actions (Full Width) -->
+        <div class="flex flex-wrap gap-4 mt-12 lg:mt-16">
+            <a href="<?php echo esc_url($checkout_link); ?>" class="bg-primary hover:bg-primary/90 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                <?php echo esc_html($primary_btn_text); ?>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+            
+            <?php if (!empty($sec_btn_text)) : ?>
+            <a href="<?php echo esc_url($sec_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
+                <?php echo esc_html($sec_btn_text); ?>
+            </a>
+            <?php endif; ?>
+
+            <?php if (!empty($ter_btn_text)) : ?>
+            <a href="<?php echo esc_url($ter_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
+                <?php echo esc_html($ter_btn_text); ?>
+            </a>
+            <?php endif; ?>
+
+            <?php if (!empty($qua_btn_text)) : ?>
+            <a href="<?php echo esc_url($qua_btn_link); ?>" class="bg-white/5 hover:bg-white/10 text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md transition-all hover:-translate-y-1 text-center flex items-center justify-center">
+                <?php echo esc_html($qua_btn_text); ?>
+            </a>
+            <?php endif; ?>
         </div>
     </div>
 </section>
