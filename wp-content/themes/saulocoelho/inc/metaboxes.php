@@ -268,7 +268,7 @@ function saulocoelho_render_store_metabox($post) {
 function saulocoelho_render_course_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     
-    echo '<h3>1. Configurações Iniciais (Hero e Preço)</h3>';
+    echo '<h3>1. Configurações Iniciais (Hero e Preço) [#checkout]</h3>';
     echo '<p style="background: #f0f6fc; padding: 10px; border-left: 4px solid #007cba; font-size: 12px;">';
     echo '<strong>Dica de Âncoras:</strong> Use os IDs abaixo para criar links internos nos botões:<br>';
     echo '<code>#conteudo</code> (Módulos), <code>#beneficios</code> (Vídeo/Benefícios), <code>#alumni-galeria</code> (Fotos), <code>#checkout</code> (Preços).';
@@ -305,7 +305,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_stats);
 
-    echo '<hr><h3>3. O Que Você Vai Aprender (Currículo)</h3>';
+    echo '<hr><h3>3. O Que Você Vai Aprender (Currículo) [#conteudo]</h3>';
     $fields_learning = [
         'course_learning_title' => 'Título da Seção de Aprendizado (Ex: O que você vai aprender)',
         'course_learning_subtitle_desc' => 'Subtítulo do Aprendizado (Ex: Conteúdo estruturado...)',
@@ -314,7 +314,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_learning);
 
-    echo '<hr><h3>4. CTA Intermediário 1 (Pós-Currículo)</h3>';
+    echo '<hr><h3>4. CTA Intermediário 1 (Pós-Currículo) [#checkout]</h3>';
     $fields_cta1 = [
         'course_mid_cta_1_text' => 'Texto de Apoio (Ex: Preparado para dominar essas habilidades?)',
         'course_mid_cta_1_btn' => 'Texto do Botão (Ex: Quero começar agora - Deixe vazio para ocultar este CTA)',
@@ -322,7 +322,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_cta1);
 
-    echo '<hr><h3>5. Seção de Benefícios (Vídeo Emocional)</h3>';
+    echo '<hr><h3>5. Seção de Benefícios (Vídeo Emocional) [#beneficios]</h3>';
     $fields_benefits = [
         'course_benefits_title' => 'Título de Benefícios (Ex: Quais os Benefícios? - Deixe vazio p/ ocultar essa seção)',
         'course_benefits_desc' => 'Texto de Benefícios (Lado Esquerdo)',
@@ -330,7 +330,7 @@ function saulocoelho_render_course_metabox($post) {
     ];
     saulocoelho_render_fields($post->ID, $fields_benefits);
 
-    echo '<hr><h3>6. CTA Intermediário 2 (Pós-Benefícios)</h3>';
+    echo '<hr><h3>6. CTA Intermediário 2 (Pós-Benefícios) [#checkout]</h3>';
     $fields_cta2 = [
         'course_mid_cta_2_text' => 'Texto Forte (Ex: Você merece dar esse próximo passo na sua carreira.)',
         'course_mid_cta_2_btn' => 'Texto do Botão (Ex: Sim, eu quero garantir minha vaga - Deixe vazio p/ ocultar)',

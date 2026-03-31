@@ -23,7 +23,7 @@ add_action( 'add_meta_boxes', 'alumni_register_metabox' );
 function alumni_register_metabox() {
     add_meta_box(
         'alumni_galerias_turmas',
-        '📸 Galerias de Turmas Alumni',
+        '📸 Galerias de Turmas Alumni [#alumni-galeria]',
         'alumni_render_metabox',
         'product',
         'normal',
