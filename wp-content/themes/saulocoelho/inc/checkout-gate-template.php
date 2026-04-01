@@ -52,7 +52,7 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
     <div class="w-full max-w-2xl z-10">
         <!-- Logo / Intro -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl font-black tracking-tight mb-3">Seja bem-vindo(a)!</h1>
+            <h1 class="text-4xl font-black tracking-tight mb-3">Seja bem-vindo!</h1>
             <p class="text-white/60 text-lg">Para finalizar sua inscrição, precisamos te identificar.</p>
         </div>
 
