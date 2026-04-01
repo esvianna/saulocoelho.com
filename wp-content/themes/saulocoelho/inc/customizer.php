@@ -147,6 +147,18 @@ function saulocoelho_customize_register( $wp_customize ) {
         'type'     => 'textarea',
     ) );
 
+    // 11.1. Blog Exclude Categories
+    $wp_customize->add_setting( 'blog_exclude_categories', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'blog_exclude_categories', array(
+        'label'    => __( 'IDs de Categorias para Ocultar do Blog', 'saulocoelho' ),
+        'description' => __( 'Insira os IDs das categorias que NÃO devem aparecer no feed principal, separados por vírgula (ex: 5,12). Use isso para ocultar a categoria "Imprensa", por exemplo.', 'saulocoelho' ),
+        'section'  => 'saulocoelho_blog_section',
+        'type'     => 'text',
+    ) );
+
     // --- BLOG SINGLE (CTA) ---
 
     // 12. Blog CTA Subtitle

@@ -24,6 +24,12 @@ function saulocoelho_register_metaboxes() {
     // 2. About Page (Quem é)
     if ($template === 'page-about.php') {
         add_meta_box('about_settings', 'Configurações da Página Sobre (Quem é)', 'saulocoelho_render_about_metabox', 'page', 'normal', 'high');
+        add_meta_box('about_press_settings', 'Seção: Na Mídia / Imprensa', 'saulocoelho_render_about_press_metabox', 'page', 'normal', 'high');
+    }
+
+    // 2.1. Press Settings for Posts
+    if (get_post_type($post_id) === 'post') {
+        add_meta_box('post_press_settings', 'Informações de Imprensa / Link Externo', 'saulocoelho_render_post_press_metabox', 'post', 'side', 'default');
     }
 
     // 3. Programs & Catalog
@@ -248,6 +254,34 @@ function saulocoelho_render_about_metabox($post) {
     for ($i=1; $i<=3; $i++) {
         saulocoelho_render_group($post->ID, "about_value_$i", ['icon' => 'Ícone Material', 'title' => 'Título', 'desc' => 'Descrição']);
     }
+}
+
+// About Press Section
+function saulocoelho_render_about_press_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    
+    $cats = get_categories(array('hide_empty' => 0));
+    $cat_options = ['' => '- Ocultar esta Seção -'];
+    foreach ($cats as $cat) {
+        $cat_options[$cat->term_id] = $cat->name;
+    }
+
+    $fields = [
+        'about_press_subtitle' => 'Subtítulo (Eyebrow - ex: Recortes & Entrevistas)',
+        'about_press_title' => 'Título da Seção (ex: Saulo na Mídia)',
+        'about_press_category' => ['type' => 'select', 'label' => 'Categoria de Imprensa para Exibição', 'options' => $cat_options],
+        'about_press_limit' => ['type' => 'select', 'label' => 'Quantidade de Matérias', 'options' => ['3' => '3 Matérias', '6' => '6 Matérias', '9' => '9 Matérias', '-1' => 'Todas']],
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
+}
+
+// Post Press URL
+function saulocoelho_render_post_press_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    $val = get_post_meta($post->ID, 'press_external_url', true);
+    echo '<p><label><strong>URL da Matéria Original:</strong></label><br>';
+    echo '<input type="url" name="press_external_url" value="'.esc_url($val).'" class="widefat" placeholder="https://exemplo.com/materia">';
+    echo '<p class="description">Se preenchido, o clique no card levará para este link ao invés do post interno.</p></p>';
 }
 
 // Programs
@@ -712,7 +746,7 @@ function saulocoelho_save_metaboxes($post_id) {
     }
 
     // Loop through all POST data and save keys starting with our prefixes
-    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_', 'home_', 'contact_'];
+    $prefixes = ['hero_', 'trusted_', 'features_', 'about_', 'prog_', 'store_', 'course_', 'programs_', 'home_', 'contact_', 'press_'];
     foreach ($_POST as $key => $value) {
         $should_save = false;
         foreach ($prefixes as $p) {

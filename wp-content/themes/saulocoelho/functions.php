@@ -297,3 +297,19 @@ add_action( 'wp_footer', 'saulocoelho_viacep_checkout_script', 30 );
 if ( file_exists( __DIR__ . '/inc/customizer.php' ) ) {
     require_once __DIR__ . '/inc/customizer.php';
 }
+
+/**
+ * Otimização de Blog - Filtragem de Categorias
+ * Oculta as categorias selecionadas no Customizer do feed principal do blog.
+ */
+function saulocoelho_exclude_categories_blog( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_home() ) {
+        $exclude_ids = get_theme_mod( 'blog_exclude_categories' );
+        if ( ! empty( $exclude_ids ) ) {
+            $exclude_array = array_map( 'trim', explode( ',', $exclude_ids ) );
+            $minus_ids = array_map( function($id) { return '-' . $id; }, $exclude_array );
+            $query->set( 'cat', implode( ',', $minus_ids ) );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'saulocoelho_exclude_categories_blog' );
