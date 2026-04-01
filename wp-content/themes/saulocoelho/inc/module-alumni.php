@@ -348,7 +348,7 @@ function alumni_save_metabox( $post_id, $post ) {
         $decoded = json_decode( wp_unslash( $ids_json ), true );
         if ( is_array( $decoded ) ) {
             $ids = array_map( 'intval', $decoded );
-            $ids = array_filter( $ids, fn( $id ) => $id > 0 );
+            $ids = array_filter( $ids, function( $id ) { return $id > 0; } );
             $ids = array_values( $ids );
         }
 
