@@ -308,7 +308,16 @@ function saulocoelho_render_programs_metabox($post) {
 
     echo '<hr><h3>Cards de Programas (Até 6)</h3>';
     for ($i=1; $i<=6; $i++) {
-        saulocoelho_render_group($post->ID, "prog_card_$i", ['img' => 'Imagem de Capa', 'icon' => 'Ícone Material (Opcional)', 'title' => 'Título', 'desc' => 'Descrição', 'tag1' => 'Tag 1', 'tag2' => 'Tag 2', 'link' => 'Link do Botão']);
+        saulocoelho_render_group($post->ID, "prog_card_$i", [
+            'img' => 'Imagem de Capa', 
+            'icon' => 'Ícone Material (Opcional)', 
+            'title' => 'Título', 
+            'desc' => 'Descrição', 
+            'status' => ['type' => 'select', 'label' => 'Status da Turma', 'options' => ['aberto' => 'Inscrições Abertas', 'espera' => 'Aguarde Próxima Turma']],
+            'tag1' => 'Tag 1', 
+            'tag2' => 'Tag 2', 
+            'link' => 'Link do Botão'
+        ]);
     }
 }
 
@@ -345,6 +354,9 @@ function saulocoelho_render_course_metabox($post) {
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
         'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
+        'course_sale_status' => ['type' => 'select', 'label' => 'Status das Vendas', 'options' => ['aberto' => 'Inscrições Abertas (Normal)', 'espera' => 'Lista de Espera / Turma Fechada']],
+        'course_waitlist_btn' => 'Texto do Botão de Espera (ex: Quero entrar na lista)',
+        'course_waitlist_link' => 'Link da Lista de Espera (WhatsApp, Typeform, etc)',
         'course_price_install' => 'Valor da Parcela (ex: 12x de R$ 97,00)',
     ];
     saulocoelho_render_fields($post->ID, $fields_hero);

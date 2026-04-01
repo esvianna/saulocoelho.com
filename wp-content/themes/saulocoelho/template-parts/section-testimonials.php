@@ -118,17 +118,35 @@ function playTestimonialVideo(url) {
     const container = document.getElementById('testimonial-player-container');
     
     let embedUrl = '';
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        const id = url.split('v=')[1] || url.split('/').pop();
-        embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-    } else if (url.includes('vimeo.com')) {
-        const id = url.split('/').pop();
-        embedUrl = `https://player.vimeo.com/video/${id}?autoplay=1`;
-    } else {
-        embedUrl = url;
+    let isDirectFile = false;
+
+    // Detect direct video files (mp4, webm, mov, etc)
+    const videoExtensions = ['.mp4', '.webm', '.mov', '.ogv'];
+    if (videoExtensions.some(ext => url.toLowerCase().endsWith(ext))) {
+        isDirectFile = true;
     }
 
-    container.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    if (!isDirectFile) {
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            const id = url.split('v=')[1] || url.split('/').pop();
+            embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+        } else if (url.includes('vimeo.com')) {
+            const id = url.split('/').pop();
+            embedUrl = `https://player.vimeo.com/video/${id}?autoplay=1`;
+        } else {
+            embedUrl = url;
+        }
+
+        container.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else {
+        // Render regular video tag for local files
+        container.innerHTML = `
+            <video class="w-full h-full bg-black" controls autoplay playsinline>
+                <source src="${url}" type="video/mp4">
+                Seu navegador não suporta vídeos.
+            </video>
+        `;
+    }
     
     lightbox.classList.remove('hidden');
     lightbox.classList.add('flex');

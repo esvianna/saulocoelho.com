@@ -25,7 +25,18 @@ $stat_3_label = get_post_meta($pid, 'course_stat_3_label', true) ?: 'Conteúdo';
 $stat_4 = get_post_meta($pid, 'course_stat_4', true) ?: 'Vitalício';
 $stat_4_label = get_post_meta($pid, 'course_stat_4_label', true) ?: 'Acesso';
 $price_install = get_post_meta($pid, 'course_price_install', true) ?: 'R$ 97,00';
-$checkout_link = '?add-to-cart=' . $pid;
+
+// Waitlist Logic
+$sale_status   = get_post_meta($pid, 'course_sale_status', true) ?: 'aberto';
+$waitlist_btn  = get_post_meta($pid, 'course_waitlist_btn', true) ?: 'Quero entrar na lista de espera';
+$waitlist_link = get_post_meta($pid, 'course_waitlist_link', true) ?: '#checkout';
+$is_waitlist   = ($sale_status === 'espera');
+
+$checkout_link = $is_waitlist ? $waitlist_link : '?add-to-cart=' . $pid;
+if ($is_waitlist) {
+    $primary_btn_text = $waitlist_btn;
+    $badge = 'Nova Turma Em Breve';
+}
 
 // WooCommerce Price Logic
 $product = function_exists('wc_get_product') ? wc_get_product($pid) : null;
@@ -457,43 +468,62 @@ get_template_part( 'template-parts/section', 'testimonials' );
              <!-- Glow effect -->
             <div class="absolute -top-1/2 -left-1/2 w-full h-full bg-primary/20 blur-[120px] rounded-full"></div>
             
-            <h3 class="text-3xl md:text-5xl font-black text-white mb-6 relative z-10">Pronto para o próximo passo?</h3>
+            <h3 class="text-3xl md:text-5xl font-black text-white mb-6 relative z-10">
+                <?php echo $is_waitlist ? 'Inscrições encerradas por enquanto' : 'Pronto para o próximo passo?'; ?>
+            </h3>
             
             <div class="flex flex-col items-center gap-8 relative z-10">
                 <div class="flex flex-col items-center gap-2">
-                    <?php if ($sale_price_val) : ?>
-                        <span class="text-slate-400 text-lg">
-                            Valor à vista de <span class="line-through text-slate-500 mr-1"><?php echo wp_kses_post($regular_price_formatted); ?></span> por <strong class="text-white"><?php echo wp_kses_post($sale_price_formatted); ?></strong>
-                        </span>
+                    <?php if ($is_waitlist) : ?>
+                        <p class="text-slate-400 text-lg max-w-xl mx-auto">
+                            Esta turma já está completa, mas você pode ser o primeiro a saber quando abrirmos novas vagas. Entre para nossa lista de espera exclusiva.
+                        </p>
                     <?php else : ?>
-                        <span class="text-slate-400 text-lg">
-                            Valor à vista <strong class="text-white"><?php echo wp_kses_post($regular_price_formatted); ?></strong>
-                        </span>
+                        <?php if ($sale_price_val) : ?>
+                            <span class="text-slate-400 text-lg">
+                                Valor à vista de <span class="line-through text-slate-500 mr-1"><?php echo wp_kses_post($regular_price_formatted); ?></span> por <strong class="text-white"><?php echo wp_kses_post($sale_price_formatted); ?></strong>
+                            </span>
+                        <?php else : ?>
+                            <span class="text-slate-400 text-lg">
+                                Valor à vista <strong class="text-white"><?php echo wp_kses_post($regular_price_formatted); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                        
+                        <div class="flex items-center gap-4 mt-2">
+                            <span class="text-white text-3xl font-bold">ou 12x de</span>
+                            <span class="text-primary text-7xl font-black"><?php echo esc_html($price_install); ?></span>
+                        </div>
                     <?php endif; ?>
-                    
-                    <div class="flex items-center gap-4 mt-2">
-                        <span class="text-white text-3xl font-bold">ou 12x de</span>
-                        <span class="text-primary text-7xl font-black"><?php echo esc_html($price_install); ?></span>
-                    </div>
                 </div>
                 
                 <a href="<?php echo esc_url($checkout_link); ?>" class="w-full max-w-md bg-primary hover:bg-primary/90 text-white px-10 py-6 rounded-2xl text-2xl font-black shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 uppercase tracking-widest text-center">
-                    Quero Garantir Minha Vaga
+                    <?php echo esc_html($primary_btn_text); ?>
                 </a>
                 
                 <div class="flex flex-wrap justify-center gap-8 mt-4 pt-8 border-t border-white/5 w-full">
-                    <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-                        <span class="material-symbols-outlined text-green-500">verified_user</span>
-                        Compra 100% Segura
-                    </div>
-                    <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-                        <span class="material-symbols-outlined text-green-500">assignment_return</span>
-                        7 Dias de Garantia
-                    </div>
-                    <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-                        <span class="material-symbols-outlined text-green-500">play_circle</span>
-                        Acesso Imediato
-                    </div>
+                    <?php if (!$is_waitlist) : ?>
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-green-500">verified_user</span>
+                            Compra 100% Segura
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-green-500">assignment_return</span>
+                            7 Dias de Garantia
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-green-500">play_circle</span>
+                            Acesso Imediato
+                        </div>
+                    <?php else : ?>
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-primary">mail</span>
+                            Aviso Imediato por E-mail/WhatsApp
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-primary">priority_high</span>
+                            Vagas Limitadas por Turma
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

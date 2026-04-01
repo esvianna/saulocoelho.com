@@ -64,9 +64,10 @@ function saulocoelho_render_testimonial_metabox($post) {
     }
     echo '</select></p>';
 
-    echo '<p><label><strong>URL do Vídeo (YouTube/Vimeo):</strong></label><br>';
-    echo '<input type="url" name="testimonial_video_url" value="' . esc_url($video_url) . '" class="large-text" placeholder="https://www.youtube.com/watch?v=...">';
-    echo '<br><span class="description">Se preenchido, um ícone de "Play" aparecerá no card e abrirá o vídeo em lightbox.</span></p>';
+    echo '<p><label><strong>URL do Vídeo (YouTube, Vimeo ou Arquivo MP4):</strong></label><br>';
+    echo '<input type="url" name="testimonial_video_url" id="testimonial_video_url" value="' . esc_url($video_url) . '" class="large-text" style="width: 80%;" placeholder="https://www.youtube.com/watch?v=...">';
+    echo '<button type="button" class="button testimonial-upload-button" data-target="testimonial_video_url">Selecionar da Biblioteca</button>';
+    echo '<br><span class="description">Você pode colar um link do YouTube/Vimeo ou subir um arquivo .mp4 diretamente para a biblioteca do WordPress.</span></p>';
 
     // Selected Product (Optional)
     $products = get_posts(['post_type' => 'product', 'posts_per_page' => -1]);
@@ -76,7 +77,43 @@ function saulocoelho_render_testimonial_metabox($post) {
         echo '<option value="'.$prod->ID.'" '.selected($product_id, $prod->ID, false).'>'.$prod->post_title.'</option>';
     }
     echo '</select></p>';
+
+    // JS for Media Upload
+    ?>
+    <script>
+    jQuery(document).ready(function($){
+        var mediaUploader;
+        $('.testimonial-upload-button').click(function(e) {
+            e.preventDefault();
+            var targetId = $(this).data('target');
+            if (mediaUploader) {
+                mediaUploader.open();
+                return;
+            }
+            mediaUploader = wp.media({
+                title: 'Selecionar Vídeo',
+                button: { text: 'Usar este vídeo' },
+                multiple: false,
+                library: { type: 'video' }
+            });
+            mediaUploader.on('select', function() {
+                var attachment = mediaUploader.state().get('selection').first().toJSON();
+                $('#' + targetId).val(attachment.url);
+            });
+            mediaUploader.open();
+        });
+    });
+    </script>
+    <?php
 }
+
+function saulocoelho_testimonial_admin_scripts($hook) {
+    global $post_type;
+    if ('testimonial' === $post_type) {
+        wp_enqueue_media();
+    }
+}
+add_action('admin_enqueue_scripts', 'saulocoelho_testimonial_admin_scripts');
 
 function saulocoelho_save_testimonial_meta($post_id) {
     if (!isset($_POST['testimonial_nonce']) || !wp_verify_nonce($_POST['testimonial_nonce'], 'saulocoelho_save_testimonial')) return;
