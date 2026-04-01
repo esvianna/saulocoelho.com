@@ -97,6 +97,23 @@ $footer_terms = get_theme_mod( 'footer_terms_link', '#' );
 </footer>
 
 <!-- Back to Top Button -->
+<?php 
+$wa_enable = get_theme_mod( 'whatsapp_enable', false );
+$wa_phone = get_theme_mod( 'whatsapp_phone', '' );
+$wa_msg = get_theme_mod( 'whatsapp_message', 'Olá! Gostaria de saber mais sobre os seus serviços.' );
+
+if ( $wa_enable && ! empty( $wa_phone ) ) : 
+    $wa_url = 'https://api.whatsapp.com/send?phone=55' . preg_replace('/\D/', '', $wa_phone) . '&text=' . urlencode( $wa_msg );
+?>
+    <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" id="whatsapp-float" class="fixed bottom-[6.5rem] right-8 z-[90] w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-[0_10px_20px_rgba(37,211,102,0.3)] transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(37,211,102,0.4)] group" title="Falar com a Equipe">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.522-2.961-2.638-.086-.115-.718-.954-.718-1.815 0-.861.452-1.281.612-1.441.16-.16.347-.2.463-.2h.334c.108 0 .252-.04.394.303l.473 1.157c.044.106.074.23.002.377-.071.148-.107.247-.213.372-.106.124-.22.277-.314.372-.105.105-.213.22-.093.426.12.206.534.882 1.146 1.428.788.701 1.447.918 1.653 1.02.206.103.328.087.45-.054.123-.141.52-.605.66-.813.14-.209.28-.175.474-.101l1.492.703c.194.095.324.143.372.226.048.082.048.476-.096.881zM12.004 2.013c4.502-.009 8.198 3.674 8.207 8.175.008 4.401-3.472 7.971-7.82 8.158l.001.001c-1.248.021-2.43-.238-3.474-.712l-4.144 1.09 1.114-4.068c-.628-1.127-.991-2.438-.988-3.834.01-4.504 3.702-8.211 8.104-8.2zm0 1.65c-3.51.008-6.383 2.881-6.391 6.39-.002 1.353.424 2.377 1.01 3.298l-.151.551 1.4-.368-.137.5c-.172.63-.441 1.611-.349 1.27l-.46 1.685 1.735-.456.327.204c.947.591 1.986.938 3.109.921 3.427-.08 6.257-2.848 6.251-6.275-.006-3.421-2.775-6.195-6.194-6.23z"/></svg>
+        
+        <span class="absolute right-full mr-4 bg-white text-slate-800 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+            Falar com a Equipe
+        </span>
+    </a>
+<?php endif; ?>
+
 <button id="back-to-top" class="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-2xl bg-background-dark-alt/40 backdrop-blur-xl border border-white/10 text-slate-400 flex items-center justify-center transition-all duration-500 opacity-0 transform translate-y-10 pointer-events-none hover:border-primary hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(19,127,236,0.3)] group" title="Voltar ao Topo">
     <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
     <span class="material-symbols-outlined text-2xl relative z-10 font-bold">north</span>

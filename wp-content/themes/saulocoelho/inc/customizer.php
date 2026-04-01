@@ -247,6 +247,53 @@ function saulocoelho_customize_register( $wp_customize ) {
         'priority' => 115,
     ) );
 
+    // Add WhatsApp Section
+    $wp_customize->add_section( 'saulocoelho_whatsapp_section', array(
+        'title'    => __( 'Botão WhatsApp Flutuante', 'saulocoelho' ),
+        'priority' => 118,
+    ) );
+
+    // 23. WhatsApp: Enable
+    $wp_customize->add_setting( 'whatsapp_enable', array(
+        'default'           => false,
+        'sanitize_callback' => 'saulocoelho_sanitize_checkbox',
+    ) );
+    $wp_customize->add_control( 'whatsapp_enable', array(
+        'label'    => __( 'Ativar Botão Flutuante?', 'saulocoelho' ),
+        'section'  => 'saulocoelho_whatsapp_section',
+        'type'     => 'checkbox',
+    ) );
+
+    // 24. WhatsApp: Phone
+    $wp_customize->add_setting( 'whatsapp_phone', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'whatsapp_phone', array(
+        'label'    => __( 'Número do WhatsApp (com DDD)', 'saulocoelho' ),
+        'description' => __( 'Ex: 11988887777 (apenas números)', 'saulocoelho' ),
+        'section'  => 'saulocoelho_whatsapp_section',
+        'type'     => 'text',
+    ) );
+
+    // 25. WhatsApp: Message
+    $wp_customize->add_setting( 'whatsapp_message', array(
+        'default'           => 'Olá! Gostaria de saber mais sobre os seus serviços.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'whatsapp_message', array(
+        'label'    => __( 'Mensagem Inicial', 'saulocoelho' ),
+        'section'  => 'saulocoelho_whatsapp_section',
+        'type'     => 'text',
+    ) );
+
+    // Checkbox sanitizer
+    if ( ! function_exists( 'saulocoelho_sanitize_checkbox' ) ) {
+        function saulocoelho_sanitize_checkbox( $checked ) {
+            return ( ( isset( $checked ) && true === $checked ) ? true : false );
+        }
+    }
+
     // 19. Contact Hero Title
     $wp_customize->add_setting( 'contact_hero_title', array(
         'default'           => 'Prepare-se para o Próximo Nível',
