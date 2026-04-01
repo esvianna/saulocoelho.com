@@ -19,62 +19,120 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
     </p>
 </div>
 
-<!-- Program Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-    <?php 
-    for ($i = 1; $i <= 6; $i++) {
-        $title = get_post_meta($post_id, "prog_card_{$i}_title", true);
-        if (!$title && $i > 4) continue;
-        
-        $img    = get_post_meta($post_id, "prog_card_{$i}_img", true);
-        $icon   = get_post_meta($post_id, "prog_card_{$i}_icon", true) ?: 'school';
-        $desc   = get_post_meta($post_id, "prog_card_{$i}_desc", true) ?: 'Breve descrição do programa.';
-        $link   = get_post_meta($post_id, "prog_card_{$i}_link", true) ?: '#';
-        $status = get_post_meta($post_id, "prog_card_{$i}_status", true) ?: 'aberto';
-        $title  = $title ?: "Programa $i";
+<!-- Program Grid Logic -->
+<?php 
+$open_programs = [];
+$wait_programs = [];
 
-        $is_open = ($status === 'aberto');
-    ?>
-    <div class="group flex flex-col bg-slate-900/40 rounded-3xl border border-white/5 overflow-hidden hover:bg-slate-900/60 transition-all hover:border-primary/50 <?php echo !$is_open ? 'opacity-80' : ''; ?>">
-        <div class="aspect-[3/4] relative overflow-hidden bg-slate-800">
-            <!-- Badge de Status -->
-            <div class="absolute top-4 left-4 z-20">
-                <?php if ($is_open) : ?>
-                    <span class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                        Inscrições Abertas
-                    </span>
-                <?php else : ?>
-                    <span class="bg-slate-800/90 text-slate-300 text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">
-                        Aguarde Próxima Turma
-                    </span>
-                <?php endif; ?>
-            </div>
+for ($i = 1; $i <= 10; $i++) { // Aumentei para 10 por segurança
+    $title = get_post_meta($post_id, "prog_card_{$i}_title", true);
+    if (!$title && $i > 3) continue;
+    
+    $data = [
+        'title'  => $title ?: "Programa $i",
+        'img'    => get_post_meta($post_id, "prog_card_{$i}_img", true),
+        'icon'   => get_post_meta($post_id, "prog_card_{$i}_icon", true) ?: 'school',
+        'desc'   => get_post_meta($post_id, "prog_card_{$i}_desc", true) ?: 'Breve descrição do programa.',
+        'link'   => get_post_meta($post_id, "prog_card_{$i}_link", true) ?: '#',
+        'status' => get_post_meta($post_id, "prog_card_{$i}_status", true) ?: 'aberto',
+    ];
 
-            <?php if ($img) : ?>
-                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-cover transition-transform duration-700 <?php echo $is_open ? 'group-hover:scale-110' : 'grayscale-[0.5]'; ?>">
-            <?php else : ?>
-                <div class="w-full h-full flex items-center justify-center opacity-20">
-                    <span class="material-symbols-outlined text-6xl"><?php echo esc_html($icon); ?></span>
-                </div>
-            <?php endif; ?>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
-        </div>
-        
-        <div class="p-8 flex flex-col flex-1">
-            <h3 class="text-xl font-bold text-white mb-3 <?php echo $is_open ? 'group-hover:text-primary' : ''; ?> transition-colors leading-tight"><?php echo esc_html($title); ?></h3>
-            <p class="text-[13px] text-slate-400 mb-8 font-light leading-relaxed line-clamp-3 italic opacity-70"><?php echo esc_html($desc); ?></p>
-            
-            <div class="mt-auto pt-6 border-t border-white/5">
-                <a href="<?php echo esc_url($link); ?>" class="inline-flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-widest hover:gap-3 transition-all">
-                    <?php echo $is_open ? 'Garanta Sua Vaga' : 'Saiba Mais / Lista de Espera'; ?> 
-                    <span class="material-symbols-outlined text-xs">arrow_forward</span>
-                </a>
-            </div>
-        </div>
+    if ($data['status'] === 'aberto') {
+        $open_programs[] = $data;
+    } else {
+        $wait_programs[] = $data;
+    }
+}
+?>
+
+<!-- Seção 1: Inscrições Abertas -->
+<?php if (!empty($open_programs)) : ?>
+<div class="mb-12">
+    <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-2xl font-black text-white uppercase tracking-wider">Inscrições Abertas</h2>
+        <div class="h-px flex-1 bg-white/10"></div>
     </div>
-    <?php } ?>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php foreach ($open_programs as $prog) : ?>
+            <div class="group flex flex-col bg-slate-900/40 rounded-3xl border border-white/5 overflow-hidden hover:bg-slate-900/60 transition-all hover:border-primary/50">
+                <div class="aspect-[3/4] relative overflow-hidden bg-slate-800">
+                    <div class="absolute top-4 left-4 z-20">
+                        <span class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                            Inscrições Abertas
+                        </span>
+                    </div>
+
+                    <?php if ($prog['img']) : ?>
+                        <img src="<?php echo esc_url($prog['img']); ?>" alt="<?php echo esc_attr($prog['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <?php else : ?>
+                        <div class="w-full h-full flex items-center justify-center opacity-20">
+                            <span class="material-symbols-outlined text-6xl"><?php echo esc_html($prog['icon']); ?></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                </div>
+                
+                <div class="p-8 flex flex-col flex-1">
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight"><?php echo esc_html($prog['title']); ?></h3>
+                    <p class="text-[13px] text-slate-400 mb-8 font-light leading-relaxed line-clamp-3 italic opacity-70"><?php echo esc_html($prog['desc']); ?></p>
+                    
+                    <div class="mt-auto pt-6 border-t border-white/5">
+                        <a href="<?php echo esc_url($prog['link']); ?>" class="inline-flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-widest hover:gap-3 transition-all">
+                            Garanta Sua Vaga 
+                            <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
+<?php endif; ?>
+
+<!-- Seção 2: Próximas Turmas / Lista de Espera -->
+<?php if (!empty($wait_programs)) : ?>
+<div class="mt-24">
+    <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-2xl font-black text-slate-400 uppercase tracking-wider">Aguarde Próximas Turmas</h2>
+        <div class="h-px flex-1 bg-white/5"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <?php foreach ($wait_programs as $prog) : ?>
+            <div class="group flex flex-col bg-slate-900/20 rounded-3xl border border-white/5 overflow-hidden transition-all opacity-80 hover:opacity-100">
+                <div class="aspect-[3/4] relative overflow-hidden bg-slate-800">
+                    <div class="absolute top-4 left-4 z-20">
+                        <span class="bg-slate-800/90 text-slate-300 text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+                            Em Breve
+                        </span>
+                    </div>
+
+                    <?php if ($prog['img']) : ?>
+                        <img src="<?php echo esc_url($prog['img']); ?>" alt="<?php echo esc_attr($prog['title']); ?>" class="w-full h-full object-cover grayscale-[0.5]">
+                    <?php else : ?>
+                        <div class="w-full h-full flex items-center justify-center opacity-20">
+                            <span class="material-symbols-outlined text-6xl"><?php echo esc_html($prog['icon']); ?></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                </div>
+                
+                <div class="p-6 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold text-white/80 mb-2 leading-tight"><?php echo esc_html($prog['title']); ?></h3>
+                    <p class="text-xs text-slate-500 mb-6 font-light leading-relaxed line-clamp-2 italic opacity-70"><?php echo esc_html($prog['desc']); ?></p>
+                    
+                    <div class="mt-auto pt-4 border-t border-white/5">
+                        <a href="<?php echo esc_url($prog['link']); ?>" class="inline-flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-widest hover:gap-3 transition-all">
+                            Saiba Mais / Lista de Espera 
+                            <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endif; ?>
 
 <!-- Footer CTA -->
 <div class="mt-24 rounded-3xl bg-slate-900 p-12 text-center border border-white/5 relative overflow-hidden shadow-2xl">

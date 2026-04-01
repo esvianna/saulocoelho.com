@@ -339,6 +339,17 @@ function saulocoelho_render_course_metabox($post) {
     echo '<strong>Dica de Âncoras:</strong> Use os IDs abaixo para criar links internos nos botões:<br>';
     echo '<code>#conteudo</code> (Ementa), <code>#modulos</code> (Módulos), <code>#beneficios</code> (Vídeo), <code>#alumni-galeria</code> (Galeria), <code>#incluso</code> (Itens Inclusos), <code>#logistica</code> (Logística), <code>#checkout</code> (Preços).';
     echo '</p>';
+
+    // ── 0. Configurações de Status (PRIORIDADE) ──────────────────────────
+    echo '<div style="background: #f0f6fc; padding: 20px; border: 1px solid #c3d9ef; border-radius: 8px; margin-bottom: 20px;">';
+    echo '<h3 style="margin-top: 0; color: #1d2327;"><span class="dashicons dashicons-cart" style="vertical-align: middle; margin-right: 8px;"></span> Status de Comercialização</h3>';
+    $fields_status = [
+        'course_sale_status' => ['type' => 'select', 'label' => 'Status das Vendas', 'options' => ['aberto' => 'Inscrições Abertas (Normal)', 'espera' => 'Lista de Espera / Turma Fechada']],
+        'course_waitlist_btn' => 'Texto do Botão de Espera (ex: Quero entrar na lista)',
+        'course_waitlist_link' => 'Link da Lista de Espera (WhatsApp, Typeform, etc)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_status);
+    echo '</div>';
     
     $fields_hero = [
         'course_type' => ['type' => 'select', 'label' => 'Modalidade do Curso', 'options' => ['online' => '100% Online', 'presencial' => 'Imersão Presencial']],
@@ -354,9 +365,6 @@ function saulocoelho_render_course_metabox($post) {
         'course_video_url' => 'URL da Imagem/Capa do Vídeo',
         'course_actual_video_url' => 'URL Real do Vídeo Público (Opcional - YouTube/Vimeo)',
         'course_video_mode' => ['type' => 'select', 'label' => 'Modo de Reprodução do Vídeo', 'options' => ['inline' => 'Substituir a Imagem e Tocar na Caixa (Padrão)', 'lightbox' => 'Abrir em Tela Cheia (Janela Pop-up)']],
-        'course_sale_status' => ['type' => 'select', 'label' => 'Status das Vendas', 'options' => ['aberto' => 'Inscrições Abertas (Normal)', 'espera' => 'Lista de Espera / Turma Fechada']],
-        'course_waitlist_btn' => 'Texto do Botão de Espera (ex: Quero entrar na lista)',
-        'course_waitlist_link' => 'Link da Lista de Espera (WhatsApp, Typeform, etc)',
         'course_price_install' => 'Valor da Parcela (ex: 12x de R$ 97,00)',
     ];
     saulocoelho_render_fields($post->ID, $fields_hero);
