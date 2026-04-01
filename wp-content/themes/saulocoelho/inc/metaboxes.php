@@ -19,6 +19,7 @@ function saulocoelho_register_metaboxes() {
         add_meta_box('home_hero_settings', '1. Configurações da Home: Hero', 'saulocoelho_render_home_hero_metabox', 'page', 'normal', 'high');
         add_meta_box('home_trusted_settings', '2. Configurações da Home: Parceiros (Trusted Logos)', 'saulocoelho_render_home_trusted_metabox', 'page', 'normal', 'high');
         add_meta_box('home_features_settings', '3. Configurações da Home: Autoridade e Serviços', 'saulocoelho_render_home_features_metabox', 'page', 'normal', 'high');
+        add_meta_box('home_testimonials_settings', '4. Configurações da Home: Depoimentos', 'saulocoelho_render_home_testimonials_metabox', 'page', 'normal', 'high');
     }
 
     // 2. About Page (Quem é)
@@ -168,6 +169,16 @@ function saulocoelho_render_home_features_metabox($post) {
     }
     echo '</div>';
     echo '<button type="button" class="button button-primary js-add-feature">+ Adicionar Novo Item</button><br><br>';
+}
+
+// Home: Testimonials
+function saulocoelho_render_home_testimonials_metabox($post) {
+    wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
+    $fields = [
+        'home_testimonials_title' => 'Título da Seção de Depoimentos (ex: O que dizem nossos alunos)',
+        'home_testimonials_ids' => 'IDs dos Depoimentos em Destaque (separados por vírgula - Deixe vazio para carregar os últimos)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields);
 }
 
 // About
@@ -445,6 +456,14 @@ function saulocoelho_render_course_metabox($post) {
     for ($i=1; $i<=8; $i++) {
         saulocoelho_render_group($post->ID, "course_mod_$i", ['title' => 'Título do Módulo', 'desc' => 'Descrição do Módulo']);
     }
+
+    echo '<hr><h3>7. Configurações de Depoimentos <code style="font-size:12px; float:right;">#depoimentos</code></h3>';
+    $testimonial_fields = [
+        'course_testimonials_title' => 'Título da Seção de Depoimentos (ex: Alunos que transformaram suas carreiras)',
+        'course_testimonials_ids' => 'IDs dos Depoimentos Manuais (separados por vírgula - Deixe vazio para carregar automáticos)',
+        'course_enable_reviews' => ['type' => 'select', 'label' => 'Habilitar Formulário de Avaliação?', 'options' => ['yes' => 'Sim', 'no' => 'Não']],
+    ];
+    saulocoelho_render_fields($post->ID, $testimonial_fields);
 }
 
 // Contact Page

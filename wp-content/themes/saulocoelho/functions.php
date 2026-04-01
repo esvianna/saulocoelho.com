@@ -299,6 +299,13 @@ if ( file_exists( __DIR__ . '/inc/customizer.php' ) ) {
 }
 
 /**
+ * Módulo de Testemunhos e Prova Social
+ */
+if ( file_exists( __DIR__ . '/inc/module-testimonials.php' ) ) {
+    require_once __DIR__ . '/inc/module-testimonials.php';
+}
+
+/**
  * Otimização de Blog - Filtragem de Categorias
  * Oculta as categorias selecionadas no Customizer do feed principal do blog.
  */

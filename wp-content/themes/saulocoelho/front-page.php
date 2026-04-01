@@ -10,6 +10,7 @@ get_header(); ?>
     get_template_part( 'template-parts/content', 'hero' );
     get_template_part( 'template-parts/content', 'trusted' );
     get_template_part( 'template-parts/content', 'features' );
+    get_template_part( 'template-parts/section', 'testimonials' );
     ?>
 </main>
 

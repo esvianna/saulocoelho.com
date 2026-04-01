@@ -445,6 +445,11 @@ if ($actual_video_url) {
 </section>
 <?php endif; ?>
 
+<?php 
+// Testimonials Section
+get_template_part( 'template-parts/section', 'testimonials' ); 
+?>
+
 <!-- Pricing -->
 <section class="py-24 relative overflow-hidden" id="checkout">
     <div class="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
@@ -494,6 +499,11 @@ if ($actual_video_url) {
         </div>
     </div>
 </section>
+
+<?php 
+// Form for students to leave reviews (Logged-in only)
+get_template_part( 'template-parts/form-review' ); 
+?>
 
 <!-- Lightbox Modal -->
 <div id="course-video-lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300">
