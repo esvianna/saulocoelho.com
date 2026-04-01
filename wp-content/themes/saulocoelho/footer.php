@@ -96,6 +96,35 @@ $footer_terms = get_theme_mod( 'footer_terms_link', '#' );
     </div>
 </footer>
 
+<!-- Back to Top Button -->
+<button id="back-to-top" class="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-2xl bg-background-dark-alt/40 backdrop-blur-xl border border-white/10 text-slate-400 flex items-center justify-center transition-all duration-500 opacity-0 transform translate-y-10 pointer-events-none hover:border-primary hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(19,127,236,0.3)] group" title="Voltar ao Topo">
+    <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+    <span class="material-symbols-outlined text-2xl relative z-10 font-bold">north</span>
+</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTop.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            } else {
+                backToTop.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTop.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
 <?php wp_footer(); ?>
 </body>
 </html>
