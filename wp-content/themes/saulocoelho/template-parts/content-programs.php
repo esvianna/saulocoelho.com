@@ -1,5 +1,6 @@
 <?php
 $post_id = get_the_ID();
+$prog_eyebrow = get_post_meta($post_id, 'programs_eyebrow', true) ?: 'Nossas Formações';
 $prog_title_1 = get_post_meta($post_id, 'programs_title_1', true) ?: 'Catálogo de';
 $prog_title_2 = get_post_meta($post_id, 'programs_title_2', true) ?: 'Programas e Mentoria';
 $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodologias exclusivas desenhadas para profissionais que buscam excelência operacional e liderança estratégica.';
@@ -9,7 +10,7 @@ $prog_desc = get_post_meta($post_id, 'programs_description', true) ?: 'Metodolog
 <div class="mb-16 flex flex-col gap-6 max-w-3xl">
     <div class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.3em] uppercase">
         <span class="h-px w-8 bg-primary"></span>
-        Nossas Soluções
+        <?php echo esc_html($prog_eyebrow); ?>
     </div>
     <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
         <?php echo esc_html($prog_title_1); ?> <span class="text-primary"><?php echo esc_html($prog_title_2); ?></span>

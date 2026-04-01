@@ -300,25 +300,13 @@ function saulocoelho_render_programs_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     
     $fields = [
+        'programs_eyebrow' => 'Texto de Destaque (Eyebrow - ex: Nossas Formações)',
         'programs_title_1' => 'Título Linha 1 (Branco)',
         'programs_title_2' => 'Título Linha 2 (Azul)',
         'programs_description' => 'Descrição da Seção',
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
-    echo '<hr><h3>Cards de Programas (Até 6)</h3>';
-    for ($i=1; $i<=6; $i++) {
-        saulocoelho_render_group($post->ID, "prog_card_$i", [
-            'img' => 'Imagem de Capa', 
-            'icon' => 'Ícone Material (Opcional)', 
-            'title' => 'Título', 
-            'desc' => 'Descrição', 
-            'status' => ['type' => 'select', 'label' => 'Status da Turma', 'options' => ['aberto' => 'Inscrições Abertas', 'espera' => 'Aguarde Próxima Turma']],
-            'tag1' => 'Tag 1', 
-            'tag2' => 'Tag 2', 
-            'link' => 'Link do Botão'
-        ]);
-    }
 }
 
 // Store
