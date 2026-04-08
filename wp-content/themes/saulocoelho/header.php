@@ -158,9 +158,11 @@
             }
             #main-nav.active a {
                 font-size: 1.25rem !important;
-                font-weight: 900 !important;
+                font-weight: 700 !important;
                 letter-spacing: 0.2em !important;
                 justify-content: center !important;
+                line-height: 1.5 !important;
+                padding: 0.5rem 0 !important;
             }
             /* Mobile Dropdown (expanded inline) */
             #main-nav.active .sub-menu {
