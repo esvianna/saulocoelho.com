@@ -25,24 +25,15 @@
       }
     </script>
     <style>
-        /* Force styling for WordPress dynamic menu */
-        #main-nav > ul {
-            display: flex !important;
-            align-items: center !important;
-            gap: 2.5rem !important; /* gap-10 */
-            list-style: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
+        /* Typography and general links (Mobile & Desktop) */
         #main-nav li {
             list-style: none !important;
             margin: 0 !important;
             position: relative;
         }
         #main-nav a {
-            font-size: 0.825rem !important; /* text-sm/xs */
             font-weight: 700 !important;
-            color: #ffffff !important; /* Changed to pure white for MAX contrast */
+            color: #ffffff !important;
             text-transform: uppercase !important;
             letter-spacing: 0.15em !important;
             text-decoration: none !important;
@@ -52,30 +43,43 @@
             gap: 0.25rem !important;
         }
         #main-nav > ul > li > a:hover {
-            color: #3b82f6 !important; /* text-primary light */
+            color: #3b82f6 !important;
         }
 
-        /* Dropdown indicator */
+        /* Dropdown indicator (Desktop & Mobile) */
         #main-nav .menu-item-has-children > a::after {
-            content: "\e313"; /* expand_more material symbol */
+            content: "\e313";
             font-family: 'Material Symbols Outlined' !important;
             font-weight: normal !important;
             font-size: 1.25rem !important;
             transition: transform 0.3s ease !important;
         }
-        #main-nav .menu-item-has-children:hover > a::after {
-            transform: rotate(-180deg) !important;
-        }
 
-        /* Desktop Dropdown Styles */
+        /* ================= Desktop Specific (lg) ================= */
         @media (min-width: 1024px) {
+            /* Force horizontal layout only in desktop */
+            #main-nav > ul {
+                display: flex !important;
+                align-items: center !important;
+                gap: 2.5rem !important;
+                list-style: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            #main-nav a {
+                font-size: 0.825rem !important;
+            }
+            #main-nav .menu-item-has-children:hover > a::after {
+                transform: rotate(-180deg) !important;
+            }
+            /* Desktop Dropdown Styles */
             #main-nav .sub-menu {
                 position: absolute !important;
                 top: 100% !important;
                 left: 50% !important;
                 transform: translateX(-50%) translateY(15px) !important;
                 min-width: 14rem !important;
-                background-color: rgba(10, 17, 24, 0.95) !important; /* dark glassmorphism */
+                background-color: rgba(10, 17, 24, 0.95) !important;
                 backdrop-filter: blur(16px) !important;
                 border: 1px solid rgba(255, 255, 255, 0.05) !important;
                 border-radius: 0.75rem !important;
@@ -123,27 +127,34 @@
             }
         }
 
-        /* Mobile menu specific styles */
+        /* ================= Mobile Specific (< 1024px) ================= */
         @media (max-width: 1023px) {
             #main-nav.active {
                 display: flex !important;
-                position: fixed !important;
-                inset: 0 !important;
+                position: absolute !important;
+                top: 5rem !important; /* height of header (h-20 = 5rem) */
+                left: 0 !important;
+                right: 0 !important;
+                height: 100vh !important;
                 background: rgba(10, 17, 24, 0.98) !important;
                 backdrop-filter: blur(20px) !important;
                 flex-direction: column !important;
-                justify-content: center !important;
+                justify-content: flex-start !important;
                 align-items: center !important;
                 z-index: 40 !important;
+                padding-top: 3rem !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
             }
             #main-nav.active > ul {
+                display: flex !important;
                 flex-direction: column !important;
                 gap: 1.5rem !important;
                 text-align: center !important;
                 width: 100% !important;
                 overflow-y: auto !important;
                 max-height: 80vh !important;
-                padding: 2rem !important;
+                padding: 0 2rem 5rem 2rem !important; /* Safe padding no mobile */
+                margin: 0 !important;
             }
             #main-nav.active a {
                 font-size: 1.25rem !important;
@@ -151,7 +162,7 @@
                 letter-spacing: 0.2em !important;
                 justify-content: center !important;
             }
-            /* Mobile Dropdown */
+            /* Mobile Dropdown (expanded inline) */
             #main-nav.active .sub-menu {
                 display: flex !important;
                 flex-direction: column !important;
