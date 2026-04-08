@@ -300,10 +300,12 @@ function saulocoelho_render_programs_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     
     $fields = [
-        'programs_eyebrow' => 'Texto de Destaque (Eyebrow - ex: Nossas Formações)',
+        'programs_eyebrow' => 'Texto de Destaque (Eyebrow - ex: Ecossistema de Formação)',
         'programs_title_1' => 'Título Linha 1 (Branco)',
         'programs_title_2' => 'Título Linha 2 (Azul)',
-        'programs_description' => 'Descrição da Seção',
+        'programs_description' => 'Texto de Apresentação Explicativa (Lado Esquerdo)',
+        'programs_video_url' => '📱 Link do Vídeo Institucional de Formações (YouTube, Vimeo ou MP4)',
+        'programs_video_thumb' => '🖼️ Capa Customizada para o Vídeo (Opcional)'
     ];
     saulocoelho_render_fields($post->ID, $fields);
 
