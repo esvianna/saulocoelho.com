@@ -299,16 +299,44 @@ function saulocoelho_render_post_press_metabox($post) {
 function saulocoelho_render_programs_metabox($post) {
     wp_nonce_field('saulocoelho_save_metabox', 'saulocoelho_nonce');
     
-    $fields = [
+    echo '<h3>1. Seção Principal (Hero Especial)</h3>';
+    $fields_main = [
         'programs_eyebrow' => 'Texto de Destaque (Eyebrow - ex: Ecossistema de Formação)',
         'programs_title_1' => 'Título Linha 1 (Branco)',
         'programs_title_2' => 'Título Linha 2 (Azul)',
         'programs_description' => 'Texto de Apresentação Explicativa (Lado Esquerdo)',
-        'programs_video_url' => '📱 Link do Vídeo Institucional de Formações (YouTube, Vimeo ou MP4)',
+        'programs_hero_btn_text' => 'Texto do Botão Hero (ex: Explorar Programas)',
+        'programs_video_url' => '📱 Link do Vídeo Institucional (YouTube, Vimeo ou MP4)',
         'programs_video_thumb' => '🖼️ Capa Customizada para o Vídeo (Opcional)'
     ];
-    saulocoelho_render_fields($post->ID, $fields);
+    saulocoelho_render_fields($post->ID, $fields_main);
 
+    echo '<hr><h3>2. Configurações da Vitrine (Carrossel)</h3>';
+    $fields_vitrine = [
+        'programs_carousel_title' => 'Título do Carrossel (ex: A Jornada do Conhecimento)',
+        'programs_endcard_title' => 'Título do Standby (Card Final) (ex: Mais Novidades em Breve)',
+        'programs_endcard_desc' => 'Descrição do Standby',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_vitrine);
+
+    echo '<hr><h3>3. Banner CTA de Conversão (Avaliação)</h3>';
+    $fields_cta1 = [
+        'programs_cta1_tag' => 'Tag Superior (ex: Atendimento Especializado)',
+        'programs_cta1_title' => 'Título da Seção',
+        'programs_cta1_desc' => 'Texto Argumentativo',
+        'programs_cta1_btn_text' => 'Texto do Botão (ex: Falar com Consultor)',
+        'programs_cta1_btn_link' => 'Link do Botão (ex: #contato)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_cta1);
+
+    echo '<hr><h3>4. CTA In-Company (Encerramento do Rodapé)</h3>';
+    $fields_cta2 = [
+        'programs_cta2_title' => 'Título Principal',
+        'programs_cta2_desc' => 'Texto Descritivo',
+        'programs_cta2_btn_text' => 'Texto do Botão (ex: Solicitar Orçamento In-company)',
+        'programs_cta2_btn_link' => 'Link do Botão (ex: #contato)',
+    ];
+    saulocoelho_render_fields($post->ID, $fields_cta2);
 }
 
 // Store
