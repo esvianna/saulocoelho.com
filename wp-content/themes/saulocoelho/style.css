@@ -223,10 +223,12 @@ h1, h2, h3, h4, h5, h6,
    Pagination: Premium Style
    ========================================================================== */
 
-.pagination {
+.pagination .nav-links {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     align-items: center;
+    justify-content: center;
 }
 
 .pagination .page-numbers {
