@@ -26,7 +26,7 @@
     </script>
     <style>
         /* Force styling for WordPress dynamic menu */
-        nav ul {
+        #main-nav > ul {
             display: flex !important;
             align-items: center !important;
             gap: 2.5rem !important; /* gap-10 */
@@ -34,40 +34,145 @@
             margin: 0 !important;
             padding: 0 !important;
         }
-        nav ul li {
+        #main-nav li {
             list-style: none !important;
             margin: 0 !important;
+            position: relative;
         }
-        nav ul li a {
+        #main-nav a {
             font-size: 0.825rem !important; /* text-sm/xs */
             font-weight: 700 !important;
             color: #ffffff !important; /* Changed to pure white for MAX contrast */
             text-transform: uppercase !important;
             letter-spacing: 0.15em !important;
             text-decoration: none !important;
-            transition: color 0.2s !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.25rem !important;
         }
-        nav ul li a:hover {
+        #main-nav > ul > li > a:hover {
             color: #3b82f6 !important; /* text-primary light */
         }
+
+        /* Dropdown indicator */
+        #main-nav .menu-item-has-children > a::after {
+            content: "\e313"; /* expand_more material symbol */
+            font-family: 'Material Symbols Outlined' !important;
+            font-weight: normal !important;
+            font-size: 1.25rem !important;
+            transition: transform 0.3s ease !important;
+        }
+        #main-nav .menu-item-has-children:hover > a::after {
+            transform: rotate(-180deg) !important;
+        }
+
+        /* Desktop Dropdown Styles */
+        @media (min-width: 1024px) {
+            #main-nav .sub-menu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 50% !important;
+                transform: translateX(-50%) translateY(15px) !important;
+                min-width: 14rem !important;
+                background-color: rgba(10, 17, 24, 0.95) !important; /* dark glassmorphism */
+                backdrop-filter: blur(16px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.05) !important;
+                border-radius: 0.75rem !important;
+                padding: 0.5rem !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
+                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0.25rem !important;
+                z-index: 50 !important;
+            }
+            #main-nav .menu-item-has-children:hover > .sub-menu {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateX(-50%) translateY(0) !important;
+            }
+            #main-nav .sub-menu li {
+                width: 100% !important;
+            }
+            #main-nav .sub-menu li a {
+                padding: 0.75rem 1rem !important;
+                border-radius: 0.5rem !important;
+                font-size: 0.75rem !important;
+                color: rgba(255,255,255,0.7) !important;
+                justify-content: flex-start !important;
+                width: 100% !important;
+            }
+            #main-nav .sub-menu li a:hover {
+                background: rgba(255, 255, 255, 0.05) !important;
+                color: #ffffff !important;
+            }
+            #main-nav .sub-menu .menu-item-has-children > a::after {
+                transform: rotate(-90deg) !important;
+                margin-left: auto !important;
+            }
+            #main-nav .sub-menu .menu-item-has-children > .sub-menu {
+                left: 100% !important;
+                top: 0 !important;
+                transform: translateX(15px) translateY(0) !important;
+            }
+            #main-nav .sub-menu .menu-item-has-children:hover > .sub-menu {
+                transform: translateX(0) translateY(0) !important;
+            }
+        }
+
         /* Mobile menu specific styles */
         @media (max-width: 1023px) {
             #main-nav.active {
                 display: flex !important;
-                position: fixed;
-                top: 5rem; /* h-20 */
-                left: 0;
-                width: 100%;
-                height: calc(100vh - 5rem);
-                background-color: rgba(16, 25, 34, 0.98); /* background-dark */
-                backdrop-filter: blur(12px);
-                flex-direction: column;
-                justify-content: center;
-                z-index: 40;
-            }
-            #main-nav.active ul {
+                position: fixed !important;
+                inset: 0 !important;
+                background: rgba(10, 17, 24, 0.98) !important;
+                backdrop-filter: blur(20px) !important;
                 flex-direction: column !important;
-                gap: 2rem !important;
+                justify-content: center !important;
+                align-items: center !important;
+                z-index: 40 !important;
+            }
+            #main-nav.active > ul {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+                text-align: center !important;
+                width: 100% !important;
+                overflow-y: auto !important;
+                max-height: 80vh !important;
+                padding: 2rem !important;
+            }
+            #main-nav.active a {
+                font-size: 1.25rem !important;
+                font-weight: 900 !important;
+                letter-spacing: 0.2em !important;
+                justify-content: center !important;
+            }
+            /* Mobile Dropdown */
+            #main-nav.active .sub-menu {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+                margin-top: 1rem !important;
+                padding-top: 1rem !important;
+                padding-bottom: 0.5rem !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                width: 100% !important;
+            }
+            #main-nav.active .sub-menu li a {
+                font-size: 0.85rem !important;
+                color: rgba(255, 255, 255, 0.7) !important;
+                letter-spacing: 0.15em !important;
+                font-weight: 700 !important;
+            }
+            #main-nav.active .menu-item-has-children > a::after {
+                display: none !important;
+            }
+            #main-nav.active > ul > li {
+                width: 100% !important;
             }
         }
     </style>
@@ -78,54 +183,6 @@
     document.body.style.backgroundColor = '#0a1118';
 </script>
 <?php wp_body_open(); ?>
-
-<style>
-    #main-nav.active {
-        display: flex !important;
-        position: fixed;
-        inset: 0;
-        background: rgba(10, 17, 24, 0.98);
-        backdrop-filter: blur(20px);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 40;
-    }
-    #main-nav.active ul {
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
-    }
-    #main-nav.active ul li a {
-        font-size: 1.25rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: white;
-    }
-    #main-nav.active ul li a:hover {
-        color: #137fec;
-    }
-    /* Simple menu styles for desktop */
-    #main-nav ul {
-        display: flex;
-        gap: 2.5rem;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    #main-nav ul li a {
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: rgba(255,255,255,0.7);
-        transition: all 0.3s ease;
-    }
-    #main-nav ul li a:hover {
-        color: white;
-    }
-</style>
 
 <header class="sticky top-0 w-full z-[100] border-b border-white/5 bg-black/10 backdrop-blur-xl transition-all duration-500">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -140,6 +197,7 @@
             <?php
             wp_nav_menu( array(
                 'theme_location' => 'menu-1',
+                'container'      => false,
                 'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                 'fallback_cb'    => false,
             ) );
