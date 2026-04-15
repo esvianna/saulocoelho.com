@@ -93,6 +93,13 @@ if ( file_exists( __DIR__ . '/inc/module-checkout-billing-summary.php' ) ) {
     require_once __DIR__ . '/inc/module-checkout-billing-summary.php';
 }
 
+/**
+ * Checkout: modal de erros + termos marcados por padrão.
+ */
+if ( file_exists( __DIR__ . '/inc/module-checkout-error-modal.php' ) ) {
+    require_once __DIR__ . '/inc/module-checkout-error-modal.php';
+}
+
 function saulocoelho_admin_scripts($hook) {
     // Only load on post edit pages
     if ($hook !== 'post.php' && $hook !== 'post-new.php') return;
@@ -324,31 +331,6 @@ function saulocoelho_checkout_reject_placeholder_fields( $data, $errors ) {
         $errors->add( 'billing_city', __( 'Informe a cidade corretamente (confira o CEP).', 'saulocoelho' ) );
     }
 }
-
-/**
- * Checkout: rolagem até os avisos de erro e foco para leitores de tela.
- */
-function saulocoelho_checkout_error_ux_script() {
-    if ( ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) ) {
-        return;
-    }
-    ?>
-    <script>
-    jQuery(function($) {
-        $(document.body).on('checkout_error', function() {
-            var $n = $('.woocommerce-NoticeGroup-checkout, .woocommerce-notices-wrapper .woocommerce-error').first();
-            if ($n.length) {
-                $('html, body').animate({ scrollTop: Math.max(0, $n.offset().top - 120) }, 350);
-                if ($n.is(':visible')) {
-                    $n.attr('tabindex', '-1').trigger('focus');
-                }
-            }
-        });
-    });
-    </script>
-    <?php
-}
-add_action( 'wp_footer', 'saulocoelho_checkout_error_ux_script', 35 );
 
 /**
  * Theme Customizer
