@@ -1,7 +1,12 @@
 <?php
 /**
- * Custom Single Product Template
- * Redesigned to follow the "Course Details" high-performance layout.
+ * Single product — layout customizado (detalhe do curso).
+ *
+ * Substitui o fluxo padrão (hooks shop + content-single-product) por template-part próprio.
+ *
+ * @see     https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 1.6.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

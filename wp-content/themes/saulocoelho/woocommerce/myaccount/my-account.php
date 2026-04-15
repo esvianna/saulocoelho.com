@@ -1,7 +1,10 @@
 <?php
 /**
- * My Account page (Custom UI Premium Overhaul)
+ * My Account page — layout em duas colunas (sidebar + conteúdo) do tema Saulo Coelho.
  *
+ * This template can be overridden by copying it to yourtheme/woocommerce/myaccount/my-account.php.
+ *
+ * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
  * @version 3.5.0
  */
