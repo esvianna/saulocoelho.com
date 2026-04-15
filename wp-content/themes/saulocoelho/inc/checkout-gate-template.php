@@ -38,7 +38,8 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
         .btn-secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 12px; font-weight: 600; transition: all 0.3s; }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
         .hidden { display: none; }
-        .loader { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+        .loader { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+        .btn-primary .loader-inline { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; }
         @keyframes spin { to { transform: rotate(360deg); } }
         /* Style for person type toggle */
         .type-toggle .active { background: #0d6efd; color: white; }
@@ -98,37 +99,46 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-2 col-span-1 md:col-span-2 js-field-pf">
-                        <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Nome Completo</label>
-                        <input type="text" name="first_name" class="input-premium w-full p-4" placeholder="Ex: João Silva">
+                    <div class="space-y-2 js-field-pf">
+                        <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Nome</label>
+                        <input type="text" name="first_name" id="reg_first_name" autocomplete="given-name" class="input-premium w-full p-4" placeholder="Ex: João" required>
+                    </div>
+                    <div class="space-y-2 js-field-pf">
+                        <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Sobrenome</label>
+                        <input type="text" name="last_name" id="reg_last_name" autocomplete="family-name" class="input-premium w-full p-4" placeholder="Ex: Silva" required>
                     </div>
                     <div class="space-y-2 col-span-1 md:col-span-2 js-field-pj hidden">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Razão Social</label>
-                        <input type="text" name="company" class="input-premium w-full p-4" placeholder="Ex: Empresa de Consultoria LTDA">
+                        <input type="text" name="company" id="reg_company" autocomplete="organization" class="input-premium w-full p-4" placeholder="Ex: Empresa de Consultoria LTDA">
                     </div>
 
                     <div class="space-y-2 js-field-pf">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1 pl-1">CPF</label>
-                        <input type="text" name="cpf" class="input-premium w-full p-4 js-check-doc" data-type="cpf" placeholder="000.000.000-00">
+                        <input type="text" name="cpf" class="input-premium w-full p-4 js-check-doc" data-type="cpf" placeholder="000.000.000-00" required inputmode="numeric" autocomplete="off">
                     </div>
                     <div class="space-y-2 js-field-pj hidden">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">CNPJ</label>
-                        <input type="text" name="cnpj" class="input-premium w-full p-4 js-check-doc" data-type="cnpj" placeholder="00.000.000/0000-00">
+                        <input type="text" name="cnpj" class="input-premium w-full p-4 js-check-doc" data-type="cnpj" placeholder="00.000.000/0000-00" inputmode="numeric" autocomplete="off">
                     </div>
 
                     <div class="space-y-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">WhatsApp</label>
-                        <input type="text" name="phone" required class="input-premium w-full p-4" placeholder="(00) 00000-0000">
+                        <input type="text" name="phone" required class="input-premium w-full p-4" placeholder="(00) 00000-0000" autocomplete="tel">
                     </div>
 
                     <div class="space-y-2 col-span-1 md:col-span-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">E-mail</label>
-                        <input type="email" name="email" required class="input-premium w-full p-4" placeholder="seuemail@exemplo.com">
+                        <input type="email" name="email" required class="input-premium w-full p-4" placeholder="seuemail@exemplo.com" autocomplete="email">
                     </div>
 
-                    <div class="space-y-2">
+                    <div class="space-y-2 col-span-1 md:col-span-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1 pl-1">CEP</label>
-                        <input type="text" name="postcode" id="reg_postcode" required class="input-premium w-full p-4" placeholder="00000-000">
+                        <input type="text" name="postcode" id="reg_postcode" required class="input-premium w-full p-4" placeholder="00000-000" autocomplete="postal-code">
+                        <p class="text-[10px] text-white/35 pl-1">Ao digitar o CEP, buscamos rua, bairro, cidade e UF automaticamente.</p>
+                    </div>
+                    <div class="space-y-2 col-span-1 md:col-span-2">
+                        <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Endereço (logradouro)</label>
+                        <input type="text" name="address_1" id="reg_address" required class="input-premium w-full p-4" placeholder="Preenchido pelo CEP ou digite a rua" autocomplete="street-address">
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Número</label>
@@ -137,14 +147,13 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
                     
                     <div class="space-y-2 col-span-1 md:col-span-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Complemento (Opcional)</label>
-                        <input type="text" name="address_complement" class="input-premium w-full p-4" placeholder="Ex: Apto 42, Bloco B">
+                        <input type="text" name="address_complement" class="input-premium w-full p-4" placeholder="Ex: Apto 42, Bloco B" autocomplete="address-line2">
                     </div>
 
-                    <!-- Hidden Address Fields for Auto-filling -->
+                    <!-- Hidden: bairro, cidade e UF preenchidos pelo ViaCEP -->
                     <input type="hidden" name="neighborhood" id="reg_neighborhood">
                     <input type="hidden" name="city" id="reg_city">
                     <input type="hidden" name="state" id="reg_state">
-                    <input type="hidden" name="address_1" id="reg_address">
 
                     <div class="space-y-2 col-span-1 md:col-span-2">
                         <label class="text-xs font-bold uppercase text-white/40 tracking-widest pl-1">Crie sua Senha</label>
@@ -207,6 +216,13 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
                 $('#form-register').show(); $('#form-login').hide();
             });
 
+            function scSyncRegisterRequired() {
+                var isPf = $('#input-persontype').val() == '1';
+                $('#reg_first_name, #reg_last_name, input[name="cpf"]').prop('required', isPf);
+                $('#reg_company, input[name="cnpj"]').prop('required', !isPf);
+            }
+            scSyncRegisterRequired();
+
             // Person type toggle
             $('.js-type-toggle').click(function() {
                 $('.js-type-toggle').removeClass('active');
@@ -218,6 +234,7 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
                 } else {
                     $('.js-field-pf').hide(); $('.js-field-pj').show();
                 }
+                scSyncRegisterRequired();
             });
 
             // Pwd toggle
@@ -229,19 +246,30 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
             });
 
             // ViaCEP
+            var regLastCep = '';
             $('#reg_postcode').on('keyup blur', function() {
                 var cep = $(this).val().replace(/\D/g, '');
-                if (cep.length === 8) {
-                    $.getJSON('https://viacep.com.br/ws/' + cep + '/json/?callback=?', function(data) {
-                        if (!("erro" in data)) {
-                            $('#reg_neighborhood').val(data.bairro);
-                            $('#reg_city').val(data.localidade);
-                            $('#reg_state').val(data.uf);
-                            $('#reg_address').val(data.logradouro);
-                            $('#reg_number').focus();
-                        }
-                    });
+                if (cep.length !== 8) {
+                    if (cep.length < 8) {
+                        regLastCep = '';
+                    }
+                    return;
                 }
+                if (cep === regLastCep && $('#reg_city').val()) {
+                    return;
+                }
+                regLastCep = cep;
+                $.getJSON('https://viacep.com.br/ws/' + cep + '/json/?callback=?', function(data) {
+                    if (!("erro" in data)) {
+                        $('#reg_neighborhood').val(data.bairro);
+                        $('#reg_city').val(data.localidade);
+                        $('#reg_state').val(data.uf);
+                        $('#reg_address').val(data.logradouro);
+                        $('#reg_number').focus();
+                    } else {
+                        $('#reg_neighborhood, #reg_city, #reg_state, #reg_address').val('');
+                    }
+                });
             });
 
             // Check Document Uniqueness
@@ -267,30 +295,40 @@ $nonce = wp_create_nonce( 'sc_gate_nonce' );
             $('#form-login').on('submit', function(e) {
                 e.preventDefault();
                 var btn = $(this).find('button[type="submit"]');
-                btn.prop('disabled', true).html('<div class="loader"></div> Validando...');
+                var labelOk = 'Continuar para o Pagamento <span class="material-symbols-outlined">chevron_right</span>';
+                btn.prop('disabled', true).html('<span class="loader-inline"><span class="loader"></span> Validando...</span>');
                 
                 $.post('<?php echo admin_url('admin-ajax.php'); ?>', $(this).serialize() + '&action=sc_quick_login&security=<?php echo $nonce; ?>', function(res) {
                     if (res.success) {
                         window.location.href = res.data.redirect;
                     } else {
-                        $('#login-error').text(res.data).fadeIn();
-                        btn.prop('disabled', false).html('Continuar para o Pagamento <span class="material-symbols-outlined">chevron_right</span>');
+                        $('#login-error').text(res.data).removeClass('hidden').hide().fadeIn();
+                        btn.prop('disabled', false).html(labelOk);
                     }
+                }).fail(function() {
+                    $('#login-error').text('Não foi possível conectar. Tente novamente.').removeClass('hidden').hide().fadeIn();
+                    btn.prop('disabled', false).html(labelOk);
                 });
             });
 
             $('#form-register').on('submit', function(e) {
                 e.preventDefault();
                 var btn = $(this).find('button[type="submit"]');
-                btn.prop('disabled', true).html('<div class="loader"></div> Criando conta...');
+                var labelOk = 'Finalizar Cadastro e Comprar <span class="material-symbols-outlined">shopping_cart_checkout</span>';
+                $('#register-error').addClass('hidden').empty();
+                btn.prop('disabled', true).html('<span class="loader-inline"><span class="loader"></span> Criando conta...</span>');
                 
                 $.post('<?php echo admin_url('admin-ajax.php'); ?>', $(this).serialize() + '&action=sc_quick_register&security=<?php echo $nonce; ?>', function(res) {
                     if (res.success) {
                         window.location.href = res.data.redirect;
                     } else {
-                        $('#register-error').text(res.data).fadeIn();
-                        btn.prop('disabled', false).html('Finalizar Cadastro e Comprar <span class="material-symbols-outlined">shopping_cart_checkout</span>');
+                        var msg = (res && res.data) ? res.data : 'Não foi possível criar a conta.';
+                        $('#register-error').text(msg).removeClass('hidden').hide().fadeIn();
+                        btn.prop('disabled', false).html(labelOk);
                     }
+                }).fail(function() {
+                    $('#register-error').text('Não foi possível conectar. Tente novamente.').removeClass('hidden').hide().fadeIn();
+                    btn.prop('disabled', false).html(labelOk);
                 });
             });
         });

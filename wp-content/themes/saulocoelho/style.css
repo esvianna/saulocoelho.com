@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.4
+Version: 1.0.5
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -121,6 +121,35 @@ body.woocommerce-checkout #payment div.payment_box {
     box-shadow: none;
 }
 body.woocommerce-checkout #payment div.payment_box::before { display: none; }
+
+/* Rótulos dos gateways (contraste em tema escuro — ex.: InfinitePay) */
+body.woocommerce-checkout #payment ul.payment_methods li.wc_payment_method > label {
+    color: #f9fafb !important;
+    font-weight: 600;
+}
+body.woocommerce-checkout #payment ul.payment_methods li.wc_payment_method > label img {
+    opacity: 1;
+}
+
+/* Avisos de validação mais legíveis no checkout */
+body.woocommerce-checkout .woocommerce-NoticeGroup-checkout,
+body.woocommerce-checkout .woocommerce-notices-wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+body.woocommerce-checkout ul.woocommerce-error {
+    background: rgba(127, 29, 29, 0.35) !important;
+    border: 1px solid rgba(248, 113, 113, 0.45) !important;
+    border-radius: 10px !important;
+    color: #fecaca !important;
+    padding: 1rem 1.25rem !important;
+    margin: 0 0 1.5rem 0 !important;
+    list-style: none !important;
+}
+body.woocommerce-checkout ul.woocommerce-error li {
+    color: #fecaca !important;
+    margin: 0.35rem 0;
+}
 
 /* Botão de Finalizar Monstruoso (CTA) */
 body.woocommerce-checkout #place_order {

@@ -6,6 +6,37 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Normaliza trechos de endereço vindos do front (evita "--", placeholders de ViaCEP etc.).
+ *
+ * @param string $val Valor bruto.
+ * @return string Valor limpo ou string vazia se inválido.
+ */
+function sc_gate_normalize_address_part( $val ) {
+    $val = trim( (string) wp_unslash( $val ) );
+    if ( $val === '' || $val === '--' || $val === '...' || $val === '…' ) {
+        return '';
+    }
+    if ( function_exists( 'mb_stripos' ) ) {
+        if ( mb_stripos( $val, 'buscando', 0, 'UTF-8' ) !== false ) {
+            return '';
+        }
+    } elseif ( stripos( $val, 'buscando' ) !== false ) {
+        return '';
+    }
+    return $val;
+}
+
+/**
+ * Conta apenas dígitos (CPF/CNPJ).
+ *
+ * @param string $val Valor.
+ * @return int Número de dígitos.
+ */
+function sc_gate_digits_only_length( $val ) {
+    return strlen( preg_replace( '/\D/', '', (string) wp_unslash( $val ) ) );
+}
+
 // 1. INTERCEPTAR CHECKOUT E REDIRECIONAR 
 add_action( 'template_redirect', 'sc_checkout_gate_redirect' );
 function sc_checkout_gate_redirect() {
@@ -111,17 +142,75 @@ add_action( 'wp_ajax_nopriv_sc_quick_register', 'sc_ajax_quick_register' );
 function sc_ajax_quick_register() {
     check_ajax_referer( 'sc_gate_nonce', 'security' );
 
-    $email    = sanitize_email( $_POST['email'] );
-    $password = $_POST['password'];
-    $captcha  = intval( $_POST['captcha_answer'] );
+    $email    = sanitize_email( wp_unslash( $_POST['email'] ?? '' ) );
+    $password = isset( $_POST['password'] ) ? (string) wp_unslash( $_POST['password'] ) : '';
+    $captcha  = isset( $_POST['captcha_answer'] ) ? intval( $_POST['captcha_answer'] ) : 0;
     $saved_captcha = WC()->session->get( 'sc_captcha_result' );
 
     // Validações Básicas
     if ( $captcha !== $saved_captcha ) {
         wp_send_json_error( 'Resultado da conta matemático incorreto.' );
     }
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( 'Informe um e-mail válido.' );
+    }
     if ( email_exists( $email ) ) {
         wp_send_json_error( 'Este e-mail já está cadastrado. Tente fazer login.' );
+    }
+    if ( strlen( $password ) < 6 ) {
+        wp_send_json_error( 'A senha deve ter pelo menos 6 caracteres.' );
+    }
+
+    $persontype = isset( $_POST['persontype'] ) ? sanitize_text_field( wp_unslash( $_POST['persontype'] ) ) : '1';
+    if ( $persontype !== '1' && $persontype !== '2' ) {
+        wp_send_json_error( 'Tipo de pessoa inválido.' );
+    }
+
+    $phone   = sc_gate_normalize_address_part( $_POST['phone'] ?? '' );
+    $postcode = sc_gate_normalize_address_part( $_POST['postcode'] ?? '' );
+    $address_number = sc_gate_normalize_address_part( $_POST['address_number'] ?? '' );
+    $address_1 = sc_gate_normalize_address_part( $_POST['address_1'] ?? '' );
+    $city    = sc_gate_normalize_address_part( $_POST['city'] ?? '' );
+    $state   = sc_gate_normalize_address_part( $_POST['state'] ?? '' );
+
+    if ( $phone === '' ) {
+        wp_send_json_error( 'O WhatsApp é obrigatório.' );
+    }
+    if ( $postcode === '' || sc_gate_digits_only_length( $postcode ) !== 8 ) {
+        wp_send_json_error( 'Informe um CEP válido com 8 dígitos.' );
+    }
+    if ( $address_number === '' ) {
+        wp_send_json_error( 'O número do endereço é obrigatório.' );
+    }
+    if ( $address_1 === '' ) {
+        wp_send_json_error( 'Informe o logradouro (preencha o CEP e aguarde ou digite a rua manualmente).' );
+    }
+    if ( $city === '' || $state === '' || strlen( $state ) !== 2 ) {
+        wp_send_json_error( 'Cidade e estado são obrigatórios. Confira se o CEP foi encontrado.' );
+    }
+
+    if ( $persontype === '1' ) {
+        $first = sc_gate_normalize_address_part( $_POST['first_name'] ?? '' );
+        $last  = sc_gate_normalize_address_part( $_POST['last_name'] ?? '' );
+        $cpf   = isset( $_POST['cpf'] ) ? (string) wp_unslash( $_POST['cpf'] ) : '';
+        if ( $first === '' ) {
+            wp_send_json_error( 'O nome é obrigatório.' );
+        }
+        if ( $last === '' ) {
+            wp_send_json_error( 'O sobrenome é obrigatório.' );
+        }
+        if ( sc_gate_digits_only_length( $cpf ) !== 11 ) {
+            wp_send_json_error( 'Informe um CPF válido (11 dígitos).' );
+        }
+    } else {
+        $company = sc_gate_normalize_address_part( $_POST['company'] ?? '' );
+        $cnpj    = isset( $_POST['cnpj'] ) ? (string) wp_unslash( $_POST['cnpj'] ) : '';
+        if ( $company === '' ) {
+            wp_send_json_error( 'A razão social é obrigatória.' );
+        }
+        if ( sc_gate_digits_only_length( $cnpj ) !== 14 ) {
+            wp_send_json_error( 'Informe um CNPJ válido (14 dígitos).' );
+        }
     }
 
     // Criar Usuário
@@ -132,26 +221,26 @@ function sc_ajax_quick_register() {
     }
 
     // Mapear campos do formulário para Billing
-    $persontype = sanitize_text_field( $_POST['persontype'] ); // 1 ou 2
     update_user_meta( $customer_id, 'billing_persontype', $persontype );
     
     if ( $persontype == '1' ) {
-        update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( $_POST['first_name'] ) );
-        update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( $_POST['last_name'] ) );
-        update_user_meta( $customer_id, 'billing_cpf', sanitize_text_field( $_POST['cpf'] ) );
+        update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) );
+        update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) );
+        update_user_meta( $customer_id, 'billing_cpf', sanitize_text_field( wp_unslash( $_POST['cpf'] ) ) );
     } else {
-        update_user_meta( $customer_id, 'billing_company', sanitize_text_field( $_POST['company'] ) );
-        update_user_meta( $customer_id, 'billing_cnpj', sanitize_text_field( $_POST['cnpj'] ) );
+        update_user_meta( $customer_id, 'billing_company', sanitize_text_field( wp_unslash( $_POST['company'] ) ) );
+        update_user_meta( $customer_id, 'billing_cnpj', sanitize_text_field( wp_unslash( $_POST['cnpj'] ) ) );
     }
 
-    update_user_meta( $customer_id, 'billing_phone', sanitize_text_field( $_POST['phone'] ) );
-    update_user_meta( $customer_id, 'billing_postcode', sanitize_text_field( $_POST['postcode'] ) );
-    update_user_meta( $customer_id, 'billing_number', sanitize_text_field( $_POST['address_number'] ) );
-    update_user_meta( $customer_id, 'billing_address_2', sanitize_text_field( $_POST['address_complement'] ) );
+    update_user_meta( $customer_id, 'billing_phone', sanitize_text_field( wp_unslash( $_POST['phone'] ) ) );
+    update_user_meta( $customer_id, 'billing_postcode', sanitize_text_field( wp_unslash( $_POST['postcode'] ) ) );
+    update_user_meta( $customer_id, 'billing_number', sanitize_text_field( wp_unslash( $_POST['address_number'] ) ) );
+    update_user_meta( $customer_id, 'billing_address_1', sanitize_text_field( wp_unslash( $_POST['address_1'] ) ) );
+    update_user_meta( $customer_id, 'billing_address_2', sanitize_text_field( wp_unslash( $_POST['address_complement'] ?? '' ) ) );
     // Bairro, Cidade e Estado (ViaCEP já preencheu no front, mas salvamos se enviados)
-    update_user_meta( $customer_id, 'billing_neighborhood', sanitize_text_field( $_POST['neighborhood'] ) );
-    update_user_meta( $customer_id, 'billing_city', sanitize_text_field( $_POST['city'] ) );
-    update_user_meta( $customer_id, 'billing_state', sanitize_text_field( $_POST['state'] ) );
+    update_user_meta( $customer_id, 'billing_neighborhood', sanitize_text_field( wp_unslash( $_POST['neighborhood'] ?? '' ) ) );
+    update_user_meta( $customer_id, 'billing_city', sanitize_text_field( wp_unslash( $_POST['city'] ) ) );
+    update_user_meta( $customer_id, 'billing_state', strtoupper( sanitize_text_field( wp_unslash( $_POST['state'] ) ) ) );
     update_user_meta( $customer_id, 'billing_country', 'BR' );
 
     // Login Silencioso

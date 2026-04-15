@@ -256,13 +256,8 @@ function saulocoelho_viacep_checkout_script() {
             // Só dispara se tiver 8 números exatos
             if (cep.length === 8 && $(this).data('last_cep') !== cep) {
                 $(this).data('last_cep', cep); // Evita duplicidade de requisição
-                
-                // Feedback visual de carregamento rápido
-                $('#billing_address_1').val('Buscando rua...');
-                $('#billing_neighborhood').val('...');
-                $('#billing_city').val('...');
 
-                // Chamada na API do Governo
+                // Chamada na API do Governo (não preenche placeholders no formulário — evita falha de validação)
                 $.getJSON('https://viacep.com.br/ws/' + cep + '/json/?callback=?', function(dados) {
                     if (!("erro" in dados)) {
                         // Injeta os dados nos campos nativos do WooCommerce e Plugin BR
@@ -290,6 +285,63 @@ function saulocoelho_viacep_checkout_script() {
     <?php
 }
 add_action( 'wp_footer', 'saulocoelho_viacep_checkout_script', 30 );
+
+/**
+ * Checkout: rejeita valores “placeholder” (--, Buscando rua..., etc.) que passam validação vazia.
+ */
+add_action( 'woocommerce_after_checkout_validation', 'saulocoelho_checkout_reject_placeholder_fields', 10, 2 );
+function saulocoelho_checkout_reject_placeholder_fields( $data, $errors ) {
+    // Apenas valores que “parecem” preenchidos mas são placeholders (evita duplicar erro de campo vazio do WC).
+    $is_placeholder = function ( $val ) {
+        $val = trim( wc_clean( (string) $val ) );
+        if ( $val === '--' || $val === '...' || $val === '…' ) {
+            return true;
+        }
+        if ( function_exists( 'mb_stripos' ) ) {
+            if ( mb_stripos( $val, 'buscando', 0, 'UTF-8' ) !== false ) {
+                return true;
+            }
+        } elseif ( stripos( $val, 'buscando' ) !== false ) {
+            return true;
+        }
+        return false;
+    };
+
+    if ( $is_placeholder( $data['billing_last_name'] ?? '' ) ) {
+        $errors->add( 'billing_last_name', __( 'Substitua o sobrenome por um valor válido (sem traços ou texto de carregamento).', 'saulocoelho' ) );
+    }
+    if ( $is_placeholder( $data['billing_address_1'] ?? '' ) ) {
+        $errors->add( 'billing_address_1', __( 'Informe o logradouro válido (rua). Se usou CEP, aguarde a busca ou digite manualmente.', 'saulocoelho' ) );
+    }
+    if ( $is_placeholder( $data['billing_city'] ?? '' ) ) {
+        $errors->add( 'billing_city', __( 'Informe a cidade corretamente (confira o CEP).', 'saulocoelho' ) );
+    }
+}
+
+/**
+ * Checkout: rolagem até os avisos de erro e foco para leitores de tela.
+ */
+function saulocoelho_checkout_error_ux_script() {
+    if ( ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) ) {
+        return;
+    }
+    ?>
+    <script>
+    jQuery(function($) {
+        $(document.body).on('checkout_error', function() {
+            var $n = $('.woocommerce-NoticeGroup-checkout, .woocommerce-notices-wrapper .woocommerce-error').first();
+            if ($n.length) {
+                $('html, body').animate({ scrollTop: Math.max(0, $n.offset().top - 120) }, 350);
+                if ($n.is(':visible')) {
+                    $n.attr('tabindex', '-1').trigger('focus');
+                }
+            }
+        });
+    });
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'saulocoelho_checkout_error_ux_script', 35 );
 
 /**
  * Theme Customizer
