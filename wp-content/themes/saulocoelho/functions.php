@@ -86,6 +86,13 @@ if ( file_exists( __DIR__ . '/inc/module-checkout-gate.php' ) ) {
     require_once __DIR__ . '/inc/module-checkout-gate.php';
 }
 
+/**
+ * Checkout: resumo de faturamento + checkout sem envio (serviço).
+ */
+if ( file_exists( __DIR__ . '/inc/module-checkout-billing-summary.php' ) ) {
+    require_once __DIR__ . '/inc/module-checkout-billing-summary.php';
+}
+
 function saulocoelho_admin_scripts($hook) {
     // Only load on post edit pages
     if ($hook !== 'post.php' && $hook !== 'post-new.php') return;

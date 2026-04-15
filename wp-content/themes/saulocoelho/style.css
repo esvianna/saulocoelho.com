@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.5
+Version: 1.0.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -149,6 +149,79 @@ body.woocommerce-checkout ul.woocommerce-error {
 body.woocommerce-checkout ul.woocommerce-error li {
     color: #fecaca !important;
     margin: 0.35rem 0;
+}
+
+/* Serviço / sem envio físico */
+body.sc-checkout-no-shipping .woocommerce-shipping-fields,
+body.sc-checkout-no-shipping .shipping_address,
+body.sc-checkout-no-shipping #ship-to-different-address,
+body.sc-checkout-no-shipping #ship-to-different-address-checkbox,
+body.sc-checkout-no-shipping .woocommerce-shipping-calculator {
+    display: none !important;
+}
+
+/* Resumo de faturamento + formulário recolhido */
+body.woocommerce-checkout .sc-billing-summary-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+body.woocommerce-checkout .sc-billing-summary-card__label {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #38bdf8;
+}
+body.woocommerce-checkout .sc-billing-summary-card__primary {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #f3f4f6;
+}
+body.woocommerce-checkout .sc-billing-summary-card__secondary {
+    margin: 0 0 1rem 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+body.woocommerce-checkout .sc-billing-summary-toggle.button {
+    display: inline-block;
+    background: transparent !important;
+    color: #f9fafb !important;
+    border: 2px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 8px !important;
+    padding: 0.65rem 1.25rem !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    font-size: 0.9rem !important;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+body.woocommerce-checkout .sc-billing-summary-toggle.button:hover {
+    border-color: #0d6efd !important;
+    background: rgba(13, 110, 253, 0.12) !important;
+}
+body.woocommerce-checkout .sc-billing-summary-hint--expanded {
+    margin: 0 0 1rem 0;
+    font-size: 0.85rem;
+}
+body.woocommerce-checkout .sc-billing-summary-collapse.button-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #38bdf8 !important;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+}
+body.woocommerce-checkout .woocommerce-billing-fields.sc-billing-collapsed > h3 {
+    display: none !important;
+}
+body.woocommerce-checkout .woocommerce-billing-fields.sc-billing-collapsed .woocommerce-billing-fields__field-wrapper {
+    display: none !important;
 }
 
 /* Botão de Finalizar Monstruoso (CTA) */
