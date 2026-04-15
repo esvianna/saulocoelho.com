@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.8
+Version: 1.0.9
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -18,9 +18,17 @@ Text Domain: saulocoelho
     body.woocommerce-checkout form.checkout {
         display: flex !important;
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         gap: 3rem;
         align-items: flex-start;
+    }
+    /* Avisos do checkout em largura total na primeira linha (evita “terceira coluna” ao lado dos dados) */
+    body.woocommerce-checkout form.checkout > .woocommerce-NoticeGroup-checkout,
+    body.woocommerce-checkout form.checkout > .woocommerce-notices-wrapper {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
     }
     body.woocommerce-checkout #customer_details {
         flex: 1;
