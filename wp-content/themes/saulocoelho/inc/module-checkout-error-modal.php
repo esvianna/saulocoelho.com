@@ -134,6 +134,7 @@ function sc_checkout_error_modal_scripts() {
 			$m.attr("hidden", "hidden").attr("aria-hidden", "true");
 		}
 		$("body").removeClass("sc-checkout-error-modal-open");
+		showNoticeGroups();
 		var $terms = $("#terms, input[name=terms]").filter(":visible").first();
 		if ($terms.length) {
 			$terms.trigger("focus");
