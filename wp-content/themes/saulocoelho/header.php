@@ -217,15 +217,38 @@
             ?>
         </nav>
 
-        <div class="hidden lg:flex items-center gap-4">
-            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
+        <div class="flex items-center gap-2 sm:gap-4 relative z-[60]">
+            <?php
+            if ( function_exists( 'WC' ) && WC()->cart ) {
+                $sc_cart_count = WC()->cart->get_cart_contents_count();
+                $sc_checkout   = wc_get_checkout_url();
+                $sc_cart_label = $sc_cart_count > 0
+                    /* translators: %d: number of items in cart */
+                    ? sprintf( __( 'Carrinho — continuar compra (%d itens)', 'saulocoelho' ), $sc_cart_count )
+                    : __( 'Carrinho — finalizar compra', 'saulocoelho' );
+                ?>
+            <a
+                href="<?php echo esc_url( $sc_checkout ); ?>"
+                class="relative flex items-center justify-center text-white/90 hover:text-white p-2 rounded-xl transition-colors hover:bg-white/5"
+                aria-label="<?php echo esc_attr( $sc_cart_label ); ?>"
+            >
+                <span class="material-symbols-outlined text-2xl sm:text-[28px]" aria-hidden="true">shopping_cart</span>
+                <?php if ( $sc_cart_count > 0 ) : ?>
+                    <span class="absolute top-0 right-0 min-w-[1.125rem] h-[1.125rem] px-1 flex items-center justify-center rounded-full bg-primary text-[10px] font-black text-white leading-none">
+                        <?php echo esc_html( $sc_cart_count > 99 ? '99+' : $sc_cart_count ); ?>
+                    </span>
+                <?php endif; ?>
+            </a>
+                <?php
+            }
+            ?>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="hidden lg:inline-flex bg-primary hover:bg-primary/90 text-white px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
                 Área do Cliente
             </a>
+            <button id="menu-toggle" class="lg:hidden text-white p-2 flex items-center justify-center transition-transform active:scale-90" aria-label="<?php esc_attr_e( 'Abrir menu', 'saulocoelho' ); ?>">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
         </div>
-        
-        <button id="menu-toggle" class="lg:hidden relative z-[60] text-white p-2 flex items-center justify-center transition-transform active:scale-90" aria-label="Toggle menu">
-            <span class="material-symbols-outlined text-3xl">menu</span>
-        </button>
     </div>
 </header>
 
