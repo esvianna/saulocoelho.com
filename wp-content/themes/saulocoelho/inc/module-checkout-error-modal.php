@@ -53,7 +53,7 @@ function sc_checkout_error_modal_markup() {
 	</div>
 	<?php
 }
-add_action( 'wp_footer', 'sc_checkout_error_modal_markup', 20 );
+add_action( 'wp_footer', 'sc_checkout_error_modal_markup', 5 );
 
 /**
  * Scripts do modal + integração com checkout_error e erros no carregamento da página.
@@ -66,11 +66,11 @@ function sc_checkout_error_modal_scripts() {
 	wp_enqueue_script( 'sc-checkout-error-modal' );
 	$inline = <<<'JS'
 (function($) {
-	var modalId = "#sc-checkout-error-modal";
-	var $modal = $(modalId);
-	var $list = $("#sc-checkout-error-modal-list");
-	var $close = $("#sc-checkout-error-modal-close");
-	var $backdrop = $(".sc-checkout-error-modal__backdrop");
+	var modalSel = "#sc-checkout-error-modal";
+
+	function $modal() {
+		return $(modalSel);
+	}
 
 	function collectErrorMessages() {
 		var msgs = [];
@@ -82,7 +82,7 @@ function sc_checkout_error_modal_scripts() {
 		});
 		$(".woocommerce-checkout .woocommerce-error").not("ul").each(function() {
 			var $el = $(this);
-			if ($el.closest(modalId).length || $el.closest("ul.woocommerce-error").length) {
+			if ($el.closest(modalSel).length || $el.closest("ul.woocommerce-error").length) {
 				return;
 			}
 			var t = $el.text().replace(/\s+/g, " ").trim();
@@ -107,24 +107,32 @@ function sc_checkout_error_modal_scripts() {
 	}
 
 	function openModal() {
+		var $m = $modal();
+		if (!$m.length) {
+			return;
+		}
 		var msgs = collectErrorMessages();
 		if (!msgs.length) {
 			return;
 		}
+		var $list = $m.find("#sc-checkout-error-modal-list");
 		$list.empty();
 		msgs.forEach(function(m) {
 			$list.append($("<li/>").text(m));
 		});
 		hideNoticeGroups();
-		$modal.removeAttr("hidden").attr("aria-hidden", "false");
+		$m.removeAttr("hidden").attr("aria-hidden", "false");
 		$("body").addClass("sc-checkout-error-modal-open");
 		setTimeout(function() {
-			$close.trigger("focus");
+			$m.find("#sc-checkout-error-modal-close").trigger("focus");
 		}, 50);
 	}
 
 	function closeModal() {
-		$modal.attr("hidden", "hidden").attr("aria-hidden", "true");
+		var $m = $modal();
+		if ($m.length) {
+			$m.attr("hidden", "hidden").attr("aria-hidden", "true");
+		}
 		$("body").removeClass("sc-checkout-error-modal-open");
 		var $terms = $("#terms, input[name=terms]").filter(":visible").first();
 		if ($terms.length) {
@@ -144,10 +152,12 @@ function sc_checkout_error_modal_scripts() {
 		}
 	}
 
-	$close.on("click", function() {
+	$(document).on("click", "#sc-checkout-error-modal-close", function(e) {
+		e.preventDefault();
 		closeModal();
 	});
-	$backdrop.on("click", function() {
+	$(document).on("click", ".sc-checkout-error-modal__backdrop", function(e) {
+		e.preventDefault();
 		closeModal();
 	});
 	$(document).on("keydown", function(e) {
@@ -171,7 +181,10 @@ function sc_checkout_error_modal_scripts() {
 			return;
 		}
 		if (!$(".woocommerce-checkout .woocommerce-error").length) {
-			$modal.attr("hidden", "hidden").attr("aria-hidden", "true");
+			var $m = $modal();
+			if ($m.length) {
+				$m.attr("hidden", "hidden").attr("aria-hidden", "true");
+			}
 			$("body").removeClass("sc-checkout-error-modal-open");
 			showNoticeGroups();
 		}
