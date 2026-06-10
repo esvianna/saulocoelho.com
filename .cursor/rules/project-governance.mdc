@@ -1,0 +1,25 @@
+---
+description: Governança do projeto Saulocoelho.com e fluxo GitHub Projects
+alwaysApply: true
+---
+
+# Governança — Saulocoelho.com
+
+## Antes de codar
+1. Ler `AGENTS.md` e `PROJECT_STATUS.md`
+2. Confirmar issue em status **Ready** (nunca implementar **Backlog** sem aprovação explícita)
+3. Consultar `DECISIONS.md`, `SECURITY.md`, `TESTING.md` quando aplicável
+
+## Depois de codar
+- Atualizar `CHANGELOG.md`, `PROJECT_STATUS.md` se relevante
+- Comentar na issue; mover para **In Review** (nunca **Done** sem pedido explícito)
+- Informar arquivos alterados, como testar, riscos
+
+## Limites
+- Escopo mínimo: não refatorar fora da issue
+- Não commitar/push sem pedido
+- Não criar issues no GitHub sem aprovação
+- Responder em português
+
+## Stack
+Tema WP em `wp-content/themes/saulocoelho/` — PHP, WooCommerce, Tailwind, metaboxes em `inc/metaboxes.php`

@@ -1,0 +1,30 @@
+---
+description: Padrões PHP/WordPress para o tema saulocoelho
+globs: wp-content/themes/saulocoelho/**/*.php
+alwaysApply: false
+---
+
+# WordPress — tema saulocoelho
+
+## Estrutura
+- Lógica nova em `inc/module-*.php` ou `inc/metaboxes/` (evitar inflar `functions.php`)
+- Templates em `template-parts/`; páginas em `page-*.php` / `template-*.php`
+- WooCommerce overrides em `woocommerce/`
+
+## Segurança
+```php
+if ( ! defined( 'ABSPATH' ) ) exit;
+// Sanitizar: sanitize_text_field, absint, esc_url_raw
+// Escapar: esc_html, esc_attr, esc_url
+// AJAX: check_ajax_referer
+```
+
+## Convenções existentes
+- Prefixo de funções: `saulocoelho_` ou `sc_` (checkout gate)
+- Conteúdo editável via metaboxes — não hardcodar textos de seções
+- Dark mode: classe `dark` no `<html>`; cores em `tailwind.config.js`
+- Estética premium: alto contraste, Inter, primary `#137fec`
+
+## WooCommerce
+- Usar hooks WC; testar checkout gate, qty AJAX e ViaCEP após mudanças
+- Staging: https://saulo.vtis.com.br

@@ -1,0 +1,25 @@
+---
+description: Build e estilos Tailwind do tema
+globs: wp-content/themes/saulocoelho/**/*.{css,js,json}
+alwaysApply: false
+---
+
+# Tailwind e assets
+
+## Build
+```bash
+cd wp-content/themes/saulocoelho && npm run build
+```
+Entrada: `src/input.css` → Saída: `dist/output.css`
+
+## Estado atual
+- `header.php` usa CDN Tailwind temporário — config duplicada
+- Migrar para build local só com issue aprovada (ver `ROADMAP.md`)
+
+## Ao alterar cores/fontes
+- Atualizar `tailwind.config.js` e enqueue em `functions.php`
+- Verificar `header.php` (CDN config) até migração
+- Rodar build e testar em staging
+
+## Plugins Tailwind
+`@tailwindcss/forms`, `@tailwindcss/container-queries`
