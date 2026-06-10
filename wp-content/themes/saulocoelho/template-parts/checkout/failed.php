@@ -19,18 +19,19 @@ $checkout_url = wc_get_checkout_url();
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0d6efd',
-                        dark: '#0f172a',
+                        primary: '#C5A059',
+                        'primary-dark': '#A6894A',
+                        dark: '#050A14',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0f172a; color: white; -webkit-font-smoothing: antialiased; }
+        body { background-color: #050A14; color: white; -webkit-font-smoothing: antialiased; }
         .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
-        .btn-primary { background: #0d6efd; color: white; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
-        .btn-primary:hover { background: #0b5ed7; transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(13, 110, 253, 0.4); }
+        .btn-primary { background: #C5A059; color: white; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+        .btn-primary:hover { background: #A6894A; transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(197, 160, 89, 0.4); }
         .btn-secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 12px; font-weight: 600; transition: all 0.3s; }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
     </style>

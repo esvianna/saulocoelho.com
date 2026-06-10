@@ -12,19 +12,59 @@
         theme: {
           extend: {
             colors: {
-              "primary": "#137fec",
+              "primary": "#C5A059",
+              "primary-light": "#D4AF37",
+              "primary-dark": "#A6894A",
               "background-light": "#f6f7f8",
-              "background-dark": "#101922",
-              "background-dark-alt": "#0a1118"
+              "background-dark": "#050A14",
+              "background-dark-alt": "#0A0E1A"
             },
             fontFamily: {
-              "display": ["Inter", "sans-serif"]
+              "display": ["Playfair Display", "Georgia", "serif"],
+              "sans": ["Inter", "sans-serif"]
             }
           }
         }
       }
     </script>
     <style>
+        /* Tipografia — Playfair Display nos títulos, Inter no corpo */
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Linhas decorativas douradas (referência Carta Pública) */
+        .sc-deco-corner {
+            pointer-events: none;
+            position: fixed;
+            z-index: 2;
+            width: 140px;
+            height: 140px;
+            opacity: 0.45;
+        }
+        .sc-deco-corner span {
+            position: absolute;
+            display: block;
+            height: 1px;
+            width: 90px;
+            background: linear-gradient(90deg, transparent, #C5A059, #D4AF37);
+        }
+        .sc-deco-corner--tr { top: 5.5rem; right: 0; }
+        .sc-deco-corner--tr span:nth-child(1) { top: 20px; right: 24px; transform: rotate(-45deg); }
+        .sc-deco-corner--tr span:nth-child(2) { top: 32px; right: 24px; transform: rotate(-45deg); width: 70px; opacity: 0.7; }
+        .sc-deco-corner--tr span:nth-child(3) { top: 44px; right: 24px; transform: rotate(-45deg); width: 50px; opacity: 0.5; }
+        .sc-deco-corner--bl { bottom: 24px; left: 0; }
+        .sc-deco-corner--bl span:nth-child(1) { bottom: 20px; left: 24px; transform: rotate(-45deg); }
+        .sc-deco-corner--bl span:nth-child(2) { bottom: 32px; left: 24px; transform: rotate(-45deg); width: 70px; opacity: 0.7; }
+        .sc-deco-corner--bl span:nth-child(3) { bottom: 44px; left: 24px; transform: rotate(-45deg); width: 50px; opacity: 0.5; }
+        @media (max-width: 767px) {
+            .sc-deco-corner { opacity: 0.25; width: 80px; height: 80px; }
+            .sc-deco-corner span { width: 50px; }
+        }
+
         /* Typography and general links (Mobile & Desktop) */
         #main-nav li {
             list-style: none !important;
@@ -43,7 +83,7 @@
             gap: 0.25rem !important;
         }
         #main-nav > ul > li > a:hover {
-            color: #3b82f6 !important;
+            color: #C5A059 !important;
         }
 
         /* Dropdown indicator (Desktop & Mobile) */
@@ -79,7 +119,7 @@
                 left: 50% !important;
                 transform: translateX(-50%) translateY(15px) !important;
                 min-width: 14rem !important;
-                background-color: rgba(10, 17, 24, 0.95) !important;
+                background-color: rgba(5, 10, 20, 0.95) !important;
                 backdrop-filter: blur(16px) !important;
                 border: 1px solid rgba(255, 255, 255, 0.05) !important;
                 border-radius: 0.75rem !important;
@@ -136,7 +176,7 @@
                 left: 0 !important;
                 right: 0 !important;
                 height: 100vh !important;
-                background: rgba(10, 17, 24, 0.98) !important;
+                background: rgba(5, 10, 20, 0.98) !important;
                 backdrop-filter: blur(20px) !important;
                 flex-direction: column !important;
                 justify-content: flex-start !important;
@@ -193,9 +233,12 @@
 <body <?php body_class('bg-background-dark-alt'); ?>>
 <script>
     // Ensure the body has the dark background even if classes are delayed
-    document.body.style.backgroundColor = '#0a1118';
+    document.body.style.backgroundColor = '#050A14';
 </script>
 <?php wp_body_open(); ?>
+
+<div class="sc-deco-corner sc-deco-corner--tr" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="sc-deco-corner sc-deco-corner--bl" aria-hidden="true"><span></span><span></span><span></span></div>
 
 <header class="sticky top-0 w-full z-[100] border-b border-white/5 bg-black/10 backdrop-blur-xl transition-all duration-500">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -203,7 +246,7 @@
             <div class="text-primary">
                 <span class="material-symbols-outlined text-3xl">terminal</span>
             </div>
-            <h2 class="text-xl font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
+            <h2 class="font-display text-xl font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
         </a>
         
         <nav id="main-nav" class="hidden lg:flex items-center gap-10">

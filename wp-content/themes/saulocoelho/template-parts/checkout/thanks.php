@@ -21,26 +21,27 @@ $first_name = $order ? $order->get_billing_first_name() : 'Aluno';
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0d6efd',
-                        dark: '#0f172a',
+                        primary: '#C5A059',
+                        'primary-dark': '#A6894A',
+                        dark: '#050A14',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0f172a; color: white; -webkit-font-smoothing: antialiased; }
+        body { background-color: #050A14; color: white; -webkit-font-smoothing: antialiased; }
         .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
-        .btn-primary { background: #0d6efd; color: white; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
-        .btn-primary:hover { background: #0b5ed7; transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(13, 110, 253, 0.4); }
+        .btn-primary { background: #C5A059; color: white; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+        .btn-primary:hover { background: #A6894A; transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(197, 160, 89, 0.4); }
         .survey-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; transition: all 0.2s; cursor: pointer; text-align: center; }
-        .survey-item:hover { background: rgba(255, 255, 255, 0.1); border-color: #0d6efd; }
-        .survey-item.active { background: #0d6efd; border-color: #0d6efd; color: white; }
+        .survey-item:hover { background: rgba(255, 255, 255, 0.1); border-color: #C5A059; }
+        .survey-item.active { background: #C5A059; border-color: #C5A059; color: white; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6 relative">
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full"></div>
 
     <div class="w-full max-w-2xl z-10 text-center">
         <!-- Success Icon Animation -->

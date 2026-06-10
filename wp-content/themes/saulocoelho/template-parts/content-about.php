@@ -143,7 +143,7 @@ $about_image = get_post_meta($post_id, 'about_image', true);
                     </div>
 
                     <!-- Milestone Icon Circle -->
-                    <div class="relative z-20 w-14 h-14 rounded-full border border-slate-700 bg-background-dark-alt flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:border-primary group-hover:text-primary group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(19,127,236,0.4)] shadow-lg overflow-hidden group-hover:shadow-primary/20">
+                    <div class="relative z-20 w-14 h-14 rounded-full border border-slate-700 bg-background-dark-alt flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:border-primary group-hover:text-primary group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(197,160,89,0.4)] shadow-lg overflow-hidden group-hover:shadow-primary/20">
                          <!-- Subtle inner glow -->
                         <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;"><?php echo esc_html($icon); ?></span>

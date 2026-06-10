@@ -58,6 +58,18 @@ Formato inspirado em ADR (Architecture Decision Record).
 
 ## Decisões pendentes
 
-- Paleta e tipografia da nova identidade visual (issue #1).
 - Estratégia de deploy (manual vs CI/CD).
 - Adoção de testes automatizados.
+
+---
+
+## ADR-005 — Nova identidade visual (navy + dourado + Playfair)
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-06-10 |
+| **Status** | Aceita |
+| **Contexto** | Cliente compartilhou peças de marca (Carta Pública, "O COMPORTAMENTO DECIDE") com paleta escura e dourada. |
+| **Decisão** | Primary `#C5A059`, fundo `#050A14`/`#0A0E1A`, Playfair Display nos títulos, Inter no corpo, CAPS só no hero, linhas decorativas douradas incluídas. |
+| **Motivo** | Alinhar site à nova marca premium do cliente. |
+| **Consequências** | Tema v1.1.0; validação visual necessária em staging. |

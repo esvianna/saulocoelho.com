@@ -50,7 +50,7 @@ if ( isset( $menu_items[ $logout_endpoint ] ) ) {
 			}
 
 			$is_active = wc_get_account_menu_item_classes( $endpoint );
-			$active_class  = strpos( $is_active, 'is-active' ) !== false ? 'bg-[#3b82f6]/10 text-[#3b82f6]' : 'text-[#64748b] dark:text-[#94a3b8] hover:bg-[#f1f5f9] dark:hover:bg-white/5';
+			$active_class  = strpos( $is_active, 'is-active' ) !== false ? 'bg-primary/10 text-primary' : 'text-[#64748b] dark:text-[#94a3b8] hover:bg-[#f1f5f9] dark:hover:bg-white/5';
 			$aria_current = ( function_exists( 'wc_is_current_account_menu_item' ) && wc_is_current_account_menu_item( $endpoint ) ) ? ' aria-current="page"' : '';
 			?>
 			<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors <?php echo esc_attr( $active_class ); ?>"<?php echo $aria_current; ?>>

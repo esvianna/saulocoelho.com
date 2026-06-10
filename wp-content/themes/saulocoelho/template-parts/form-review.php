@@ -81,6 +81,6 @@ $status = isset($_GET['review_status']) ? $_GET['review_status'] : '';
 
 <style>
 /* Estilo customizado para o Star Rating pois Tailwind peer-hover reverso precisa de CSS puro ou lógica complexa */
-.peer-hover\:text-primary ~ label { color: #137fec !important; }
-.peer-checked\:text-primary ~ label { color: #137fec !important; }
+.peer-hover\:text-primary ~ label { color: #C5A059 !important; }
+.peer-checked\:text-primary ~ label { color: #C5A059 !important; }
 </style>

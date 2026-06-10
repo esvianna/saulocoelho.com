@@ -97,14 +97,14 @@ function alumni_render_metabox( $post ) {
                     <?php foreach ( $courses as $course ) :
                         $checked = in_array( $course->ID, $selected_turmas, true ) ? 'checked' : '';
                     ?>
-                        <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid <?php echo $checked ? '#0d6efd' : '#dee2e6'; ?>;border-radius:6px;cursor:pointer;transition:all .2s;font-size:13px;">
+                        <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid <?php echo $checked ? '#C5A059' : '#dee2e6'; ?>;border-radius:6px;cursor:pointer;transition:all .2s;font-size:13px;">
                             <input
                                 type="checkbox"
                                 name="alumni_turmas[]"
                                 value="<?php echo esc_attr( $course->ID ); ?>"
                                 <?php echo $checked; ?>
                                 onchange="alumniToggleFotosPanel(this)"
-                                style="width:16px;height:16px;accent-color:#0d6efd;"
+                                style="width:16px;height:16px;accent-color:#C5A059;"
                             >
                             <span style="color:#333;"><?php echo esc_html( $course->post_title ); ?></span>
                         </label>
@@ -125,15 +125,15 @@ function alumni_render_metabox( $post ) {
                     id="alumni-fotos-panel-<?php echo esc_attr( $course->ID ); ?>"
                     class="alumni-fotos-panel"
                     data-course-id="<?php echo esc_attr( $course->ID ); ?>"
-                    style="display:<?php echo $is_selected ? 'block' : 'none'; ?>;margin-bottom:16px;border:1px solid #0d6efd;border-radius:8px;overflow:hidden;"
+                    style="display:<?php echo $is_selected ? 'block' : 'none'; ?>;margin-bottom:16px;border:1px solid #C5A059;border-radius:8px;overflow:hidden;"
                 >
-                    <div style="background:#0d6efd;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+                    <div style="background:#C5A059;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
                         <strong style="color:#fff;font-size:13px;">📷 Fotos: <?php echo esc_html( $course->post_title ); ?></strong>
                         <button
                             type="button"
                             class="alumni-upload-btn button button-primary"
                             data-course-id="<?php echo esc_attr( $course->ID ); ?>"
-                            style="background:#fff;color:#0d6efd;border:none;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:bold;cursor:pointer;"
+                            style="background:#fff;color:#C5A059;border:none;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:bold;cursor:pointer;"
                         >
                             + Adicionar Fotos
                         </button>
@@ -493,16 +493,16 @@ function alumni_render_my_account_tab() {
         display: flex; align-items: center; gap: 8px;
         border-bottom: 1px solid rgba(100,116,139,.15); padding-bottom: 12px;
     }
-    .alumni-mytab-product-name a { color: #3b82f6; text-decoration: none; transition: color .2s; }
+    .alumni-mytab-product-name a { color: #C5A059; text-decoration: none; transition: color .2s; }
     .alumni-mytab-product-name a:hover { color: #2563eb; }
     .alumni-mytab-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
     .alumni-mytab-tab {
         background: rgba(59,130,246,.07); border: 1px solid rgba(59,130,246,.2);
-        color: #3b82f6; padding: 7px 18px; border-radius: 999px;
+        color: #C5A059; padding: 7px 18px; border-radius: 999px;
         font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s;
     }
     .alumni-mytab-tab:hover,
-    .alumni-mytab-tab.active { background: #3b82f6; color: #fff; box-shadow: 0 0 14px rgba(59,130,246,.3); }
+    .alumni-mytab-tab.active { background: #C5A059; color: #fff; box-shadow: 0 0 14px rgba(197,160,89,.3); }
     .alumni-mytab-panel { display: none; }
     .alumni-mytab-panel.active { display: block; }
     .alumni-mytab-grid {
@@ -553,7 +553,7 @@ function alumni_render_my_account_tab() {
             ?>
                 <div class="alumni-mytab-product">
                     <p class="alumni-mytab-product-name">
-                        <span class="material-symbols-outlined" style="font-size:18px;color:#3b82f6;">collections</span>
+                        <span class="material-symbols-outlined" style="font-size:18px;color:#C5A059;">collections</span>
                         <a href="<?php echo esc_url( $galeria['product_url'] ); ?>"><?php echo esc_html( $galeria['product_title'] ); ?></a>
                     </p>
 

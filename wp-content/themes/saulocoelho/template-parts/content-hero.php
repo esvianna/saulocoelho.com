@@ -4,7 +4,7 @@
  */
 $post_id = get_the_ID();
 $hero_eyebrow = get_post_meta($post_id, 'hero_eyebrow', true) ?: 'Alta Performance & Liderança';
-$hero_title = get_post_meta($post_id, 'hero_title', true) ?: 'Desperte o seu <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">potencial máximo</span>';
+$hero_title = get_post_meta($post_id, 'hero_title', true) ?: 'Desperte o seu <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">potencial máximo</span>';
 $hero_description = get_post_meta($post_id, 'hero_description', true) ?: 'Transforme sua trajetória com as metodologias aplicadas por Saulo Coelho nos maiores ecossistemas corporativos do Brasil.';
 $hero_bg_image = get_post_meta($post_id, 'hero_bg_image', true) ?: 'https://sccr.com.br/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-07-at-12.43.04-1.jpeg';
 $hero_btn_1_text = get_post_meta($post_id, 'hero_btn_1_text', true) ?: 'Conheça os Programas';
@@ -36,7 +36,7 @@ $hero_mobile_overlay = get_post_meta($post_id, 'hero_mobile_overlay', true) ?: '
         <div class="max-w-2xl space-y-8 animate-fade-in">
             <div class="space-y-4">
                 <span class="text-primary font-bold tracking-[0.3em] uppercase text-sm block"><?php echo esc_html($hero_eyebrow); ?></span>
-                <h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white">
+                <h1 class="hero-title font-display text-4xl md:text-6xl font-black leading-[1.1] tracking-tight text-white uppercase">
                     <?php echo $hero_title; ?>
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-lg leading-relaxed font-light">

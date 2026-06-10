@@ -4,13 +4,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#137fec",
+        "primary": "#C5A059",
+        "primary-light": "#D4AF37",
+        "primary-dark": "#A6894A",
         "background-light": "#f6f7f8",
-        "background-dark": "#101922",
-        "background-dark-alt": "#0a1118"
+        "background-dark": "#050A14",
+        "background-dark-alt": "#0A0E1A"
       },
       fontFamily: {
-        "display": ["Inter", "sans-serif"]
+        "display": ["Playfair Display", "Georgia", "serif"],
+        "sans": ["Inter", "sans-serif"]
       },
       borderRadius: {
         "DEFAULT": "0.125rem",

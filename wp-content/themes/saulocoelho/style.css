@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.0.9
+Version: 1.1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -104,8 +104,8 @@ body.woocommerce-checkout form .form-row textarea {
 }
 body.woocommerce-checkout form .form-row input.input-text:focus,
 body.woocommerce-checkout form .form-row select:focus {
-    border-color: #0d6efd !important;
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+    border-color: #C5A059 !important;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1) !important;
     outline: none !important;
 }
 
@@ -222,7 +222,7 @@ body.sc-checkout-error-modal-open {
 }
 .sc-checkout-error-modal__close.button {
     width: 100%;
-    background: #0d6efd !important;
+    background: #C5A059 !important;
     color: #fff !important;
     border: none !important;
     border-radius: 8px !important;
@@ -284,8 +284,8 @@ body.woocommerce-checkout .sc-billing-summary-toggle.button {
     transition: border-color 0.2s, background 0.2s;
 }
 body.woocommerce-checkout .sc-billing-summary-toggle.button:hover {
-    border-color: #0d6efd !important;
-    background: rgba(13, 110, 253, 0.12) !important;
+    border-color: #C5A059 !important;
+    background: rgba(197, 160, 89, 0.12) !important;
 }
 body.woocommerce-checkout .sc-billing-summary-hint--expanded {
     margin: 0 0 1rem 0;
@@ -309,7 +309,7 @@ body.woocommerce-checkout .woocommerce-billing-fields.sc-billing-collapsed .wooc
 
 /* Botão de Finalizar Monstruoso (CTA) */
 body.woocommerce-checkout #place_order {
-    background: #0d6efd !important;
+    background: #C5A059 !important;
     color: #fff !important;
     width: 100% !important;
     padding: 1rem 2rem !important;
@@ -325,7 +325,7 @@ body.woocommerce-checkout #place_order {
 body.woocommerce-checkout #place_order:hover {
     background: #0b5ed7 !important;
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
 }
 
 .woocommerce form .form-row .required {
@@ -383,11 +383,11 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .prose-premium blockquote {
-    border-left: 4px solid #0d6efd;
+    border-left: 4px solid #C5A059;
     padding-left: 1.5rem;
     font-style: italic;
     color: #ffffff;
-    background: rgba(13, 110, 253, 0.05);
+    background: rgba(197, 160, 89, 0.05);
     padding: 2rem;
     border-radius: 0 1rem 1rem 0;
     margin: 2rem 0;
@@ -434,10 +434,10 @@ h1, h2, h3, h4, h5, h6,
 
 .pagination .page-numbers.current,
 .pagination .page-numbers:hover {
-    background: #0d6efd;
+    background: #C5A059;
     color: white;
-    border-color: #0d6efd;
-    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.2);
+    border-color: #C5A059;
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
 }
 
 .pagination .page-numbers.prev,

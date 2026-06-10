@@ -73,7 +73,7 @@ $first_id = $turmas_data[0]['id'];
        ALUMNI GALLERY — Premium Dark Theme
        ═══════════════════════════════════════════════════ */
     .alumni-gallery-section {
-        background: #0a1118;
+        background: #0A0E1A;
         padding: 80px 0 96px;
         border-top: 1px solid rgba(255, 255, 255, 0.06);
         position: relative;
@@ -126,7 +126,7 @@ $first_id = $turmas_data[0]['id'];
         font-weight: 800;
         letter-spacing: 0.25em;
         text-transform: uppercase;
-        color: #137fec;
+        color: #C5A059;
         margin-bottom: 24px;
     }
 
@@ -187,8 +187,8 @@ $first_id = $turmas_data[0]['id'];
     }
 
     .alumni-tab-btn.active {
-        background: #137fec;
-        border-color: #137fec;
+        background: #C5A059;
+        border-color: #C5A059;
         color: #fff;
         box-shadow: 0 0 24px rgba(19, 127, 236, 0.35);
     }
@@ -219,7 +219,7 @@ $first_id = $turmas_data[0]['id'];
         border-radius: 12px;
         overflow: hidden;
         cursor: pointer;
-        background: #101922;
+        background: #050A14;
         opacity: 0;
         transform: scale(0.95);
         transition: opacity 0.4s ease, transform 0.4s ease;

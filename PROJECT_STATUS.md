@@ -4,9 +4,7 @@
 
 ## Onde paramos
 
-A issue **#2** (governança técnica e fluxo GitHub Projects) foi implementada. O projeto agora possui documentação viva, regras do Cursor e integração com o GitHub Projects como fonte de verdade para tarefas.
-
-**Nenhuma funcionalidade do site foi alterada nesta etapa.**
+A issue **#1** (nova identidade visual) foi implementada e está em **In Review**. Aguarda validação em staging.
 
 ## Estado atual do projeto
 
@@ -14,7 +12,7 @@ A issue **#2** (governança técnica e fluxo GitHub Projects) foi implementada. 
 
 | Área | Estado |
 |------|--------|
-| Tema WordPress `saulocoelho` v1.0.9 | Funcional |
+| Tema WordPress `saulocoelho` v1.1.0 | Identidade visual navy + dourado |
 | Home, Sobre, Programas, Loja, Contato, Legal | Templates + metaboxes |
 | WooCommerce (produtos, checkout, my-account) | Customizado |
 | Checkout gate (login antes do checkout) | Implementado |
@@ -27,12 +25,12 @@ A issue **#2** (governança técnica e fluxo GitHub Projects) foi implementada. 
 
 | # | Título | Status |
 |---|--------|--------|
-| 2 | Governança técnica e fluxo GitHub Projects | In review |
-| 1 | Alterar cores e fontes (nova identidade visual) | Backlog |
+| 1 | Nova identidade visual (Playfair + navy/dourado) | In review |
+| 2 | Governança técnica e fluxo GitHub Projects | Done |
 
 ### Pendências conhecidas
 
-- Issue #1 aguarda aprovação para execução (Playfair Display, azul escuro + dourado).
+- Validar identidade visual em staging (issue #1).
 - Tailwind CDN temporário no `header.php` — build local (`dist/output.css`) não está em uso.
 - `product_requirements_document.md` é um template vazio, não um PRD real.
 - Sem testes automatizados (PHPUnit, E2E).
@@ -40,10 +38,8 @@ A issue **#2** (governança técnica e fluxo GitHub Projects) foi implementada. 
 
 ## Próximos passos recomendados
 
-1. Validar a governança criada nesta issue (#2) e mover para **Done**.
-2. Revisar e aprovar a issue #1 (identidade visual) — mover para **Ready** quando pronta.
-3. Considerar issue futura: migrar Tailwind CDN → build local.
-4. Considerar issue futura: documentar PRD real do produto.
+1. Validar issue #1 em staging e mover para **Done**.
+2. Considerar issue futura: migrar Tailwind CDN → build local.
 
 ## Riscos ativos
 

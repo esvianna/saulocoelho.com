@@ -17,7 +17,7 @@ $footer_terms = get_theme_mod( 'footer_terms_link', '#' );
                 <div class="text-primary">
                     <span class="material-symbols-outlined text-2xl">terminal</span>
                 </div>
-                <h2 class="text-lg font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
+                <h2 class="font-display text-lg font-black tracking-tighter uppercase text-white"><?php bloginfo( 'name' ); ?></h2>
             </div>
             
             <?php if ( $footer_bio ) : ?>
@@ -114,7 +114,7 @@ if ( $wa_enable && ! empty( $wa_phone ) ) :
     </a>
 <?php endif; ?>
 
-<button id="back-to-top" class="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-2xl bg-background-dark-alt/40 backdrop-blur-xl border border-white/10 text-slate-400 flex items-center justify-center transition-all duration-500 opacity-0 transform translate-y-10 pointer-events-none hover:border-primary hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(19,127,236,0.3)] group" title="Voltar ao Topo">
+<button id="back-to-top" class="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-2xl bg-background-dark-alt/40 backdrop-blur-xl border border-white/10 text-slate-400 flex items-center justify-center transition-all duration-500 opacity-0 transform translate-y-10 pointer-events-none hover:border-primary hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(197,160,89,0.3)] group" title="Voltar ao Topo">
     <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
     <span class="material-symbols-outlined text-2xl relative z-10 font-bold">north</span>
 </button>

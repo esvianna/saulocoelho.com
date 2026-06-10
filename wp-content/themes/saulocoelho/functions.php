@@ -46,8 +46,13 @@ function saulocoelho_scripts() {
     $theme_version = wp_get_theme()->get( 'Version' );
     wp_enqueue_style( 'saulocoelho-style', get_stylesheet_uri(), array(), $theme_version );
 
-    // Inter Font
-    wp_enqueue_style( 'saulocoelho-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', array(), null );
+    // Inter (corpo/UI) + Playfair Display (títulos)
+    wp_enqueue_style(
+        'saulocoelho-fonts',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap',
+        array(),
+        null
+    );
 
     // Material Symbols
     wp_enqueue_style( 'saulocoelho-material-symbols', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap', array(), null );
@@ -226,8 +231,8 @@ function saulocoelho_checkout_qty_script() {
         transition: all 0.3s ease;
     }
     .checkout-qty-wrapper input.qty:focus {
-        border-color: #0d6efd !important;
-        box-shadow: 0 0 10px rgba(13,110,253,0.3) !important;
+        border-color: #C5A059 !important;
+        box-shadow: 0 0 10px rgba(197,160,89,0.3) !important;
     }
     .checkout-qty-wrapper { display: inline-block; margin-left: 10px; }
     

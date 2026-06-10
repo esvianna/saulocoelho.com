@@ -26,7 +26,7 @@ if (empty($features)) {
             </div>
             <?php if ($features_image) : ?>
                 <div class="hidden lg:block relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-primary/20 to-blue-600/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary-dark/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                     <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl skew-y-1 group-hover:skew-y-0 transition-transform duration-700">
                         <img src="<?php echo esc_url($features_image); ?>" alt="<?php echo esc_attr($features_title); ?>" class="w-full h-[300px] object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>

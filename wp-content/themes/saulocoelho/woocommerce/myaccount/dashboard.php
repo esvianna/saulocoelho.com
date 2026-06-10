@@ -68,9 +68,9 @@ if ( $has_ama ) {
 
 <!-- KPIs Mocks baseados no Protótipo agora conectados ao Banco de Dados -->
 <div class="mb-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-    <div class="rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] p-6 shadow-sm shadow-blue-500/10">
+    <div class="rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] p-6 shadow-sm shadow-primary/10">
         <div class="flex items-center gap-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[#3b82f6]/10 text-[#3b82f6]">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[#C5A059]/10 text-[#C5A059]">
                 <span class="material-symbols-outlined">play_lesson</span>
             </div>
             <div>
@@ -135,16 +135,16 @@ if ( $has_ama ) {
             <div class="mt-auto">
                 <div class="mb-2 flex items-center justify-between text-sm">
                     <span class="text-slate-500">Progresso</span>
-                    <span class="font-bold <?php echo $is_completed ? 'text-green-500' : 'text-[#3b82f6]'; ?>">
+                    <span class="font-bold <?php echo $is_completed ? 'text-green-500' : 'text-[#C5A059]'; ?>">
                         <?php echo esc_html( $progress ); ?>%
                     </span>
                 </div>
                 <div class="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                    <div class="h-full transition-all duration-1000 <?php echo $is_completed ? 'bg-green-500' : 'bg-[#3b82f6]'; ?>" style="width: <?php echo esc_attr( $progress ); ?>%;"></div>
+                    <div class="h-full transition-all duration-1000 <?php echo $is_completed ? 'bg-green-500' : 'bg-[#C5A059]'; ?>" style="width: <?php echo esc_attr( $progress ); ?>%;"></div>
                 </div>
                 
                 <div class="mt-6 flex gap-3">
-                    <a href="<?php echo $player_url; ?>" class="flex-1 rounded-lg bg-[#3b82f6]/10 px-4 py-3 text-sm font-bold text-[#3b82f6] transition-colors hover:bg-[#3b82f6] hover:text-white border-0 cursor-pointer text-center block" style="font-family: inherit;">
+                    <a href="<?php echo $player_url; ?>" class="flex-1 rounded-lg bg-[#C5A059]/10 px-4 py-3 text-sm font-bold text-[#C5A059] transition-colors hover:bg-[#C5A059] hover:text-white border-0 cursor-pointer text-center block" style="font-family: inherit;">
                         <?php echo $is_completed ? 'Revisar Aula' : 'Retomar Aula'; ?>
                     </a>
                     
@@ -170,7 +170,7 @@ if ( $has_ama ) {
     <span class="material-symbols-outlined text-5xl text-slate-400 mb-4 inline-block">school</span>
     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Nenhum curso iniciado</h3>
     <p class="text-slate-500 mb-6">Explore nossa loja e comece sua jornada ao topo.</p>
-    <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="inline-block rounded-lg bg-[#3b82f6] px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-600 shadow-lg shadow-blue-500/20">
+    <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="inline-block rounded-lg bg-[#C5A059] px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-dark shadow-lg shadow-primary/20">
         Ver Treinamentos
     </a>
 </div>

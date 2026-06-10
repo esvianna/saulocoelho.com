@@ -48,7 +48,7 @@ Tema WordPress customizado (`saulocoelho`) para o site de Saulo Coelho — lider
 - **Tailwind CSS** — build via npm em `src/input.css` → `dist/output.css`; hoje o `header.php` ainda usa CDN temporário
 - **Metaboxes** — conteúdo editável em `inc/metaboxes.php`
 - **Módulos** — lógica em `inc/module-*.php`, templates em `template-parts/`
-- **Estética** — dark mode premium, alto contraste, fonte Inter, cor primária `#137fec`
+- **Estética** — dark mode premium, Playfair Display (títulos), Inter (corpo), cor primária `#C5A059`
 
 ## Limites importantes
 
