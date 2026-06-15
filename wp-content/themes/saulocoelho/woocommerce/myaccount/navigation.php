@@ -45,6 +45,9 @@ if ( isset( $menu_items[ $logout_endpoint ] ) ) {
 			if ( 'minhas-turmas' === $endpoint ) {
 				$icon = 'photo_library';
 			}
+			if ( 'questionario-presencial' === $endpoint ) {
+				$icon = 'assignment';
+			}
 			if ( 'edit-address' === $endpoint || 'edit-account' === $endpoint ) {
 				$icon = 'settings';
 			}

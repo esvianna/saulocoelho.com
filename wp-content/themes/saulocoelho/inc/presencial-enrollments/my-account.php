@@ -38,8 +38,7 @@ function sc_presencial_account_menu_items( $items ) {
 		return $items;
 	}
 
-	$questionnaires = sc_presencial_get_user_questionnaire_enrollments( $user_id );
-	if ( empty( $questionnaires ) ) {
+	if ( ! sc_presencial_user_has_questionnaire_access( $user_id ) ) {
 		return $items;
 	}
 
@@ -108,6 +107,8 @@ function sc_presencial_render_enrollment_list( $user_id ) {
 		echo '<p class="text-slate-500">' . esc_html__( 'Nenhum questionário no momento.', 'saulocoelho' ) . '</p>';
 		return;
 	}
+
+	echo '<p class="text-sm text-slate-500 mb-4">' . esc_html__( 'Um questionário por formação — mesmo que você tenha mais de um pedido, responda ou edite uma única vez.', 'saulocoelho' ) . '</p>';
 
 	echo '<ul class="space-y-4">';
 	foreach ( $rows as $row ) {

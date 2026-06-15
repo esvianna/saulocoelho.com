@@ -37,17 +37,39 @@ function sc_presencial_enrollment_has_questionnaire( $enrollment ) {
 	if ( ! $enrollment ) {
 		return false;
 	}
+	if ( ! empty( $enrollment->responses_json ) && $enrollment->responses_json !== 'null' ) {
+		return true;
+	}
 	if ( ! empty( $enrollment->form_snapshot_json ) ) {
 		return true;
 	}
 	if ( ! empty( $enrollment->form_id ) ) {
 		return true;
 	}
-	if ( ! empty( $enrollment->form_schema_version ) && $enrollment->form_schema_version === SC_PRESENCIAL_FORM_SCHEMA ) {
+	if ( ! empty( $enrollment->form_schema_version ) ) {
 		return true;
 	}
 	return sc_forms_product_has_form( (int) $enrollment->product_id )
 		|| sc_presencial_is_presencial_product( (int) $enrollment->product_id );
+}
+
+/**
+ * Aluno deve ver o menu/aba de questionário (pendente ou já respondido).
+ */
+function sc_presencial_user_has_questionnaire_access( $user_id ) {
+	$user_id = absint( $user_id );
+	if ( ! $user_id ) {
+		return false;
+	}
+
+	foreach ( sc_presencial_get_user_enrollments( $user_id ) as $row ) {
+		if ( sc_presencial_enrollment_has_questionnaire( $row )
+			&& in_array( $row->form_status, array( 'pending', 'complete' ), true ) ) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
