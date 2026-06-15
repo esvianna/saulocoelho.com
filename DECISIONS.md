@@ -56,10 +56,26 @@ Formato inspirado em ADR (Architecture Decision Record).
 
 ---
 
+## ADR-006 — Inscrições presenciais: formulário pós-pedido, pagamento pendente e painel admin
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-06-15 |
+| **Status** | Proposta — aguarda Google Forms do cliente; workspace em `SAULO COELHO/saulocoelho.code-workspace` |
+| **Contexto** | Cliente solicita formulário de cadastro/pesquisa para treinamento presencial ([Coaching\|Terapia](https://saulocoelho.com/produto/formacao-coaching-comportamental/)), opção de pagamento via equipe e painel de inscrições. Issue #3. |
+| **Decisão** | (1) Formulário **após** finalização do pedido, **não bloqueante** — pendência em Minha Conta. (2) Pagamento offline via **gateway WooCommerce** com pedido pendente, notificação à equipe e reserva imediata de vaga (sem prazo automático de cancelamento). (3) Confirmação de pagamento manual no WooCommerce; NF fora do sistema. (4) Painel admin para `administrator` com relatório inscritos/pagos/presentes. (5) Formulário **reutilizável** entre produtos. (6) Integração preferencial com plugin **AmaEducacional** (`ama_course`, `lms_enrollments`). (7) E-mails: confirmação, lembrete de formulário, lembrete de evento; material só após pedido confirmado. |
+| **Motivo** | Reaproveitar stack WC + LMS existente; evitar Google Forms embed (dados fragmentados); alinhar turmas presenciais ao modelo `ama_course` já usado no Alumni. |
+| **Consequências** | Desenvolvimento cross-repo (tema + AmaEducacional); possível extensão de schema de enrollments; check-in/QR ficam para detalhamento de v1. |
+
+---
+
 ## Decisões pendentes
 
 - Estratégia de deploy (manual vs CI/CD).
 - Adoção de testes automatizados.
+- Campos do formulário de inscrição (aguardando Google Forms).
+- Check-in com QR code / crachás na v1 ou v2.
+- Metabox de limite de vagas (`course_max_seats`) se ainda não existir no produto.
 
 ---
 

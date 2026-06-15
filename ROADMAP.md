@@ -6,6 +6,13 @@ Itens aqui **não estão aprovados** para implementação. Aguardam análise, pr
 
 ### P1 — Aprovada no backlog, aguarda Ready
 
+#### Issue existente #3: Treinamento presencial — formulário, pagamento e painel admin
+- **Contexto:** Formação Coaching|Terapia e futuros cursos presenciais; cliente enviará Google Forms.
+- **Escopo:** Formulário pós-pedido (reutilizável), gateway pagamento com equipe, painel inscrições, e-mails transacionais, integração AmaEducacional.
+- **Fora de escopo (v1):** Lista de espera, prazo automático cancelamento, NF, check-in QR (a confirmar).
+- **Critérios de aceite:** Ver issue #3 — depende de Google Forms + workspace plugin.
+- **Riscos:** Cross-repo; overbooking se contagem de vagas não for implementada.
+
 #### Issue existente #1: Nova identidade visual
 - **Contexto:** Atualizar fontes e cores para Playfair Display + azul escuro/dourado.
 - **Escopo:** `tailwind.config.js`, `header.php`, `functions.php` (fonts), `style.css`, templates.

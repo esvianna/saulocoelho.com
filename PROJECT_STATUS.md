@@ -1,6 +1,6 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-06-10
+Última atualização: 2026-06-15
 
 ## Onde paramos
 
@@ -27,6 +27,7 @@ A issue **#1** (nova identidade visual) foi implementada e está em **In Review*
 |---|--------|--------|
 | 1 | Nova identidade visual (Playfair + navy/dourado) | In review |
 | 2 | Governança técnica e fluxo GitHub Projects | Done |
+| 3 | Treinamento presencial: formulário, pagamento no evento e painel admin | Backlog |
 
 ### Pendências conhecidas
 
