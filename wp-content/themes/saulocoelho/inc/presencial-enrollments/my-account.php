@@ -125,7 +125,7 @@ function sc_presencial_handle_form_post( $enrollment ) {
 		return;
 	}
 
-	$result = sc_presencial_validate_form_submission( $_POST );
+	$result = sc_presencial_validate_form_submission( sc_presencial_get_post_input() );
 	if ( ! empty( $result['errors'] ) ) {
 		foreach ( $result['errors'] as $msg ) {
 			wc_add_notice( $msg, 'error' );
@@ -154,6 +154,7 @@ function sc_presencial_render_form( $enrollment ) {
 	$order    = wc_get_order( (int) $enrollment->order_id );
 	$defaults = sc_presencial_default_field_values( (int) $enrollment->user_id, $order );
 	$product  = get_the_title( (int) $enrollment->product_id );
+	$post_input = sc_presencial_get_post_input();
 
 	$by_section = array();
 	foreach ( $schema['fields'] as $field ) {
@@ -180,7 +181,7 @@ function sc_presencial_render_form( $enrollment ) {
 					<legend class="text-lg font-bold text-[#C5A059] px-2"><?php echo esc_html( $section['title'] ); ?></legend>
 					<div class="space-y-5 mt-4">
 						<?php foreach ( $fields as $field ) :
-							sc_presencial_render_field( $field, $defaults, $_POST );
+							sc_presencial_render_field( $field, $defaults, $post_input );
 						endforeach; ?>
 					</div>
 				</fieldset>

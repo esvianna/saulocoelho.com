@@ -278,9 +278,10 @@ function sc_presencial_get_form_schema() {
  * @return array{errors: string[], responses: array<string, mixed>}
  */
 function sc_presencial_validate_form_submission( array $post_data ) {
-	$schema   = sc_presencial_get_form_schema();
-	$errors   = array();
-	$response = array();
+	$post_data = wp_unslash( $post_data );
+	$schema    = sc_presencial_get_form_schema();
+	$errors    = array();
+	$response  = array();
 
 	foreach ( $schema['fields'] as $field ) {
 		$key  = $field['key'];
@@ -293,10 +294,18 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 
 		if ( $type === 'multiselect' ) {
 			$raw = isset( $post_data[ $key ] ) && is_array( $post_data[ $key ] ) ? $post_data[ $key ] : array();
-			$raw = array_map( 'sanitize_text_field', wp_unslash( $raw ) );
+			$raw = array_map( 'sanitize_text_field', $raw );
 			$raw = array_values( array_filter( $raw, static function ( $v ) {
 				return $v !== '';
 			} ) );
+			if ( ! empty( $field['options'] ) ) {
+				foreach ( $raw as $opt ) {
+					if ( ! isset( $field['options'][ $opt ] ) ) {
+						$errors[] = sprintf( __( 'Opção inválida em: %s', 'saulocoelho' ), $field['label'] );
+						continue 2;
+					}
+				}
+			}
 			if ( ! empty( $field['required'] ) && empty( $raw ) ) {
 				$errors[] = sprintf(
 					/* translators: %s: field label */
@@ -312,7 +321,7 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 		if ( is_array( $raw ) ) {
 			$raw = '';
 		}
-		$raw = is_string( $raw ) ? wp_unslash( $raw ) : '';
+		$raw = is_string( $raw ) ? $raw : '';
 
 		if ( $type === 'textarea' ) {
 			$value = sanitize_textarea_field( $raw );
@@ -360,7 +369,7 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 	$extra_keys = array( 'referral_source_other', 'life_areas_change_other', 'desired_results_other', 'prior_training_which' );
 	foreach ( $extra_keys as $ek ) {
 		if ( isset( $post_data[ $ek ] ) && trim( (string) $post_data[ $ek ] ) !== '' ) {
-			$response[ $ek ] = sanitize_text_field( wp_unslash( (string) $post_data[ $ek ] ) );
+			$response[ $ek ] = sanitize_text_field( (string) $post_data[ $ek ] );
 		}
 	}
 

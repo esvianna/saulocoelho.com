@@ -108,3 +108,16 @@ function sc_presencial_default_field_values( $user_id, $order = null ) {
 
 	return $values;
 }
+
+/**
+ * POST do questionário com wp_unslash (consistente com a validação).
+ *
+ * @return array<string, mixed>
+ */
+function sc_presencial_get_post_input() {
+	if ( ( $_SERVER['REQUEST_METHOD'] ?? '' ) !== 'POST' || empty( $_POST ) ) {
+		return array();
+	}
+
+	return wp_unslash( $_POST );
+}
