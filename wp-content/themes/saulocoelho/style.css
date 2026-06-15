@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.1.0
+Version: 1.2.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -135,8 +135,10 @@ body.woocommerce-checkout #payment ul.payment_methods li.wc_payment_method > lab
     color: #f9fafb !important;
     font-weight: 600;
 }
-body.woocommerce-checkout #payment ul.payment_methods li.wc_payment_method > label img {
-    opacity: 1;
+/* InfinitePay: logo com texto preto ilegível no fundo escuro */
+body.woocommerce-checkout #payment ul.payment_methods li[class*="infinitepay"] > label img,
+body.woocommerce-checkout #payment ul.payment_methods li.wc_payment_method > label img[src*="infinitepay" i] {
+    display: none !important;
 }
 
 /* Avisos de validação mais legíveis no checkout */

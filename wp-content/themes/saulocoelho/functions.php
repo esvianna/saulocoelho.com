@@ -352,6 +352,13 @@ if ( file_exists( __DIR__ . '/inc/module-testimonials.php' ) ) {
 }
 
 /**
+ * Inscrições presenciais — gateway, questionário e painel admin (issue #3).
+ */
+if ( file_exists( __DIR__ . '/inc/module-presencial-enrollments.php' ) ) {
+    require_once __DIR__ . '/inc/module-presencial-enrollments.php';
+}
+
+/**
  * Otimização de Blog - Filtragem de Categorias
  * Oculta as categorias selecionadas no Customizer do feed principal do blog.
  */

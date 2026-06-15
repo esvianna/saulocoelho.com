@@ -4,6 +4,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-06-15
+
+### Added (issue #3)
+- Módulo **inscrições presenciais**: gateway WooCommerce «Pagamento direto com o Saulo», questionário pós-pedido (22 campos), endpoint Minha Conta, painel admin (inscritos/pagos/presença), export CSV.
+- Tabela `{prefix}sc_presencial_enrollments`; e-mails à equipe (pedido on-hold e questionário completo).
+
+### Changed
+- Tema v1.1.0 → v1.2.0.
+
 ## [1.1.0] — 2026-06-10
 
 ### Added
