@@ -33,6 +33,20 @@ function sc_presencial_product_needs_enrollment( $product_id ) {
 	return sc_forms_product_has_form( $product_id ) || sc_presencial_is_presencial_product( $product_id );
 }
 
+/**
+ * Schema version reconhecido: legado hardcoded ou formulário CRUD existente no banco.
+ */
+function sc_presencial_is_valid_form_schema_version( $schema_version ) {
+	$schema_version = (string) $schema_version;
+	if ( $schema_version === '' ) {
+		return false;
+	}
+	if ( $schema_version === SC_PRESENCIAL_FORM_SCHEMA ) {
+		return true;
+	}
+	return (bool) sc_forms_get_form_by_slug( $schema_version );
+}
+
 function sc_presencial_enrollment_has_questionnaire( $enrollment ) {
 	if ( ! $enrollment ) {
 		return false;
@@ -43,10 +57,10 @@ function sc_presencial_enrollment_has_questionnaire( $enrollment ) {
 	if ( ! empty( $enrollment->form_snapshot_json ) ) {
 		return true;
 	}
-	if ( ! empty( $enrollment->form_id ) ) {
+	if ( ! empty( $enrollment->form_id ) && sc_forms_get_form( (int) $enrollment->form_id ) ) {
 		return true;
 	}
-	if ( ! empty( $enrollment->form_schema_version ) ) {
+	if ( sc_presencial_is_valid_form_schema_version( $enrollment->form_schema_version ?? '' ) ) {
 		return true;
 	}
 	return sc_forms_product_has_form( (int) $enrollment->product_id )
@@ -57,19 +71,7 @@ function sc_presencial_enrollment_has_questionnaire( $enrollment ) {
  * Aluno deve ver o menu/aba de questionário (pendente ou já respondido).
  */
 function sc_presencial_user_has_questionnaire_access( $user_id ) {
-	$user_id = absint( $user_id );
-	if ( ! $user_id ) {
-		return false;
-	}
-
-	foreach ( sc_presencial_get_user_enrollments( $user_id ) as $row ) {
-		if ( sc_presencial_enrollment_has_questionnaire( $row )
-			&& in_array( $row->form_status, array( 'pending', 'complete' ), true ) ) {
-			return true;
-		}
-	}
-
-	return false;
+	return ! empty( sc_presencial_get_user_questionnaire_enrollments( absint( $user_id ) ) );
 }
 
 /**

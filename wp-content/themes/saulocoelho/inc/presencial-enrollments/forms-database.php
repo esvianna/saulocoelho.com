@@ -127,6 +127,20 @@ function sc_forms_get_form( $form_id ) {
 }
 
 /**
+ * @return object|null
+ */
+function sc_forms_get_form_by_slug( $schema_slug ) {
+	global $wpdb;
+	$schema_slug = sanitize_key( (string) $schema_slug );
+	if ( $schema_slug === '' ) {
+		return null;
+	}
+	return $wpdb->get_row(
+		$wpdb->prepare( 'SELECT * FROM ' . sc_forms_table_name() . ' WHERE schema_slug = %s', $schema_slug )
+	);
+}
+
+/**
  * @return array<int, object>
  */
 function sc_forms_list_forms( $status = null ) {
