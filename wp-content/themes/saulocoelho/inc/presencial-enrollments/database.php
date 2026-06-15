@@ -10,13 +10,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sc_presencial_install_table() {
 	sc_forms_install_tables();
 	sc_forms_maybe_seed_and_migrate();
+	sc_presencial_maybe_repair_not_required_status();
 	update_option( 'sc_presencial_db_version', SC_PRESENCIAL_DB_VERSION );
+}
+
+/**
+ * Corrige inscrições presenciais legadas gravadas com form_status incorreto.
+ */
+function sc_presencial_maybe_repair_not_required_status() {
+	if ( get_option( 'sc_presencial_repair_not_required' ) ) {
+		return;
+	}
+
+	global $wpdb;
+	$table = sc_presencial_table_name();
+	$wpdb->query(
+		$wpdb->prepare(
+			"UPDATE {$table} SET form_status = 'pending' WHERE form_status = 'not_required' AND form_schema_version = %s",
+			SC_PRESENCIAL_FORM_SCHEMA
+		)
+	);
+
+	update_option( 'sc_presencial_repair_not_required', 1 );
 }
 
 function sc_presencial_maybe_install_table() {
 	if ( get_option( 'sc_presencial_db_version' ) !== SC_PRESENCIAL_DB_VERSION ) {
 		sc_presencial_install_table();
 	}
+	sc_presencial_maybe_repair_not_required_status();
 }
 
 /**
@@ -51,7 +73,7 @@ function sc_presencial_get_enrollment_by_order_product( $order_id, $product_id )
  * Status inicial do questionário para o produto.
  */
 function sc_presencial_initial_form_status( $product_id ) {
-	if ( sc_forms_product_has_form( $product_id ) ) {
+	if ( sc_forms_product_has_form( $product_id ) || sc_presencial_is_presencial_product( $product_id ) ) {
 		return 'pending';
 	}
 	return 'not_required';

@@ -46,7 +46,8 @@ function sc_presencial_enrollment_has_questionnaire( $enrollment ) {
 	if ( ! empty( $enrollment->form_schema_version ) && $enrollment->form_schema_version === SC_PRESENCIAL_FORM_SCHEMA ) {
 		return true;
 	}
-	return sc_forms_product_has_form( (int) $enrollment->product_id );
+	return sc_forms_product_has_form( (int) $enrollment->product_id )
+		|| sc_presencial_is_presencial_product( (int) $enrollment->product_id );
 }
 
 /**

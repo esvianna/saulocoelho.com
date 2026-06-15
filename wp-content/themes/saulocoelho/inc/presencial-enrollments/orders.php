@@ -60,7 +60,7 @@ function sc_presencial_thankyou_form_cta( $order_id ) {
 	$pending = array();
 	foreach ( $order->get_items() as $item ) {
 		$product_id = (int) $item->get_product_id();
-		if ( ! sc_forms_product_has_form( $product_id ) ) {
+		if ( ! sc_forms_product_has_form( $product_id ) && ! sc_presencial_is_presencial_product( $product_id ) ) {
 			continue;
 		}
 		$row = sc_presencial_get_enrollment_by_order_product( $order_id, $product_id );
