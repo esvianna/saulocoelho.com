@@ -27,7 +27,13 @@ A issue **#1** (nova identidade visual) foi implementada e está em **In Review*
 |---|--------|--------|
 | 1 | Nova identidade visual (Playfair + navy/dourado) | In review |
 | 2 | Governança técnica e fluxo GitHub Projects | Done |
-| 3 | Treinamento presencial: formulário, pagamento no evento e painel admin | Backlog |
+| 3 | Treinamento presencial: formulário, pagamento no evento e painel admin | Backlog (spec: Google Forms mapeado) |
+
+### Issue #3 — especificação (2026-06-15)
+
+- Google Forms mapeado campo a campo (22 campos); comentário em [issue #3](https://github.com/esvianna/saulocoelho.com/issues/3#issuecomment-4709638764).
+- Decisões D9–D13 em `DECISIONS.md` (e-mail/CPF fora do form, sem pagamento no form, padrão "Outro", LGPD).
+- **Pendente:** cliente confirmar ordem checkout ↔ formulário; depois mover issue para **Ready**.
 
 ### Pendências conhecidas
 

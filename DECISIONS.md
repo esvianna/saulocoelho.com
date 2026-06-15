@@ -61,7 +61,7 @@ Formato inspirado em ADR (Architecture Decision Record).
 | Campo | Valor |
 |-------|-------|
 | **Data** | 2026-06-15 |
-| **Status** | Proposta — aguarda Google Forms do cliente; workspace em `SAULO COELHO/saulocoelho.code-workspace` |
+| **Status** | Proposta — Google Forms mapeado (issue #3); aguarda confirmação cliente (ordem checkout ↔ form) e **Ready** |
 | **Contexto** | Cliente solicita formulário de cadastro/pesquisa para treinamento presencial ([Coaching\|Terapia](https://saulocoelho.com/produto/formacao-coaching-comportamental/)), opção de pagamento via equipe e painel de inscrições. Issue #3. |
 | **Decisão** | (1) Formulário **após** finalização do pedido, **não bloqueante** — pendência em Minha Conta. (2) Pagamento offline via **gateway WooCommerce** com pedido pendente, notificação à equipe e reserva imediata de vaga (sem prazo automático de cancelamento). (3) Confirmação de pagamento manual no WooCommerce; NF fora do sistema. (4) Painel admin para `administrator` com relatório inscritos/pagos/presentes. (5) Formulário **reutilizável** entre produtos. (6) Integração preferencial com plugin **AmaEducacional** (`ama_course`, `lms_enrollments`). (7) E-mails: confirmação, lembrete de formulário, lembrete de evento; material só após pedido confirmado. |
 | **Motivo** | Reaproveitar stack WC + LMS existente; evitar Google Forms embed (dados fragmentados); alinhar turmas presenciais ao modelo `ama_course` já usado no Alumni. |
@@ -73,9 +73,21 @@ Formato inspirado em ADR (Architecture Decision Record).
 
 - Estratégia de deploy (manual vs CI/CD).
 - Adoção de testes automatizados.
-- Campos do formulário de inscrição (aguardando Google Forms).
+- Ordem checkout vs. formulário (cliente a confirmar; proposta: pedido primeiro, form depois).
 - Check-in com QR code / crachás na v1 ou v2.
 - Metabox de limite de vagas (`course_max_seats`) se ainda não existir no produto.
+
+### ADR-006 — complementos (mapeamento Google Forms, 2026-06-15)
+
+| ID | Decisão |
+|----|---------|
+| D9 | E-mail e CPF **fora** do formulário de pesquisa (conta WP + checkout BR). |
+| D10 | Campo de pagamento do Google Forms **não** replicado; pagamento só no WooCommerce. |
+| D11 | Multiselect com "Outro": slug `other` + campo `*_other` condicional e obrigatório se marcado. |
+| D12 | `coaching_use_intent` como select (opções mutuamente exclusivas). |
+| D13 | Respostas sensíveis do formulário: painel admin apenas `administrator`. |
+
+Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3.
 
 ---
 
