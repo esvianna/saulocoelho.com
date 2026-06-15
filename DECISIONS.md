@@ -90,8 +90,47 @@ Formato inspirado em ADR (Architecture Decision Record).
 | D15 | Checkout com opção **"Pagamento direto com o Saulo"** (ou equivalente): pedido pendente, equipe confirma pagamento no WC, vaga reservada na hora. |
 | D16 | **Limite de vagas:** usar **estoque WooCommerce** no produto (`manage_stock` + quantidade = vagas); checkout bloqueia ao esgotar. Pedidos pendentes consomem estoque conforme config WC. |
 | D17 | **Check-in v1:** lista manual no painel (presente/ausente); sem QR code na primeira versão. |
+| D18 | Questionário pós-inscrição **v1 hardcoded** (`form-schema.php`); evolução com **CRUD + vínculo produto** na issue **#4** (Backlog). |
 
-Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3.
+Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD configurável: issue #4.
+
+---
+
+## ADR-007 — CRUD de formulários pós-inscrição (issue #4)
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-06-15 |
+| **Status** | Implementada (v1.3.0) — **In Review** |
+| **Contexto** | Questionário v1 hardcoded (D18); cliente precisa criar perguntas e associar formulário ao produto. |
+| **Decisão** | CRUD no admin (`administrator`); vínculo opcional formulário ↔ produto WC; reutilização do mesmo form em N produtos; online e presencial; edição de respostas pelo aluno; sem condicionais na v1; seções e ordem livres; limites por tipo de campo; respostas versionadas; painel e CSV dinâmicos. |
+| **Motivo** | Autonomia da equipe sem deploy; flexibilidade por produto mantendo reuso. |
+| **Consequências** | Substituir `form-schema.php` por dados em BD; ampliar enrollments para produtos online; condicionais e versionamento avançado ficam para v2. |
+
+### ADR-007 — complementos
+
+| ID | Decisão |
+|----|---------|
+| D19 | CRUD de formulários: apenas role **`administrator`**. |
+| D20 | Aluno pode **editar** respostas após envio (v1). |
+| D21 | Formulário **opcional por produto**; mesmo formulário **reutilizável** em vários produtos. |
+| D22 | **Sem campos condicionais** na v1 do CRUD (fluxos «Se sim…», «Outro» → v2). |
+| D23 | Limites por tipo: texto curto **254** chars; texto longo **até 4.000** (configurável por campo). |
+| D24 | **Ordem livre** de seções e perguntas (não fixar 4 blocos). |
+| D25 | Produto **sem** formulário → **sem questionário**; pedido finaliza sem CTA/pendência. |
+| D26 | Produtos **online e presencial** podem ter formulário pós-pedido. |
+| D27 | Troca de formulário no produto: respostas antigas **permanecem na versão antiga**. |
+| D28 | Painel inscrições e **export CSV** com colunas **dinâmicas** por pergunta. |
+
+### ADR-007 — armazenamento técnico (implementado)
+
+| Elemento | Implementação |
+|----------|----------------|
+| Formulários | Tabelas `sc_forms`, `sc_form_sections`, `sc_form_fields` |
+| Vínculo produto | Post meta `sc_post_order_form_id` (metabox lateral do produto) |
+| Versionamento | Coluna `version` em `sc_forms`; incremento ao salvar estrutura |
+| Respostas versionadas | `form_snapshot_json` + `form_version` em `sc_presencial_enrollments` |
+| Legado | `form-schema.php` mantido como seed/fallback; migração automática na ativação |
 
 ---
 

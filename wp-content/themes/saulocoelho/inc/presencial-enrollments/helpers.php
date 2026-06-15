@@ -47,8 +47,9 @@ function sc_presencial_table_name() {
  */
 function sc_presencial_form_status_label( $status ) {
 	$labels = array(
-		'pending'  => __( 'Questionário pendente', 'saulocoelho' ),
-		'complete' => __( 'Questionário completo', 'saulocoelho' ),
+		'pending'      => __( 'Questionário pendente', 'saulocoelho' ),
+		'complete'     => __( 'Questionário completo', 'saulocoelho' ),
+		'not_required' => __( 'Sem questionário', 'saulocoelho' ),
 	);
 	return $labels[ $status ] ?? $status;
 }

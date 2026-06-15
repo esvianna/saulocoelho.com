@@ -8,11 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Definição de campos do formulário reutilizável.
+ * Schema legado hardcoded (seed coaching-terapia-2026-07).
  *
  * @return array<string, array<string, mixed>>
  */
-function sc_presencial_get_form_schema() {
+function sc_presencial_get_hardcoded_form_schema() {
 	return array(
 		'sections' => array(
 			array(
@@ -273,13 +273,28 @@ function sc_presencial_get_form_schema() {
 }
 
 /**
+ * Schema ativo (delega ao serviço ou legado).
+ *
+ * @param object|null $enrollment
+ * @return array
+ */
+function sc_presencial_get_form_schema( $enrollment = null ) {
+	if ( $enrollment ) {
+		return sc_forms_get_schema_for_enrollment( $enrollment );
+	}
+	return sc_presencial_get_hardcoded_form_schema();
+}
+
+/**
  * Valida POST e retorna array de erros ou responses sanitizadas.
  *
+ * @param array       $post_data
+ * @param array|null  $schema
  * @return array{errors: string[], responses: array<string, mixed>}
  */
-function sc_presencial_validate_form_submission( array $post_data ) {
+function sc_presencial_validate_form_submission( array $post_data, $schema = null ) {
 	$post_data = wp_unslash( $post_data );
-	$schema    = sc_presencial_get_form_schema();
+	$schema    = is_array( $schema ) ? $schema : sc_presencial_get_hardcoded_form_schema();
 	$errors    = array();
 	$response  = array();
 
@@ -325,6 +340,11 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 
 		if ( $type === 'textarea' ) {
 			$value = sanitize_textarea_field( $raw );
+			$max   = isset( $field['max_length'] ) ? (int) $field['max_length'] : SC_FORMS_TEXTAREA_MAX;
+			if ( $max > 0 && mb_strlen( $value ) > $max ) {
+				$errors[] = sprintf( __( 'Texto muito longo em: %s (máx. %d caracteres)', 'saulocoelho' ), $field['label'], $max );
+				continue;
+			}
 		} elseif ( $type === 'date' ) {
 			$value = sanitize_text_field( $raw );
 			if ( $value && ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ) {
@@ -333,6 +353,13 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 			}
 		} else {
 			$value = sanitize_text_field( $raw );
+			if ( in_array( $type, array( 'text', 'tel' ), true ) ) {
+				$max = isset( $field['max_length'] ) ? (int) $field['max_length'] : SC_FORMS_TEXT_MAX;
+				if ( $max > 0 && mb_strlen( $value ) > $max ) {
+					$errors[] = sprintf( __( 'Texto muito longo em: %s (máx. %d caracteres)', 'saulocoelho' ), $field['label'], $max );
+					continue;
+				}
+			}
 		}
 
 		if ( ! empty( $field['required'] ) && $value === '' ) {
@@ -350,26 +377,46 @@ function sc_presencial_validate_form_submission( array $post_data ) {
 		}
 	}
 
-	// Validação condicional "Outro" e "Se sim, qual?"
-	if ( ( $post_data['referral_source'] ?? '' ) === 'other' && trim( (string) ( $post_data['referral_source_other'] ?? '' ) ) === '' ) {
-		$errors[] = __( 'Descreva como ficou sabendo da formação.', 'saulocoelho' );
-	}
-	if ( is_array( $post_data['life_areas_change'] ?? null ) && in_array( 'other', $post_data['life_areas_change'], true )
-		&& trim( (string) ( $post_data['life_areas_change_other'] ?? '' ) ) === '' ) {
-		$errors[] = __( 'Descreva a outra área da vida.', 'saulocoelho' );
-	}
-	if ( is_array( $post_data['desired_results'] ?? null ) && in_array( 'other', $post_data['desired_results'], true )
-		&& trim( (string) ( $post_data['desired_results_other'] ?? '' ) ) === '' ) {
-		$errors[] = __( 'Descreva o outro resultado desejado.', 'saulocoelho' );
-	}
-	if ( ( $post_data['prior_training'] ?? '' ) === 'sim' && trim( (string) ( $post_data['prior_training_which'] ?? '' ) ) === '' ) {
-		$errors[] = __( 'Informe qual treinamento você já fez com Saulo.', 'saulocoelho' );
+	// Validação "Outro" / campos auxiliares vinculados (legado + snapshot).
+	foreach ( $schema['fields'] as $field ) {
+		if ( empty( $field['other_field'] ) ) {
+			continue;
+		}
+		$parent_key = $field['key'];
+		$other_key  = $field['other_field'];
+		$parent_val = $post_data[ $parent_key ] ?? '';
+		$needs_other = false;
+
+		if ( $field['type'] === 'multiselect' && is_array( $parent_val ) ) {
+			$needs_other = in_array( 'other', $parent_val, true );
+		} elseif ( (string) $parent_val === 'other' ) {
+			$needs_other = true;
+		}
+
+		if ( $needs_other && trim( (string) ( $post_data[ $other_key ] ?? '' ) ) === '' ) {
+			$errors[] = sprintf( __( 'Preencha o campo complementar de: %s', 'saulocoelho' ), $field['label'] );
+		}
+
+		if ( isset( $post_data[ $other_key ] ) && trim( (string) $post_data[ $other_key ] ) !== '' ) {
+			$response[ $other_key ] = sanitize_text_field( (string) $post_data[ $other_key ] );
+		}
 	}
 
-	$extra_keys = array( 'referral_source_other', 'life_areas_change_other', 'desired_results_other', 'prior_training_which' );
-	foreach ( $extra_keys as $ek ) {
-		if ( isset( $post_data[ $ek ] ) && trim( (string) $post_data[ $ek ] ) !== '' ) {
-			$response[ $ek ] = sanitize_text_field( (string) $post_data[ $ek ] );
+	// Condicional legada "Se sim, qual?" (campos com show_if no snapshot).
+	foreach ( $schema['fields'] as $field ) {
+		if ( empty( $field['show_if'] ) || empty( $field['required'] ) ) {
+			continue;
+		}
+		if ( ! sc_presencial_field_visible( $field['show_if'], $post_data ) ) {
+			continue;
+		}
+		$key = $field['key'];
+		$val = $post_data[ $key ] ?? '';
+		if ( is_array( $val ) ) {
+			$val = '';
+		}
+		if ( trim( (string) $val ) === '' ) {
+			$errors[] = sprintf( __( 'Preencha o campo: %s', 'saulocoelho' ), $field['label'] );
 		}
 	}
 

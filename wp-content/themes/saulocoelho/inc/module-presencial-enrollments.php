@@ -9,13 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SC_PRESENCIAL_DB_VERSION', '1.0.0' );
+define( 'SC_PRESENCIAL_DB_VERSION', '2.0.0' );
 define( 'SC_PRESENCIAL_FORM_SCHEMA', 'coaching-terapia-2026-07' );
 
 $sc_presencial_dir = __DIR__ . '/presencial-enrollments';
 require_once $sc_presencial_dir . '/helpers.php';
+require_once $sc_presencial_dir . '/forms-database.php';
 require_once $sc_presencial_dir . '/database.php';
 require_once $sc_presencial_dir . '/form-schema.php';
+require_once $sc_presencial_dir . '/forms-service.php';
+require_once $sc_presencial_dir . '/forms-admin.php';
+require_once $sc_presencial_dir . '/product-form.php';
 require_once $sc_presencial_dir . '/gateway.php';
 require_once $sc_presencial_dir . '/orders.php';
 require_once $sc_presencial_dir . '/my-account.php';

@@ -4,7 +4,7 @@
 
 ## Onde paramos
 
-A issue **#3** (inscrições presenciais) foi **implementada** e está em **In Review**. Issue **#1** (identidade visual) aguarda validação em staging.
+A issue **#4** (CRUD formulários pós-inscrição) foi **implementada** e está em **In Review** (tema v1.3.0). Issue **#3** permanece em **In Review** — validar gateway e fluxo presencial em staging.
 
 ## Estado atual do projeto
 
@@ -12,7 +12,7 @@ A issue **#3** (inscrições presenciais) foi **implementada** e está em **In R
 
 | Área | Estado |
 |------|--------|
-| Tema WordPress `saulocoelho` v1.1.0 | Identidade visual navy + dourado |
+| Tema WordPress `saulocoelho` v1.3.0 | Identidade visual + inscrições/questionários |
 | Home, Sobre, Programas, Loja, Contato, Legal | Templates + metaboxes |
 | WooCommerce (produtos, checkout, my-account) | Customizado |
 | Checkout gate (login antes do checkout) | Implementado |
@@ -28,6 +28,7 @@ A issue **#3** (inscrições presenciais) foi **implementada** e está em **In R
 | 1 | Nova identidade visual (Playfair + navy/dourado) | In review |
 | 2 | Governança técnica e fluxo GitHub Projects | Done |
 | 3 | Treinamento presencial: formulário, pagamento no evento e painel admin | In review |
+| 4 | CRUD: formulários pós-inscrição configuráveis por produto | In review |
 
 ### Pendências conhecidas
 

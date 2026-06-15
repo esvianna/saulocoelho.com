@@ -1,6 +1,6 @@
 <?php
 /**
- * Endpoint Minha Conta — questionário presencial.
+ * Endpoint Minha Conta — questionário pós-inscrição.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,8 +33,13 @@ function sc_presencial_account_query_vars( $vars ) {
 add_filter( 'woocommerce_account_menu_items', 'sc_presencial_account_menu_items' );
 
 function sc_presencial_account_menu_items( $items ) {
-	$has = sc_presencial_get_user_enrollments( get_current_user_id(), 'pending' );
-	if ( empty( $has ) ) {
+	$user_id = get_current_user_id();
+	if ( ! $user_id ) {
+		return $items;
+	}
+
+	$questionnaires = sc_presencial_get_user_questionnaire_enrollments( $user_id );
+	if ( empty( $questionnaires ) ) {
 		return $items;
 	}
 
@@ -72,8 +77,16 @@ function sc_presencial_render_account_endpoint() {
 		return;
 	}
 
-	if ( $enrollment->form_status === 'complete' ) {
-		echo '<div class="woocommerce-message">' . esc_html__( 'Questionário já enviado. Obrigado!', 'saulocoelho' ) . '</div>';
+	if ( ! sc_presencial_enrollment_has_questionnaire( $enrollment ) ) {
+		echo '<p>' . esc_html__( 'Este produto não possui questionário.', 'saulocoelho' ) . '</p>';
+		return;
+	}
+
+	$editing = isset( $_GET['edit'] ) && $_GET['edit'] === '1';
+
+	if ( $enrollment->form_status === 'complete' && ! $editing ) {
+		echo '<div class="woocommerce-message">' . esc_html__( 'Questionário já enviado. Você pode editar suas respostas se precisar atualizar.', 'saulocoelho' ) . '</div>';
+		echo '<p><a class="button" href="' . esc_url( add_query_arg( array( 'inscricao' => (int) $enrollment->id, 'edit' => '1' ), wc_get_account_endpoint_url( 'questionario-presencial' ) ) ) . '">' . esc_html__( 'Editar respostas', 'saulocoelho' ) . '</a></p>';
 		echo '<p><a class="button" href="' . esc_url( wc_get_account_endpoint_url( 'questionario-presencial' ) ) . '">' . esc_html__( 'Voltar', 'saulocoelho' ) . '</a></p>';
 		return;
 	}
@@ -87,18 +100,12 @@ function sc_presencial_render_enrollment_list( $user_id ) {
 		echo '<div class="woocommerce-message mb-6">' . esc_html__( 'Questionário enviado com sucesso. Obrigado!', 'saulocoelho' ) . '</div>';
 	}
 
-	$rows = sc_presencial_get_user_enrollments( $user_id );
-	$rows = array_filter(
-		$rows,
-		static function ( $row ) {
-			return $row->form_status === 'pending';
-		}
-	);
+	$rows = sc_presencial_get_user_questionnaire_enrollments( $user_id );
 
-	echo '<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">' . esc_html__( 'Questionários pendentes', 'saulocoelho' ) . '</h2>';
+	echo '<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">' . esc_html__( 'Questionários de inscrição', 'saulocoelho' ) . '</h2>';
 
 	if ( empty( $rows ) ) {
-		echo '<p class="text-slate-500">' . esc_html__( 'Nenhum questionário pendente no momento.', 'saulocoelho' ) . '</p>';
+		echo '<p class="text-slate-500">' . esc_html__( 'Nenhum questionário no momento.', 'saulocoelho' ) . '</p>';
 		return;
 	}
 
@@ -106,17 +113,21 @@ function sc_presencial_render_enrollment_list( $user_id ) {
 	foreach ( $rows as $row ) {
 		$title = get_the_title( (int) $row->product_id );
 		$url   = add_query_arg( 'inscricao', (int) $row->id, wc_get_account_endpoint_url( 'questionario-presencial' ) );
+		if ( $row->form_status === 'complete' ) {
+			$url = add_query_arg( 'edit', '1', $url );
+		}
+		$btn_label = $row->form_status === 'pending' ? __( 'Preencher', 'saulocoelho' ) : __( 'Editar', 'saulocoelho' );
 		echo '<li class="p-4 border border-slate-200 dark:border-white/10 rounded-xl flex flex-wrap items-center justify-between gap-3">';
 		echo '<div><strong class="text-slate-900 dark:text-white">' . esc_html( $title ) . '</strong>';
 		echo '<p class="text-sm text-slate-500 m-0">' . esc_html( sc_presencial_form_status_label( $row->form_status ) ) . '</p></div>';
-		echo '<a class="inline-block rounded-lg bg-[#C5A059] px-4 py-2 text-sm font-bold text-white" href="' . esc_url( $url ) . '">' . esc_html__( 'Preencher', 'saulocoelho' ) . '</a>';
+		echo '<a class="inline-block rounded-lg bg-[#C5A059] px-4 py-2 text-sm font-bold text-white" href="' . esc_url( $url ) . '">' . esc_html( $btn_label ) . '</a>';
 		echo '</li>';
 	}
 	echo '</ul>';
 }
 
 function sc_presencial_handle_form_post( $enrollment ) {
-	if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+	if ( ( $_SERVER['REQUEST_METHOD'] ?? '' ) !== 'POST' ) {
 		return;
 	}
 
@@ -125,7 +136,8 @@ function sc_presencial_handle_form_post( $enrollment ) {
 		return;
 	}
 
-	$result = sc_presencial_validate_form_submission( sc_presencial_get_post_input() );
+	$schema = sc_forms_get_schema_for_enrollment( $enrollment );
+	$result = sc_presencial_validate_form_submission( sc_presencial_get_post_input(), $schema );
 	if ( ! empty( $result['errors'] ) ) {
 		foreach ( $result['errors'] as $msg ) {
 			wc_add_notice( $msg, 'error' );
@@ -133,7 +145,7 @@ function sc_presencial_handle_form_post( $enrollment ) {
 		return;
 	}
 
-	if ( sc_presencial_save_responses( (int) $enrollment->id, $result['responses'] ) ) {
+	if ( sc_presencial_save_responses( (int) $enrollment->id, $result['responses'], $schema ) ) {
 		do_action( 'sc_presencial_form_completed', (int) $enrollment->id, $result['responses'] );
 		wp_safe_redirect(
 			add_query_arg(
@@ -150,11 +162,20 @@ function sc_presencial_handle_form_post( $enrollment ) {
 }
 
 function sc_presencial_render_form( $enrollment ) {
-	$schema   = sc_presencial_get_form_schema();
-	$order    = wc_get_order( (int) $enrollment->order_id );
-	$defaults = sc_presencial_default_field_values( (int) $enrollment->user_id, $order );
-	$product  = get_the_title( (int) $enrollment->product_id );
+	$schema     = sc_forms_get_schema_for_enrollment( $enrollment );
+	$order      = wc_get_order( (int) $enrollment->order_id );
+	$defaults   = sc_presencial_default_field_values( (int) $enrollment->user_id, $order );
+	$product    = get_the_title( (int) $enrollment->product_id );
 	$post_input = sc_presencial_get_post_input();
+
+	if ( $enrollment->form_status === 'complete' && ! empty( $enrollment->responses_json ) ) {
+		$saved = json_decode( (string) $enrollment->responses_json, true );
+		if ( is_array( $saved ) ) {
+			$defaults = array_merge( $defaults, $saved );
+		}
+	}
+
+	$description = ! empty( $schema['meta']['description'] ) ? $schema['meta']['description'] : __( 'Responda com sinceridade. Suas respostas nos ajudam a personalizar sua experiência na formação.', 'saulocoelho' );
 
 	$by_section = array();
 	foreach ( $schema['fields'] as $field ) {
@@ -162,10 +183,14 @@ function sc_presencial_render_form( $enrollment ) {
 	}
 
 	wc_print_notices();
+	$is_edit = $enrollment->form_status === 'complete';
 	?>
 	<div class="sc-presencial-form-wrap max-w-3xl">
 		<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2"><?php echo esc_html( $product ); ?></h2>
-		<p class="text-slate-500 mb-6"><?php esc_html_e( 'Responda com sinceridade. Suas respostas nos ajudam a personalizar sua experiência na formação.', 'saulocoelho' ); ?></p>
+		<p class="text-slate-500 mb-6"><?php echo esc_html( $description ); ?></p>
+		<?php if ( $is_edit ) : ?>
+			<p class="text-sm text-amber-600 mb-4"><?php esc_html_e( 'Você está editando suas respostas anteriores.', 'saulocoelho' ); ?></p>
+		<?php endif; ?>
 
 		<form method="post" class="sc-presencial-form space-y-10">
 			<?php wp_nonce_field( 'sc_presencial_save_' . $enrollment->id, 'sc_presencial_form_nonce' ); ?>
@@ -188,7 +213,7 @@ function sc_presencial_render_form( $enrollment ) {
 			<?php endforeach; ?>
 
 			<button type="submit" class="rounded-lg bg-[#C5A059] px-8 py-3 text-sm font-bold text-white border-0 cursor-pointer">
-				<?php esc_html_e( 'Enviar questionário', 'saulocoelho' ); ?>
+				<?php echo $is_edit ? esc_html__( 'Salvar alterações', 'saulocoelho' ) : esc_html__( 'Enviar questionário', 'saulocoelho' ); ?>
 			</button>
 		</form>
 	</div>
@@ -254,6 +279,11 @@ function sc_presencial_render_field( array $field, array $defaults, array $post 
 		);
 	}
 
+	$max_attr = '';
+	if ( ! empty( $field['max_length'] ) && in_array( $type, array( 'text', 'tel', 'textarea' ), true ) ) {
+		$max_attr = ' maxlength="' . (int) $field['max_length'] . '"';
+	}
+
 	echo '<div class="sc-field"' . $wrap_attrs . '>';
 	echo '<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2" for="sc_' . esc_attr( $key ) . '">';
 	echo esc_html( $label );
@@ -264,9 +294,10 @@ function sc_presencial_render_field( array $field, array $defaults, array $post 
 
 	if ( $type === 'textarea' ) {
 		printf(
-			'<textarea class="w-full rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-900 p-3" id="sc_%1$s" name="%1$s" rows="4"%2$s>%3$s</textarea>',
+			'<textarea class="w-full rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-900 p-3" id="sc_%1$s" name="%1$s" rows="4"%2$s%3$s>%4$s</textarea>',
 			esc_attr( $key ),
 			$req ? ' required' : '',
+			$max_attr,
 			esc_textarea( is_string( $value ) ? $value : '' )
 		);
 	} elseif ( $type === 'select' ) {
@@ -299,11 +330,12 @@ function sc_presencial_render_field( array $field, array $defaults, array $post 
 	} else {
 		$input_type = $type === 'date' ? 'date' : ( $type === 'tel' ? 'tel' : 'text' );
 		printf(
-			'<input class="w-full rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-900 p-3" type="%1$s" id="sc_%2$s" name="%2$s" value="%3$s"%4$s />',
+			'<input class="w-full rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-900 p-3" type="%1$s" id="sc_%2$s" name="%2$s" value="%3$s"%4$s%5$s />',
 			esc_attr( $input_type ),
 			esc_attr( $key ),
 			esc_attr( is_string( $value ) ? $value : '' ),
-			$req ? ' required' : ''
+			$req ? ' required' : '',
+			$max_attr
 		);
 	}
 
@@ -317,7 +349,13 @@ function sc_presencial_dashboard_pending_notice() {
 		return;
 	}
 
-	$pending = sc_presencial_get_user_enrollments( get_current_user_id(), 'pending' );
+	$pending = array_filter(
+		sc_presencial_get_user_questionnaire_enrollments( get_current_user_id() ),
+		static function ( $row ) {
+			return $row->form_status === 'pending';
+		}
+	);
+
 	if ( empty( $pending ) ) {
 		return;
 	}

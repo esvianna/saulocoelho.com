@@ -8,32 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function sc_presencial_install_table() {
-	global $wpdb;
-
-	$table   = sc_presencial_table_name();
-	$charset = $wpdb->get_charset_collate();
-
-	$sql = "CREATE TABLE {$table} (
-		id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-		user_id bigint(20) unsigned NOT NULL,
-		order_id bigint(20) unsigned NOT NULL,
-		product_id bigint(20) unsigned NOT NULL,
-		form_schema_version varchar(64) NOT NULL DEFAULT 'coaching-terapia-2026-07',
-		form_status varchar(20) NOT NULL DEFAULT 'pending',
-		attendance_status varchar(20) NOT NULL DEFAULT 'unknown',
-		responses_json longtext NULL,
-		created_at datetime NOT NULL,
-		updated_at datetime NOT NULL,
-		PRIMARY KEY  (id),
-		UNIQUE KEY order_product (order_id, product_id),
-		KEY user_id (user_id),
-		KEY product_id (product_id),
-		KEY form_status (form_status)
-	) {$charset};";
-
-	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-	dbDelta( $sql );
-
+	sc_forms_install_tables();
+	sc_forms_maybe_seed_and_migrate();
 	update_option( 'sc_presencial_db_version', SC_PRESENCIAL_DB_VERSION );
 }
 
@@ -72,6 +48,16 @@ function sc_presencial_get_enrollment_by_order_product( $order_id, $product_id )
 }
 
 /**
+ * Status inicial do questionário para o produto.
+ */
+function sc_presencial_initial_form_status( $product_id ) {
+	if ( sc_forms_product_has_form( $product_id ) ) {
+		return 'pending';
+	}
+	return 'not_required';
+}
+
+/**
  * @return int|false ID da inscrição.
  */
 function sc_presencial_upsert_enrollment( $user_id, $order_id, $product_id ) {
@@ -85,6 +71,10 @@ function sc_presencial_upsert_enrollment( $user_id, $order_id, $product_id ) {
 		return false;
 	}
 
+	if ( ! sc_presencial_product_needs_enrollment( $product_id ) ) {
+		return false;
+	}
+
 	$existing = sc_presencial_get_enrollment_by_order_product( $order_id, $product_id );
 	$now      = current_time( 'mysql' );
 
@@ -92,27 +82,31 @@ function sc_presencial_upsert_enrollment( $user_id, $order_id, $product_id ) {
 		return (int) $existing->id;
 	}
 
+	$form_id     = sc_forms_product_form_id( $product_id );
+	$form        = $form_id ? sc_forms_get_form( $form_id ) : null;
+	$form_status = sc_presencial_initial_form_status( $product_id );
+
 	$wpdb->insert(
 		sc_presencial_table_name(),
 		array(
 			'user_id'             => $user_id,
 			'order_id'            => $order_id,
 			'product_id'          => $product_id,
-			'form_schema_version' => SC_PRESENCIAL_FORM_SCHEMA,
-			'form_status'         => 'pending',
+			'form_id'             => $form_id,
+			'form_version'        => $form ? (int) $form->version : 0,
+			'form_schema_version' => $form ? $form->schema_slug : ( sc_presencial_is_presencial_product( $product_id ) ? SC_PRESENCIAL_FORM_SCHEMA : '' ),
+			'form_snapshot_json'  => null,
+			'form_status'         => $form_status,
 			'attendance_status'   => 'unknown',
 			'responses_json'      => null,
 			'created_at'          => $now,
 			'updated_at'          => $now,
 		),
-		array( '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s' )
+		array( '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 	);
 
 	$enrollment_id = (int) $wpdb->insert_id;
 
-	/**
-	 * Permite integração futura com AmaEducacional (matrícula em ama_course).
-	 */
 	do_action( 'sc_presencial_enrollment_created', $enrollment_id, $user_id, $order_id, $product_id );
 
 	return $enrollment_id ?: false;
@@ -141,11 +135,34 @@ function sc_presencial_get_user_enrollments( $user_id, $form_status = null ) {
 	return $wpdb->get_results( $wpdb->prepare( $sql, $args ) );
 }
 
-function sc_presencial_save_responses( $enrollment_id, array $responses ) {
+/**
+ * Inscrições com questionário ativo para o aluno.
+ *
+ * @return array<int, object>
+ */
+function sc_presencial_get_user_questionnaire_enrollments( $user_id ) {
+	$rows = sc_presencial_get_user_enrollments( $user_id );
+	return array_values(
+		array_filter(
+			$rows,
+			static function ( $row ) {
+				return sc_presencial_enrollment_has_questionnaire( $row )
+					&& in_array( $row->form_status, array( 'pending', 'complete' ), true );
+			}
+		)
+	);
+}
+
+function sc_presencial_save_responses( $enrollment_id, array $responses, array $schema = null ) {
 	global $wpdb;
 
 	$enrollment_id = absint( $enrollment_id );
 	if ( ! $enrollment_id ) {
+		return false;
+	}
+
+	$enrollment = sc_presencial_get_enrollment( $enrollment_id );
+	if ( ! $enrollment ) {
 		return false;
 	}
 
@@ -154,15 +171,41 @@ function sc_presencial_save_responses( $enrollment_id, array $responses ) {
 		return false;
 	}
 
+	$update = array(
+		'responses_json' => $json,
+		'form_status'    => 'complete',
+		'updated_at'     => current_time( 'mysql' ),
+	);
+
+	if ( empty( $enrollment->form_snapshot_json ) ) {
+		if ( ! $schema ) {
+			$schema = sc_forms_get_schema_for_enrollment( $enrollment );
+		}
+		$snapshot = sc_forms_create_snapshot( $schema );
+		$snap_json = wp_json_encode( $snapshot, JSON_UNESCAPED_UNICODE );
+		if ( $snap_json ) {
+			$update['form_snapshot_json'] = $snap_json;
+		}
+		if ( ! empty( $schema['meta']['form_id'] ) ) {
+			$update['form_id']      = (int) $schema['meta']['form_id'];
+			$update['form_version'] = (int) ( $schema['meta']['form_version'] ?? 0 );
+		}
+	}
+
+	$formats = array();
+	foreach ( $update as $key => $val ) {
+		if ( in_array( $key, array( 'form_id', 'form_version' ), true ) ) {
+			$formats[] = '%d';
+		} else {
+			$formats[] = '%s';
+		}
+	}
+
 	return (bool) $wpdb->update(
 		sc_presencial_table_name(),
-		array(
-			'responses_json' => $json,
-			'form_status'    => 'complete',
-			'updated_at'     => current_time( 'mysql' ),
-		),
+		$update,
 		array( 'id' => $enrollment_id ),
-		array( '%s', '%s', '%s' ),
+		$formats,
 		array( '%d' )
 	);
 }
