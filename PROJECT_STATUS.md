@@ -39,6 +39,7 @@ Repo: https://github.com/esvianna/vtis-quiz · Local: `C:\Users\dudav\Documents\
 | 5 | Ajustes no processo de associação dos formulários dos produtos (pós-pedido) | Backlog |
 | 6 | Quiz marketing multi-cliente: plugin VTIS Quiz (`vtis-quiz`) | In review |
 | 7 | vtis-quiz 1.1: escalas, faixas por dimensão, pergunta aberta | In review |
+| 8 | vtis-quiz 1.2: relatório resultado por e-mail (HTML) | In review |
 
 ### Pendências conhecidas
 

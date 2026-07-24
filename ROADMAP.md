@@ -30,8 +30,13 @@ Itens aqui **não estão aprovados** para implementação. Aguardam análise, pr
 #### Issue #7: vtis-quiz 1.1 — escalas, faixas por dimensão, pergunta aberta
 - **Status:** In Review — https://github.com/esvianna/saulocoelho.com/issues/7
 - **Plano:** `docs/PLAN-vtis-quiz-escalas-faixas-aberta.md`
-- **Entregue:** A+B+C + seed `codigo-da-lideranca` no plugin **v1.1.0** (DB 3)
-- **Próximo passo:** validar em staging/local → Done; deploy FTP.
+- **Entregue:** A+B+C + seed `codigo-da-lideranca` no plugin **v1.1.0** (DB 3) + progresso localStorage **v1.1.1**
+- **Próximo passo:** validar em staging/prod → Done.
+
+#### Issue #8: vtis-quiz 1.2 — relatório do resultado por e-mail (HTML)
+- **Status:** In Review — https://github.com/esvianna/saulocoelho.com/issues/8
+- **Entregue:** plugin **v1.2.0** — e-mail HTML + preview/reenvio/encaminhar no admin Leads
+- **Próximo passo:** validar SMTP + UI → Done; deploy FTP.
 
 #### Migrar Tailwind CDN para build local
 - **Problema:** `header.php` usa CDN temporário; `dist/output.css` não existe no repo.
