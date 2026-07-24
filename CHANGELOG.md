@@ -4,6 +4,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 
 ## [Unreleased]
 
+### Added
+- Documentação do Quiz marketing multi-cliente (plugin `vtis-quiz`): ADR-008, `docs/vtis-quiz-spec.md`; issue [#6](https://github.com/esvianna/saulocoelho.com/issues/6).
+- Skin do quiz no tema (`inc/module-vtis-quiz-skin.php`) — CSS variables Playfair/`#C5A059` via hook `vtis_quiz_enqueue_assets`.
+- Plano issue [#7](https://github.com/esvianna/saulocoelho.com/issues/7): `docs/PLAN-vtis-quiz-escalas-faixas-aberta.md` (A escalas, B faixas dimensão, C texto aberto).
+
+### Changed
+- Issue #6 implementada no plugin externo https://github.com/esvianna/vtis-quiz (v1.0.0).
+- Issue #7: plugin `vtis-quiz` **v1.1.0** — A+B+C + seed `codigo-da-lideranca` (DB 3).
+
 ## [1.3.0] — 2026-06-15
 
 ### Added (issue #4)

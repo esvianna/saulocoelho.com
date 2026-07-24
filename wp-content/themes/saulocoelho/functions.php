@@ -358,6 +358,10 @@ if ( file_exists( __DIR__ . '/inc/module-presencial-enrollments.php' ) ) {
     require_once __DIR__ . '/inc/module-presencial-enrollments.php';
 }
 
+if ( file_exists( __DIR__ . '/inc/module-vtis-quiz-skin.php' ) ) {
+    require_once __DIR__ . '/inc/module-vtis-quiz-skin.php';
+}
+
 /**
  * Otimização de Blog - Filtragem de Categorias
  * Oculta as categorias selecionadas no Customizer do feed principal do blog.

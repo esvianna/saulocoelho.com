@@ -73,9 +73,13 @@ Formato inspirado em ADR (Architecture Decision Record).
 
 - Estratégia de deploy (manual vs CI/CD).
 - Adoção de testes automatizados.
+- Conteúdo definitivo (perguntas/dimensões) do 1.º quiz Saulo.
+- ~~Criar repositório GitHub do plugin `vtis-quiz`~~ — **criado** https://github.com/esvianna/vtis-quiz (2026-07-24).
 - ~~Ordem checkout vs. formulário~~ — **aprovado:** questionário após finalização do pedido (D14).
 - ~~Check-in v1~~ — **lista manual** no painel admin; QR/crachás para v2 se necessário (D17).
 - ~~Limite de vagas~~ — **estoque WooCommerce** no produto = número de vagas (D16); sem metabox `course_max_seats`.
+- ~~Plugin vs tema para quiz marketing~~ — **aprovado:** plugin separado + lead antes do resultado (ADR-008, D29).
+- ~~Nome `vtis-quiz`~~ — **confirmado** (2026-07-24).
 
 ### ADR-006 — complementos (mapeamento Google Forms, 2026-06-15)
 
@@ -144,3 +148,27 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Decisão** | Primary `#C5A059`, fundo `#050A14`/`#0A0E1A`, Playfair Display nos títulos, Inter no corpo, CAPS só no hero, linhas decorativas douradas incluídas. |
 | **Motivo** | Alinhar site à nova marca premium do cliente. |
 | **Consequências** | Tema v1.1.0; validação visual necessária em staging. |
+
+---
+
+## ADR-008 — Plugin VTIS Quiz (marketing/avaliação multi-cliente)
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-07-24 |
+| **Status** | Implementada (plugin v1.0.0) — **In Review** (issue #6) |
+| **Contexto** | Cliente Saulo Coelho quer quizzes no estilo [Bylevel Quiz Performance](https://bylevel.com.br/quiz-performance/) (perguntas → score → mapa por dimensões → CTA). O mesmo produto poderá ser reutilizado por AmaMinerais e outros sites WP. Já existem no ecossistema: (a) questionário pós-inscrição `sc_forms*` no tema (sem scoring/wizard); (b) quizzes LMS no AmaEducacional (avaliação de aula). |
+| **Decisão** | (1) **Plugin WordPress separado** (prefixo/text domain propostos `vtis-quiz`), em repositório próprio — **não** implementar como módulo do tema `saulocoelho`. (2) Tema host só integra (página/shortcode + skin CSS da marca). (3) **Lead obrigatório antes do resultado** (e-mail e WhatsApp): sem lead válido não exibe score/mapa. (4) Dados em tabelas custom do plugin (`vtis_quiz_*`); **não** reutilizar `sc_*` nem `lms_*`/`ama_*`. (5) Front: shortcode + rewrite `/quiz/{slug}/`; UX multi-step inspirada no modelo Bylevel. (6) MVP sem acoplamento WooCommerce — CTA = URL configurável; CRM/Woo em fases posteriores via hooks. (7) Spec completa em `docs/vtis-quiz-spec.md`. |
+| **Motivo** | Reuso multi-cliente; separação clara de produtos (pós-pedido vs marketing vs LMS); white-label sem lock-in de marca Saulo/Ama. |
+| **Consequências** | Novo repo/plugin quando for implementar; governança e 1.ª instalação no Project Saulo; skins por tema; LGPD e disclaimer obrigatórios no gate de lead. |
+
+### ADR-008 — complementos
+
+| ID | Decisão |
+|----|---------|
+| D29 | Captura de lead **antes** do resultado (e-mail + WhatsApp); consentimento LGPD no gate. |
+| D30 | Prefixo/repo **`vtis-quiz`** — nome confirmado (2026-07-24); issue [#6](https://github.com/esvianna/saulocoelho.com/issues/6). |
+| D31 | Fora de escopo do plugin: questionário pós-inscrição (`sc_forms`) e quizzes LMS AmaEducacional. |
+| D32 | MVP: admin do quiz + front wizard + submissions + CSV; sem CRM/Woo. |
+| D33 | Skin visual no tema do site (ex.: Playfair/`#C5A059` no Saulo); CSS base neutro no plugin. |
+| D34 | Issue #7: A+B+C + seed `codigo-da-lideranca` na v1.1.0 (DB 3). |
