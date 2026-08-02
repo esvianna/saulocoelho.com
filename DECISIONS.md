@@ -73,7 +73,7 @@ Formato inspirado em ADR (Architecture Decision Record).
 
 - Estratégia de deploy (manual vs CI/CD).
 - Adoção de testes automatizados.
-- Conteúdo definitivo (perguntas/dimensões) do 1.º quiz Saulo.
+- ~~Conteúdo definitivo (perguntas/dimensões) do 1.º quiz Saulo.~~ — *Código da Liderança* (seed) + **MAPA 2022** decidido para Saulo (D35); implementação tipológica pendente.
 - ~~Criar repositório GitHub do plugin `vtis-quiz`~~ — **criado** https://github.com/esvianna/vtis-quiz (2026-07-24).
 - ~~Ordem checkout vs. formulário~~ — **aprovado:** questionário após finalização do pedido (D14).
 - ~~Check-in v1~~ — **lista manual** no painel admin; QR/crachás para v2 se necessário (D17).
@@ -172,3 +172,5 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | D32 | MVP: admin do quiz + front wizard + submissions + CSV; sem CRM/Woo. |
 | D33 | Skin visual no tema do site (ex.: Playfair/`#C5A059` no Saulo); CSS base neutro no plugin. |
 | D34 | Issue #7: A+B+C + seed `codigo-da-lideranca` na v1.1.0 (DB 3). |
+| D35 | **MAPA** (Método de Avaliação da Personalidade Ativa) no **saulocoelho.com**: versão canónica **2022** (60 itens Likert, 15 por dicotomia E/I·N/S·T/F·J/P, pontos com sinal, % clareza, código de 4 letras + perfil dos 16 tipos). Fonte: `SCCR/HERO/MAPA` (Teste/Revisão MAPA.xlsx, PDF perguntas, PERSONALIDADES, CAPA). |
+| D36 | MAPA **não** cabe só com seed no motor Likert actual — exige extensão do `vtis-quiz` (modo tipológico / typology). Plugin continua multi-cliente; 1.ª entrega + skin no tema Saulo. Posicionamento: método próprio inspirado em teoria de tipos — **não** marcar como MBTI® oficial. PDF/capa estilo Word = fase posterior ao MVP tipológico (HTML + e-mail). |

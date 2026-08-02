@@ -1,74 +1,33 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-07-24
+Última atualização: 2026-08-02
 
 ## Onde paramos
 
-Issue **#6** (MVP) e **#7** (1.1) em **In Review**. Plugin **v1.1.0** (DB 3) em staging + produção. Skin do tema **deployada em produção** (2026-07-24).
+Issue **[#9](https://github.com/esvianna/saulocoelho.com/issues/9)** MAPA tipológico — plugin **v1.3.0** commit `62d69a7` **deployado** em staging + produção. Aguarda validação humana → **In Review**.
 
-Repo: https://github.com/esvianna/vtis-quiz · Local: `C:\Users\dudav\Documents\Projetos\vtis-quiz` · Skin: `inc/module-vtis-quiz-skin.php`.
+Issues quiz **#6–#8** continuam em **In Review**.
 
-**Pós-deploy:** no WP Admin visitar/reactivar plugin (upgrade DB→3 + seed); **flush permalinks**; testar shortcodes + visual da skin.
+Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
-## Estado atual do projeto
+## Pós-deploy (fazer no WP)
 
-### O que já existe
+1. Reactivar / visitar plugins (upgrade DB→4 + seed `mapa` se ainda não existir).
+2. **Flush permalinks**.
+3. Criar página com `[vtis_quiz slug="mapa"]` ou abrir `/quiz/mapa/`.
+4. Completar um caso da planilha 2022 e comparar tipo/%; testar e-mail.
 
-| Área | Estado |
-|------|--------|
-| Tema WordPress `saulocoelho` v1.3.0 | Identidade visual + inscrições/questionários |
-| Home, Sobre, Programas, Loja, Contato, Legal | Templates + metaboxes |
-| WooCommerce (produtos, checkout, my-account) | Customizado |
-| Checkout gate (login antes do checkout) | Implementado |
-| Módulo Alumni (galerias de turmas) | Implementado |
-| Módulo Testemunhos | Implementado |
-| Integração ViaCEP no checkout | Implementado |
-| Formulários pós-inscrição CRUD (`sc_forms*`) | Implementado (v1.3.0) |
-| Plugin VTIS Quiz (`vtis-quiz` 1.0.0) | MVP entregue — In Review |
-| Skin quiz no tema | `module-vtis-quiz-skin.php` |
-| GitHub repo + Projects | Configurado |
+## Próximos passos
 
-### Issues no GitHub Projects
+1. Validar MAPA em staging/prod → mover #9 para Done quando OK.
+2. (Fase 2) PDF/capa CAPA-MAPA-MODELO.
 
-| # | Título | Status |
-|---|--------|--------|
-| 1 | Nova identidade visual (Playfair + navy/dourado) | Done |
-| 2 | Governança técnica e fluxo GitHub Projects | Done |
-| 3 | Treinamento presencial: formulário, pagamento no evento e painel admin | Done |
-| 4 | CRUD: formulários pós-inscrição configuráveis por produto | Done |
-| 5 | Ajustes no processo de associação dos formulários dos produtos (pós-pedido) | Backlog |
-| 6 | Quiz marketing multi-cliente: plugin VTIS Quiz (`vtis-quiz`) | In review |
-| 7 | vtis-quiz 1.1: escalas, faixas por dimensão, pergunta aberta | In review |
-| 8 | vtis-quiz 1.2: relatório resultado por e-mail (HTML) | In review |
+## Riscos
 
-### Pendências conhecidas
+- Polaridade dos 60 itens inferida semanticamente — validar vs planilha.
+- Perfis 16 tipos: revisão editorial/direitos.
+- Não marcar como MBTI® oficial.
 
-- Validar #7 (escalas, faixas, texto aberto, seed `codigo-da-lideranca`); deploy 1.1.0.
-- Validar #6 em staging (checklist na issue).
-- Copy/dimensões finais do 1.º quiz Saulo (substituir seed).
-- Sem testes automatizados (PHPUnit, E2E).
-- Deploy manual.
+## Como retomar
 
-## Próximos passos recomendados
-
-1. Deploy plugin em staging + flush permalinks; testar `[vtis_quiz slug="avaliacao-exemplo"]` e `/quiz/avaliacao-exemplo/`.
-2. Cliente fornece copy → editar quiz no admin.
-3. Após validação humana: mover #6 para **Done**.
-
-## Riscos ativos
-
-- **Tailwind CDN em produção** — dependência externa.
-- **JavaScript inline** em `functions.php` (checkout).
-- **Metaboxes grandes** — manutenção complexa.
-- **AJAX checkout qty** `nopriv` — nonce pendente.
-- **Quiz marketing** — LGPD/copy; seed é placeholder.
-
-## Decisões pendentes
-
-- Conteúdo definitivo do 1.º quiz Saulo.
-- Definir se Tailwind passa a build local.
-- Fluxo de deploy.
-
-## Como retomar depois
-
-- "Leia PROJECT_STATUS.md e a issue #6 — o que falta validar no quiz?"
+- "Validei o MAPA — mover #9 para Done" ou "Ajustar polaridade da pergunta X"
