@@ -4,11 +4,11 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.16** (`neuropsicanalise-final`) com **timer 90 min**. Deploy staging/prod feito. Aguarda validação humana → **Done**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.17**. Slug canónico **`neuropsicanalise`**. Timer 90 min. Aguarda validação humana → **Done**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
-**URL:** https://saulocoelho.com/quiz/neuropsicanalise-final/
+**URL:** https://saulocoelho.com/quiz/neuropsicanalise/
 
 ## Pós-deploy (validar no WP)
 
@@ -20,8 +20,9 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 ## Decisões fechadas nesta entrega
 
 - `result_delivery`: **deferred** (como MAPA; nota revelada pela formação).
-- Slug: `neuropsicanalise-final`.
-- Timer: **90 minutos** (`time_limit_minutes`, v1.3.16).
+- Slug: `neuropsicanalise` (URL https://saulocoelho.com/quiz/neuropsicanalise/ ; legado `neuropsicanalise-final`).
+- Timer: **90 minutos** (`time_limit_minutes`, v1.3.16+).
+- **Não** gravar o quiz no ecrã de edição do admin (destrói `options_json` MC → Likert).
 - Fora ainda: prática no admin, UI de gabarito MC no admin.
 
 ## Próximos passos
