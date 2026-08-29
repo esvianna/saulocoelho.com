@@ -4,7 +4,7 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.15** (`neuropsicanalise-final`) **deployado** em staging/prod (FTP Confrarias). Seed activo em produção (`max_score` 40, CSS `ver=1.3.15`). Aguarda validação humana completa (submission + Leads) → depois **Done**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.16** (`neuropsicanalise-final`) com **timer 90 min**. Deploy staging/prod feito. Aguarda validação humana → **Done**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
@@ -21,7 +21,8 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 
 - `result_delivery`: **deferred** (como MAPA; nota revelada pela formação).
 - Slug: `neuropsicanalise-final`.
-- Fora: prática no admin, timer 90 min, UI de gabarito no admin.
+- Timer: **90 minutos** (`time_limit_minutes`, v1.3.16).
+- Fora ainda: prática no admin, UI de gabarito MC no admin.
 
 ## Próximos passos
 
