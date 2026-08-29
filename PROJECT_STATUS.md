@@ -4,17 +4,18 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — seed no plugin **vtis-quiz v1.3.15** (`neuropsicanalise-final`, DB 8). Código pronto; aguarda **deploy** staging/prod + flush permalinks + validação humana → **In Review**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.15** (`neuropsicanalise-final`) **deployado** em staging/prod (FTP Confrarias). Seed activo em produção (`max_score` 40, CSS `ver=1.3.15`). Aguarda validação humana completa (submission + Leads) → depois **Done**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
-## Pós-deploy (fazer no WP)
+**URL:** https://saulocoelho.com/quiz/neuropsicanalise-final/
 
-1. Actualizar/activar plugin vtis-quiz 1.3.15 (upgrade DB→8 cria o quiz se o slug ainda não existir).
-2. **Flush permalinks**.
-3. Abrir `/quiz/neuropsicanalise-final/` ou página com `[vtis_quiz slug="neuropsicanalise-final"]`.
-4. Completar 1 submission de teste; confirmar lead em **VTIS Quiz → Leads** (score + respostas). Resultado ao aluno: **deferred** (mensagem sem nota).
-5. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+## Pós-deploy (validar no WP)
+
+1. Completar 1 submission de teste; confirmar lead em **VTIS Quiz → Leads** (score + respostas). Resultado ao aluno: **deferred**.
+2. Export CSV opcional.
+3. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+4. Flush permalinks só se alguma rota `/quiz/…` falhar (rewrite já respondeu 200 em prod).
 
 ## Decisões fechadas nesta entrega
 
