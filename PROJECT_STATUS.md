@@ -1,33 +1,34 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-08-02
+Última atualização: 2026-08-29
 
 ## Onde paramos
 
-Issue **[#9](https://github.com/esvianna/saulocoelho.com/issues/9)** MAPA tipológico — plugin **v1.3.0** commit `62d69a7` **deployado** em staging + produção. Aguarda validação humana → **In Review**.
-
-Issues quiz **#6–#8** continuam em **In Review**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — seed no plugin **vtis-quiz v1.3.15** (`neuropsicanalise-final`, DB 8). Código pronto; aguarda **deploy** staging/prod + flush permalinks + validação humana → **In Review**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
 ## Pós-deploy (fazer no WP)
 
-1. Reactivar / visitar plugins (upgrade DB→4 + seed `mapa` se ainda não existir).
+1. Actualizar/activar plugin vtis-quiz 1.3.15 (upgrade DB→8 cria o quiz se o slug ainda não existir).
 2. **Flush permalinks**.
-3. Criar página com `[vtis_quiz slug="mapa"]` ou abrir `/quiz/mapa/`.
-4. Completar um caso da planilha 2022 e comparar tipo/%; testar e-mail.
+3. Abrir `/quiz/neuropsicanalise-final/` ou página com `[vtis_quiz slug="neuropsicanalise-final"]`.
+4. Completar 1 submission de teste; confirmar lead em **VTIS Quiz → Leads** (score + respostas). Resultado ao aluno: **deferred** (mensagem sem nota).
+5. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+
+## Decisões fechadas nesta entrega
+
+- `result_delivery`: **deferred** (como MAPA; nota revelada pela formação).
+- Slug: `neuropsicanalise-final`.
+- Fora: prática no admin, timer 90 min, UI de gabarito no admin.
 
 ## Próximos passos
 
-1. Validar MAPA em staging/prod → mover #9 para Done quando OK.
-2. (Fase 2) PDF/capa CAPA-MAPA-MODELO.
-
-## Riscos
-
-- Polaridade dos 60 itens inferida semanticamente — validar vs planilha.
-- Perfis 16 tipos: revisão editorial/direitos.
-- Não marcar como MBTI® oficial.
+1. Deploy staging (`saulo.vtis.com.br`) → smoke test → prod.
+2. Ligar shortcode na página Woo/formação quando existir.
+3. Validar #12 → Done quando OK.
+4. Issues futuras opcionais: nota prática no admin, timer, tipo MC no admin.
 
 ## Como retomar
 
-- "Validei o MAPA — mover #9 para Done" ou "Ajustar polaridade da pergunta X"
+- "Deploy do vtis-quiz 1.3.15 feito — validar #12" ou "Mudar neuro para immediate / outro slug"
