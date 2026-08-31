@@ -4,30 +4,23 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — plugin **vtis-quiz v1.3.20**. Slug **`neuropsicanalise`**. Timer 90 min. **Nota prática + certificação 60/40** no admin Leads.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** — plugin **vtis-quiz v1.3.21**. Slug **`neuropsicanalise`**. Timer 90 min, nota prática 60/40, **embaralhar alternativas**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
 **URL:** https://saulocoelho.com/quiz/neuropsicanalise/
 
-## Pós-deploy (validar no WP)
+## Pós-deploy (validar)
 
-1. Abrir um lead da Neuro → ver score teórico + faixa; lançar nota prática (ex. 8,0); confirmar nota final e relatório.
-2. Imprimir relatório: blocos teórico / prática / certificação.
-3. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+1. Abrir o quiz em duas sessões: ordem A/B/C/D deve mudar; pontuação no Leads continua correcta.
+2. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
 
-## Decisões fechadas
+## Decisões
 
-- `result_delivery`: **deferred**.
-- Slug: `neuropsicanalise`.
-- Timer: **90 minutos**.
-- Prática: lançada no lead; final = teórica(0–10)×0,60 + prática×0,40; aprovado ≥ 7,5 + ética + conduta segura (D37).
+- `result_delivery`: **deferred**; timer 90 min; prática no lead; final = teórica×0,60 + prática×0,40.
+- `shuffle_options`: activo na Neuro (letras seguem a posição na tela).
 
 ## Próximos passos
 
 1. Validar #12 → Done quando OK.
 2. Issue opcional: UI de gabarito MC no admin.
-
-## Como retomar
-
-- "Validar nota prática #12" ou "Deploy vtis-quiz 1.3.20"
