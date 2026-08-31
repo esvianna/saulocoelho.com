@@ -13,9 +13,10 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 ## Pós-deploy (validar no WP)
 
 1. Completar 1 submission de teste; confirmar lead em **VTIS Quiz → Leads** (score + respostas). Resultado ao aluno: **deferred**.
-2. Export CSV opcional.
-3. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
-4. Flush permalinks só se alguma rota `/quiz/…` falhar (rewrite já respondeu 200 em prod).
+2. Em Leads: título do quiz visível; se houver aviso de órfãos → **Eliminar leads órfãos**.
+3. Export CSV opcional.
+4. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+5. Flush permalinks só se alguma rota `/quiz/…` falhar (rewrite já respondeu 200 em prod).
 
 ## Decisões fechadas nesta entrega
 
