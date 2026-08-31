@@ -4,24 +4,26 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** — plugin **vtis-quiz v1.3.22**. Slug **`neuropsicanalise`**. Timer, prática 60/40, shuffle; **guardar no admin preserva gabarito MC**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — **Done** (validação humana 2026-08-31).
+
+Plugin **vtis-quiz 1.3.22** em produção. URL: https://saulocoelho.com/quiz/neuropsicanalise/
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
-**URL:** https://saulocoelho.com/quiz/neuropsicanalise/
+## Entrega #12 (resumo)
 
-## Validar
+- 40 MC + gabarito; 7 dimensões; faixas 0–23 / 24–29 / 30–35 / 36–40
+- Lead gate + `result_delivery` **deferred**; timer **90 min**
+- Nota prática no admin + certificação **60/40** (mín. 7,5)
+- Embaralhar alternativas (`shuffle_options`)
+- Save no admin **preserva** gabarito MC (1.3.22)
+- Leads: títulos, órfãos, relatório HTML
 
-1. Embaralhar: duas sessões com letras diferentes; score correcto.
-2. Editar settings (ex. shuffle) e Guardar → `max_score` continua 40 / opções A–D.
-3. Nota prática no lead.
+## Próximos passos sugeridos
 
-## Decisões
-
-- `result_delivery`: deferred; timer 90; prática 60/40; `shuffle_options`.
-- Desde 1.3.22: save admin preserva `options_json` por pergunta (D37).
-
-## Próximos passos
-
-1. Validar #12 → Done quando OK.
+1. Ligar shortcode/URL na página Woo/formação quando existir.
 2. Issue opcional: UI de edição do gabarito MC no admin.
+
+## Como retomar
+
+- Nova prioridade do Project #6, ou "ligar quiz neuro na página do curso".
