@@ -4,23 +4,24 @@
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** — plugin **vtis-quiz v1.3.21**. Slug **`neuropsicanalise`**. Timer 90 min, nota prática 60/40, **embaralhar alternativas**.
+Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** — plugin **vtis-quiz v1.3.22**. Slug **`neuropsicanalise`**. Timer, prática 60/40, shuffle; **guardar no admin preserva gabarito MC**.
 
 Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
 **URL:** https://saulocoelho.com/quiz/neuropsicanalise/
 
-## Pós-deploy (validar)
+## Validar
 
-1. Abrir o quiz em duas sessões: ordem A/B/C/D deve mudar; pontuação no Leads continua correcta.
-2. **Não** gravar este quiz no ecrã de edição do admin (destrói `options_json` MC).
+1. Embaralhar: duas sessões com letras diferentes; score correcto.
+2. Editar settings (ex. shuffle) e Guardar → `max_score` continua 40 / opções A–D.
+3. Nota prática no lead.
 
 ## Decisões
 
-- `result_delivery`: **deferred**; timer 90 min; prática no lead; final = teórica×0,60 + prática×0,40.
-- `shuffle_options`: activo na Neuro (letras seguem a posição na tela).
+- `result_delivery`: deferred; timer 90; prática 60/40; `shuffle_options`.
+- Desde 1.3.22: save admin preserva `options_json` por pergunta (D37).
 
 ## Próximos passos
 
 1. Validar #12 → Done quando OK.
-2. Issue opcional: UI de gabarito MC no admin.
+2. Issue opcional: UI de edição do gabarito MC no admin.

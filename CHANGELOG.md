@@ -5,7 +5,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
-- Issue [#12](https://github.com/esvianna/saulocoelho.com/issues/12): Avaliação Final Neuropsicanálise — `vtis-quiz` **1.3.21** (embaralhar alternativas + nota prática 60/40); slug **`neuropsicanalise`**; D37 actualizado.
+- Issue [#12](https://github.com/esvianna/saulocoelho.com/issues/12): Avaliação Final Neuropsicanálise — `vtis-quiz` **1.3.22** (preserva gabarito ao guardar; shuffle; prática 60/40); slug **`neuropsicanalise`**; D37 actualizado.
 - Documentação do Quiz marketing multi-cliente (plugin `vtis-quiz`): ADR-008, `docs/vtis-quiz-spec.md`; issue [#6](https://github.com/esvianna/saulocoelho.com/issues/6).
 - Skin do quiz no tema (`inc/module-vtis-quiz-skin.php`) — CSS variables Playfair/`#C5A059` via hook `vtis_quiz_enqueue_assets`.
 - Plano issue [#7](https://github.com/esvianna/saulocoelho.com/issues/7): `docs/PLAN-vtis-quiz-escalas-faixas-aberta.md` (A escalas, B faixas dimensão, C texto aberto).
