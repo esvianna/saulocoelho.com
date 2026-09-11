@@ -1,14 +1,16 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-08-31
+Última atualização: 2026-09-11
 
 ## Onde paramos
 
-Issue **[#12](https://github.com/esvianna/saulocoelho.com/issues/12)** Avaliação Final Neuropsicanálise — **Done** (validação humana 2026-08-31).
+Quiz **8 Códigos de Reação** no plugin **vtis-quiz 1.3.23**, publicado em produção.
 
-Plugin **vtis-quiz 1.3.22** em produção. URL: https://saulocoelho.com/quiz/neuropsicanalise/
+- URL: https://saulocoelho.com/quiz/8-codigos-de-reacao/
+- 32 afirmações, escala 0–5, mapa em média /5, entrega imediata (Saulo testa)
+- `saulo.vtis.com.br` redireciona para produção; o deploy efetivo foi em `saulocoelho.com`
 
-Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
+Issue GitHub: não criada (sem pedido). Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-quiz-skin.php`.
 
 ## Entrega #12 (resumo)
 
@@ -21,9 +23,10 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 
 ## Próximos passos sugeridos
 
-1. Ligar shortcode/URL na página Woo/formação quando existir.
-2. Issue opcional: UI de edição do gabarito MC no admin.
+1. CTA URL da mentoria quando existir (campo no admin).
+2. Quando for uso só de mentorado: Entrega diferida no admin.
+3. Push do repo `vtis-quiz` se pedido.
 
 ## Como retomar
 
-- Nova prioridade do Project #6, ou "ligar quiz neuro na página do curso".
+- Testar o fluxo completo (32 itens + lead + mapa /5) e ajustar copy/CTA no admin.

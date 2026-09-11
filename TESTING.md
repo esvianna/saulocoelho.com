@@ -85,6 +85,20 @@ Executar antes de mover issue para **Done**:
 1. Passo a passo para o revisor humano
 ```
 
+### Quiz 8 Códigos de Reação (`vtis-quiz` 1.3.23)
+
+URL: https://saulocoelho.com/quiz/8-codigos-de-reacao/
+
+- [ ] Intro carrega; 32 afirmações; escala 0–5 (Nunca … Sempre)
+- [ ] Lead (nome, e-mail, WhatsApp, consentimento) antes do resultado
+- [ ] Mapa: oito códigos com média **x,x / 5** (ex. 16 pontos brutos → 4,0/5), sem selo de predominante
+- [ ] Faixa por barra (Não aparece … Código dominante)
+- [ ] E-mail/relatório também em /5
+- [ ] Disclaimer de não-diagnóstico visível
+- [ ] Admin: quiz publicado; Entrega imediata; Pontuação nas barras = média
+
+Regressão: `/quiz/neuropsicanalise/`, `/quiz/mapa/`, `/quiz/codigo-da-lideranca/` continuam a mostrar soma bruta nas barras.
+
 ## Testes automatizados (futuro)
 
 Ver `ROADMAP.md` — PHPUnit para funções puras; E2E opcional para checkout. Não implementado nesta etapa.

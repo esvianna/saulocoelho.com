@@ -5,6 +5,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
+- Quiz **8 Códigos de Reação** no `vtis-quiz` **1.3.23**, publicado: https://saulocoelho.com/quiz/8-codigos-de-reacao/
 - Issue [#12](https://github.com/esvianna/saulocoelho.com/issues/12): Avaliação Final Neuropsicanálise — **Done**; `vtis-quiz` **1.3.22** em prod (`/quiz/neuropsicanalise/`); D37.
 - Documentação do Quiz marketing multi-cliente (plugin `vtis-quiz`): ADR-008, `docs/vtis-quiz-spec.md`; issue [#6](https://github.com/esvianna/saulocoelho.com/issues/6).
 - Skin do quiz no tema (`inc/module-vtis-quiz-skin.php`) — CSS variables Playfair/`#C5A059` via hook `vtis_quiz_enqueue_assets`.
