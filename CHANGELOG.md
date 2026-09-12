@@ -5,6 +5,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
+- **Leads da palestra** (Teresópolis): página `/palestra/`, cadastro obrigatório (nome, e-mail, WhatsApp, LGPD), PDF tokenizado + e-mail, admin CSV e QR. Tabela `{prefix}sc_palestra_leads`. ADR-009.
+- **CRUD de palestras** (`sc_palestra`): cada evento tem data, local, textos, campos extra, ficheiros privados e imagem de fundo. `/palestra/` continua a ser a palestra principal; outras em `/palestra/{slug}/`.
 - Quiz **8 Códigos de Reação** no `vtis-quiz` **1.3.23**, publicado: https://saulocoelho.com/quiz/8-codigos-de-reacao/
 - Issue [#12](https://github.com/esvianna/saulocoelho.com/issues/12): Avaliação Final Neuropsicanálise — **Done**; `vtis-quiz` **1.3.22** em prod (`/quiz/neuropsicanalise/`); D37.
 - Documentação do Quiz marketing multi-cliente (plugin `vtis-quiz`): ADR-008, `docs/vtis-quiz-spec.md`; issue [#6](https://github.com/esvianna/saulocoelho.com/issues/6).

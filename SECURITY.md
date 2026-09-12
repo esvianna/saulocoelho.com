@@ -45,6 +45,13 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 ### Uploads e mídia
 - Usar APIs WordPress (`wp_enqueue_media`) — não implementar upload custom sem validação MIME.
 
+### Leads da palestra (`inc/module-palestra-leads.php`)
+- Formulário público: nonce AJAX, honeypot, rate limit por IP (transients).
+- Ficheiros **fora** da Biblioteca de Média; pasta `uploads/sc-palestra-private/{id}/` com `.htaccess` Deny; entrega só com token (48 h, poucos downloads). PDF legado do tema em `private/` só como fallback.
+- Não logar e-mail, WhatsApp ou token em `error_log`.
+- Admin/CSV: `manage_options`. CPT `sc_palestra` usa caps de página.
+- Consentimento LGPD obrigatório no envio.
+
 ## WooCommerce
 
 - Preferir hooks e APIs WC em vez de alterar core do plugin.

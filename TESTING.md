@@ -99,6 +99,22 @@ URL: https://saulocoelho.com/quiz/8-codigos-de-reacao/
 
 Regressão: `/quiz/neuropsicanalise/`, `/quiz/mapa/`, `/quiz/codigo-da-lideranca/` continuam a mostrar soma bruta nas barras.
 
+### Palestra Teresópolis (`/palestra/`)
+
+Requer **deploy FTP do tema** em produção (autorização expressa). Depois:
+
+- [x] https://saulocoelho.com/palestra/ abre o formulário (mobile)
+- [x] Sem cadastro, o PDF não é acessível por URL direta em `/wp-content/themes/saulocoelho/private/`
+- [x] Envio válido → botão **Baixar PDF** e e-mail com anexo ou link (48 h)
+- [x] Recarregar `/palestra/` sem token volta ao formulário (sem ficheiro)
+- [x] Link expirado / inventado → recusa
+- [ ] Admin **Palestras**: criar/editar evento (data, local, textos, campos, ficheiros, fundo); `/palestra/` continua a palestra principal
+- [ ] Nova palestra em `/palestra/{slug}/` com QR próprio
+- [ ] Admin **Palestras → Leads**: filtro por evento + CSV
+- [ ] Checkbox LGPD obrigatório; honeypot não cria lead visível
+
+O PWA https://app.saulocoelho.com não deve receber estes dados.
+
 ## Testes automatizados (futuro)
 
 Ver `ROADMAP.md` — PHPUnit para funções puras; E2E opcional para checkout. Não implementado nesta etapa.

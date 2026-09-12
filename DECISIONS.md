@@ -175,3 +175,17 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | D35 | **MAPA** (Método de Avaliação da Personalidade Ativa) no **saulocoelho.com**: versão canónica **2022** (60 itens Likert, 15 por dicotomia E/I·N/S·T/F·J/P, pontos com sinal, % clareza, código de 4 letras + perfil dos 16 tipos). Fonte: `SCCR/HERO/MAPA` (Teste/Revisão MAPA.xlsx, PDF perguntas, PERSONALIDADES, CAPA). |
 | D36 | MAPA **não** cabe só com seed no motor Likert actual — exige extensão do `vtis-quiz` (modo tipológico / typology). Plugin continua multi-cliente; 1.ª entrega + skin no tema Saulo. Posicionamento: método próprio inspirado em teoria de tipos — **não** marcar como MBTI® oficial. PDF/capa estilo Word = fase posterior ao MVP tipológico (HTML + e-mail). |
 | D37 | **Avaliação Final Neuropsicanálise** (#12, **Done** 2026-08-31): no **vtis-quiz** (≥1.3.22); seed MC; `result_delivery` = **deferred**; timer 90 min; slug **`neuropsicanalise`**; prática 60/40 no admin; **`shuffle_options`**; save admin **preserva** gabarito MC. UI de edição de gabarito no admin ainda **fora** (issue futura opcional). |
+| D38 | Palestra Teresópolis (2026-09): captura de leads **no tema WP** (`/palestra/`), não no PWA mock nem no `vtis-quiz`. PDF tokenizado + e-mail; ver ADR-009. |
+
+---
+
+## ADR-009 — Leads da palestra com PDF tokenizado
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-12 |
+| **Status** | Aceita |
+| **Contexto** | Palestra *O Comportamento Decide* (Teresópolis, 2026-09-14). Precisava de QR/link para slides em PDF com cadastro (nome, e-mail, WhatsApp) para a plataforma OCD. O PWA `app.saulocoelho.com` não persiste dados. |
+| **Decisão** | Página `/palestra/` no tema `saulocoelho`. Tabela `{prefix}sc_palestra_leads`. PDF em `wp-content/themes/saulocoelho/private/` (bloqueado via HTTP). Download só com token (48 h, até 8 downloads). Cópia por e-mail (anexo; se o SMTP recusar, só o link). Admin **Leads palestra** + CSV. |
+| **Motivo** | Marca do site, LGPD, dados no WP (não no protótipo Expo), deploy só do tema via FTP. |
+| **Consequências** | Página criada automaticamente no `init` se o slug não existir. Não cria conta Woo. Não liga ao app OCD. O PDF continua partilhável depois do 1.º download. Evolução: CPT `sc_palestra` (CRUD) para repetir o funil em novas palestras; Teresópolis permanece canónica em `/palestra/`. |

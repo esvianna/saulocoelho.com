@@ -1,8 +1,15 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-09-11
+Última atualização: 2026-09-12
 
 ## Onde paramos
+
+**Palestra Teresópolis (segunda 14/09):** captura de leads **e CRUD de palestras no ar** em produção.
+
+- URL: https://saulocoelho.com/palestra/ (Teresópolis; também `/palestra/teresopolis/`)
+- Admin WP: **Palestras** (criar/editar) e **Palestras → Leads**
+- PDF privado; download só após cadastro
+- PWA `app.saulocoelho.com` **não** entra neste fluxo
 
 Quiz **8 Códigos de Reação** no plugin **vtis-quiz 1.3.23**, publicado em produção.
 
@@ -23,10 +30,12 @@ Issue GitHub: não criada (sem pedido). Repo plugin: https://github.com/esvianna
 
 ## Próximos passos sugeridos
 
-1. CTA URL da mentoria quando existir (campo no admin).
-2. Quando for uso só de mentorado: Entrega diferida no admin.
-3. Push do repo `vtis-quiz` se pedido.
+1. QR/link da palestra: https://saulocoelho.com/palestra/ — conferir e-mail do PDF e CSV no admin **Palestras → Leads**.
+2. CTA URL da mentoria quando existir (campo no admin do quiz).
+3. Quando for uso só de mentorado: Entrega diferida no admin.
+4. Push do repo `vtis-quiz` se pedido.
 
 ## Como retomar
 
-- Testar o fluxo completo (32 itens + lead + mapa /5) e ajustar copy/CTA no admin.
+- Palestra: admin **Palestras** (eventos) e **Palestras → Leads**. `/palestra/` permanece Teresópolis. Checklist em `TESTING.md`.
+- Quiz 8 Códigos: testar o fluxo completo (32 itens + lead + mapa /5) e ajustar copy/CTA no admin.

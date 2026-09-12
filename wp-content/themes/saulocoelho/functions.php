@@ -363,6 +363,13 @@ if ( file_exists( __DIR__ . '/inc/module-vtis-quiz-skin.php' ) ) {
 }
 
 /**
+ * Leads da palestra — PDF tokenizado (Teresópolis).
+ */
+if ( file_exists( __DIR__ . '/inc/module-palestra-leads.php' ) ) {
+    require_once __DIR__ . '/inc/module-palestra-leads.php';
+}
+
+/**
  * Otimização de Blog - Filtragem de Categorias
  * Oculta as categorias selecionadas no Customizer do feed principal do blog.
  */

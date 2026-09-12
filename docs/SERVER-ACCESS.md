@@ -1,6 +1,6 @@
 # Acesso ao servidor — Saulocoelho.com (Confrarias)
 
-**Última atualização:** 2026-07-24
+**Última atualização:** 2026-09-10
 
 ## Autorização
 
@@ -24,6 +24,7 @@ Fonte: FileZilla site **Confrarias** (máquina local).
 |----------|-----|----------|
 | Staging | https://saulo.vtis.com.br | `/saulo.vtis.com.br` |
 | Produção | https://saulocoelho.com | `/saulocoelho.com` |
+| PWA OCD | https://app.saulocoelho.com | `/app.saulocoelho.com` |
 
 Tema activo: `…/wp-content/themes/saulocoelho`  
 Plugins: `…/wp-content/plugins/` (ex.: `vtis-quiz` ainda por criar no servidor)
