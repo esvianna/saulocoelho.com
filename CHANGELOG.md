@@ -5,7 +5,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
-- **Convite LMS (Leadership Academy):** após cadastro em `/inscricao/{slug}/` o aluno entra na hora (cookie), vai à sala do curso e vê como definir senha em Minha Conta — não fica preso se o e-mail de acesso não chegar. `inc/module-lms-invite-handoff.php`.
+- **Convite LMS (handoff):** após cadastro em `/inscricao/{slug}/` o aluno entra na hora (cookie), vai à sala e vê como definir senha — sem depender do e-mail. `inc/module-lms-invite-handoff.php`. Tema **1.3.25** em produção (FTP). ADR-014 · [#17](https://github.com/esvianna/saulocoelho.com/pull/17).
 - **Leads da palestra** (Teresópolis): página `/palestra/`, cadastro obrigatório (nome, e-mail, WhatsApp, LGPD), PDF tokenizado + e-mail, admin CSV e QR. Tabela `{prefix}sc_palestra_leads`. ADR-009.
 - **CRUD de palestras** (`sc_palestra`): cada evento tem data, local, textos, campos extra, ficheiros privados e imagem de fundo. `/palestra/` continua a ser a palestra principal; outras em `/palestra/{slug}/`.
 - E-mail da palestra: remetente `From`/`Reply-To` = e-mail de contato do tema (`contato@saulocoelho.com`), em vez do default `wordpress@`.

@@ -4,7 +4,9 @@
 
 ## Onde paramos
 
-**Leadership Academy (convite LMS):** alunos novos ficavam perdidos quando o e-mail de acesso não chegava. Handoff no tema: login imediato + sala do curso + aviso para definir senha. Falta deploy do tema e teste com token real. Patch definitivo no plugin AmaEducacional continua desejável.
+**Convite LMS — handoff (ADR-014 / [#17](https://github.com/esvianna/saulocoelho.com/pull/17)):** tema **1.3.25** — **no ar** (FTP 2026-09-16). **Validado** (conta nova → sala sem e-mail + aviso de senha). Patch canónico no AmaEducacional ainda desejável.
+
+**Nota:** Portal do Aluno e restante tema ≥ 1.3.24 estão em produção via FTP, mas ainda **não** estão todos no `main` deste repo — próximo passo: alinhar git com o tema real.
 
 **Palestra Teresópolis (segunda 14/09):** captura de leads **e CRUD de palestras no ar** em produção.
 

@@ -117,11 +117,10 @@ O PWA https://app.saulocoelho.com não deve receber estes dados.
 
 ### Convite LMS — handoff sem e-mail (`/inscricao/{slug}/`)
 
-Requer **deploy do tema**. Token real da metabox Convite (Leadership Academy).
+Requer **tema ≥ 1.3.25** (handoff). Token real da metabox Convite (Leadership Academy).
 
+- [x] Conta nova (e-mail inédito): logado → sala **sem** abrir o e-mail; aviso para definir senha (validado 2026-09-16 em prod)
 - [ ] Token inválido: continua a mensagem de erro; **sem** CTA de “inscrição confirmada”
-- [ ] Cadastro novo (e-mail inédito): após enviar, o aluno fica **logado** e chega à sala `/curso/leadership-academy/` (ou vê botões Entrar na sala / Definir senha)
-- [ ] Sem abrir o e-mail, consegue estudar; em Minha Conta aparece o aviso para definir senha
 - [ ] Gravar senha em Detalhes da conta remove o aviso
 - [ ] E-mail já existente: continua o fluxo do plugin (login em Minha Conta); dica “Esqueci a senha” se `redirect_to` for o curso
 - [ ] Checkout `/boas-vindas/` e cadastro da loja **inalterados**
