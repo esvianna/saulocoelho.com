@@ -8,12 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function sc_palestra_privacy_url() {
+	if ( function_exists( 'saulocoelho_privacy_url' ) ) {
+		return saulocoelho_privacy_url();
+	}
 	$url = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
 	if ( $url ) {
 		return $url;
 	}
 	$mod = get_theme_mod( 'footer_privacy_link', '' );
-	return ( $mod && $mod !== '#' ) ? $mod : home_url( '/' );
+	return ( $mod && $mod !== '#' ) ? $mod : home_url( '/privacidade/' );
 }
 
 function sc_palestra_normalize_whatsapp( $raw ) {

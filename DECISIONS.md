@@ -179,19 +179,6 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 
 ---
 
-## ADR-014 — Convite LMS: acesso imediato sem depender do e-mail
-
-| Campo | Valor |
-|-------|-------|
-| **Data** | 2026-09-16 |
-| **Status** | Aceita (tema ≥ 1.3.25 em produção; PR #17) |
-| **Contexto** | Conta criada no `/inscricao/{slug}/?t=` com senha gerada por e-mail. Alunos sem e-mail ficavam sem senha e sem sala. |
-| **Decisão** | No tema (`inc/module-lms-invite-handoff.php`): após `user_register` nesse URL, autenticar por cookie, redirecionar à sala quando matriculado, CTA de backup + aviso para definir senha em Minha Conta. E-mail do plugin continua como backup. |
-| **Motivo** | O e-mail não pode ser o único próximo passo; alinhado ao login silencioso do checkout. |
-| **Consequências** | Patch no tema sem esperar release do AmaEducacional. Ideal no futuro: o plugin autenticar no próprio `InviteRegistration`. Portal e restantes módulos FTP (≥ 1.3.24) ficam fora deste PR — alinhar `main` com o tema de produção noutro passo. |
-
----
-
 ## ADR-009 — Leads da palestra com PDF tokenizado
 
 | Campo | Valor |
@@ -202,3 +189,69 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Decisão** | Página `/palestra/` no tema `saulocoelho`. Tabela `{prefix}sc_palestra_leads`. PDF em `wp-content/themes/saulocoelho/private/` (bloqueado via HTTP). Download só com token (48 h, até 8 downloads). Cópia por e-mail (anexo; se o SMTP recusar, só o link). Admin **Leads palestra** + CSV. |
 | **Motivo** | Marca do site, LGPD, dados no WP (não no protótipo Expo), deploy só do tema via FTP. |
 | **Consequências** | Página criada automaticamente no `init` se o slug não existir. Não cria conta Woo. Não liga ao app OCD. O PDF continua partilhável depois do 1.º download. Evolução: CPT `sc_palestra` (CRUD) para repetir o funil em novas palestras; Teresópolis permanece canónica em `/palestra/`. |
+
+---
+
+## ADR-010 — Leadership Academy: convite no LMS, skin no tema
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-14 |
+| **Status** | Aceita |
+| **Contexto** | Turma Leadership Academy no AmaEducacional; alunos precisam de cadastro simples (QR/token) e ver o curso em Minha Conta. Quizzes vtis-quiz ainda não existem (fase 2). PWA OCD fora de escopo. |
+| **Decisão** | (1) Inscrição no plugin AmaEducacional (`/inscricao/{slug}/?t=`). (2) Tema só faz skin + avisos de login em pt-BR. (3) Não usar checkout Woo nem auto-inscrição gratuita aberta. (4) Curso deve ficar oculto no catálogo. |
+| **Motivo** | Matrícula já vive no LMS; Minha Conta já lista cursos matriculados. |
+| **Consequências** | Deploy cruzado (plugin 1.0.20 + tema 1.3.1). Regenerar permalinks se `/inscricao/` der 404. |
+
+---
+
+## ADR-011 — Portal do Aluno: shell Minha Conta + PWA (só logados)
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-15 |
+| **Status** | Aceita |
+| **Contexto** | Alunos precisam de acesso app-like a cursos/certificados/conta sem chrome de marketing; instalação PWA só na área do aluno. OCD (`app.saulocoelho.com`) é produto à parte. |
+| **Decisão** | (1) Shell se logado em Minha Conta **ou** singular LMS (`ama_course` / `ama_lesson`). (2) Tabs Cursos · Certificados · Conta; no LMS a tab Cursos fica activa. (3) Manifest/SW em `/portal-aluno/*`; CTA instalar só na tab Conta. (4) Convite `/inscricao/` e PWA OCD fora do shell. |
+| **Motivo** | Reaproveitar Minha Conta + LMS; ao retomar aula o aluno não perde o chrome app-like. |
+| **Consequências** | Tema ≥ 1.3.20; flush rewrite na 1.ª carga (`saulocoelho_portal_rewrite_v1`). Visitante no curso continua com header de marketing. |
+
+---
+
+## ADR-012 — Exercícios de aula: uma resposta + refazer
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-15 |
+| **Status** | Aceita |
+| **Contexto** | Quizzes de marketing permitem várias respostas; exercícios da Leadership Academy na grade LMS devem ter uma resposta por aluno e opção de refazer só se permitido. |
+| **Decisão** | Implementação no plugin `vtis-quiz` (≥ 1.3.32): `one_response_per_user` + `allow_retake` (update). Política por curso no AmaEducacional (≥ 1.0.31) via filtro `vtis_quiz_allow_retake`. |
+| **Motivo** | Evitar várias submissions do mesmo exercício; aluno ao voltar vê o resultado. |
+| **Consequências** | Deploy dos dois plugins; quizzes de marketing sem as flags continuam ilimitados. |
+
+---
+
+## ADR-013 — Portal: avisos (sininho) + Web Push
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-15 |
+| **Status** | Aceita (spec; implementação só com issue Ready) |
+| **Contexto** | Alunos do Portal PWA precisam de avisos da equipa (turma, lembretes). iOS só tem Web Push fiável com PWA instalada; muitos alunos verão o browser sem permissão de push. OCD (`app.saulocoelho.com`) é produto à parte. |
+| **Decisão** | (1) **Inbox + sininho** é a fonte de verdade (sempre disponível no Portal logado). (2) **Web Push** (VAPID) é canal opcional na mesma notificação — não um sistema paralelo. (3) Backend em **módulo/plugin WP** (tabelas + REST + admin); UI do sininho no **tema** (topbar Portal). Preferência: plugin dedicado leve no ecossistema Saulo **ou** módulo no AmaEducacional se a segmentação por curso for o núcleo — **v1: plugin/módulo no site Saulo** com audience `all` / `course:{id}` / `user:{id}` via matrículas Ama quando existir. (4) Fases: **A** inbox+admin+sininho; **B** subscribe+SW push+envio; **C** fila/relatório/e-mail. (5) Não misturar SW/origin com OCD. |
+| **Motivo** | Inbox cobre quem nega push ou usa iOS sem instalar; push só “acorda” o aluno. Separar dados do tema facilita secrets VAPID e deploy. |
+| **Consequências** | Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) em **Backlog**. VAPID public no front; private só server-side. Opt-in explícito na tab Conta. SW Portal ganha handlers `push` / `notificationclick`. |
+
+---
+
+## ADR-014 — Convite LMS: acesso imediato sem depender do e-mail
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-16 |
+| **Status** | Aceita (tema ≥ 1.3.25 em produção; [#17](https://github.com/esvianna/saulocoelho.com/pull/17) merged) |
+| **Contexto** | Conta criada no `/inscricao/{slug}/?t=` com senha gerada por e-mail. Alunos sem e-mail ficavam sem senha e sem sala. |
+| **Decisão** | No tema (`inc/module-lms-invite-handoff.php`): após `user_register` nesse URL, autenticar por cookie, redirecionar à sala quando matriculado, CTA de backup + aviso para definir senha em Minha Conta. E-mail do plugin continua como backup. |
+| **Motivo** | O e-mail não pode ser o único próximo passo; alinhado ao login silencioso do checkout. |
+| **Consequências** | Patch no tema sem esperar release do AmaEducacional. Ideal no futuro: o plugin autenticar no próprio `InviteRegistration`. Não sobrescrever o Portal 1.3.24+ no deploy — só ficheiros do handoff + bump de versão. |
+

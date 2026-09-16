@@ -29,11 +29,6 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 - Normalização de endereço e validação CPF/CNPJ.
 - **Cuidado:** qualquer mudança afeta autenticação e dados pessoais (LGPD).
 
-### Convite LMS (`inc/module-lms-invite-handoff.php`)
-- Login por cookie após cadastro em `/inscricao/{slug}/` (senha gerada pelo LMS, não escolhida no form).
-- Não logar senhas. Não autenticar fora desse URL.
-- Aviso para definir senha some ao gravar Detalhes da conta.
-
 ### AJAX quantidade no checkout (`functions.php`)
 - Endpoint `saulocoelho_update_checkout_qty` registrado para usuários logados e `nopriv`.
 - **Risco:** manipulação de carrinho sem verificação forte de nonce.
@@ -56,6 +51,24 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 - Não logar e-mail, WhatsApp ou token em `error_log`.
 - Admin/CSV: `manage_options`. CPT `sc_palestra` usa caps de página.
 - Consentimento LGPD obrigatório no envio.
+
+### Minha Conta / login
+- Avisos de erro são só apresentação (tradução + CSS). Não relaxar autenticação nem limites do plugin de tentativas.
+
+### Convite LMS (`inc/module-lms-invite-handoff.php`)
+- Login por cookie só em `/inscricao/{slug}/` após `user_register` (senha gerada pelo LMS, não escolhida no form).
+- Não autenticar fora desse URL. Não logar senhas.
+- Aviso para definir senha some ao gravar Detalhes da conta (`woocommerce_save_account_details`).
+
+### Portal do Aluno (PWA)
+- Shell e CTA instalar só com sessão autenticada em Minha Conta. Manifest/SW públicos em `/portal-aluno/` (necessário ao install); conteúdo da conta continua a exigir login WP. Banner de instalação oculto em `display-mode: standalone` / iOS `navigator.standalone`. Não misturar com `app.saulocoelho.com`.
+- **Avisos / Web Push (ADR-013, futuro):** inbox autenticado; VAPID private só no servidor; opt-in explícito; não enviar dados pessoais no payload do push além do necessário (título/corpo/URL).
+
+### Exercícios vtis-quiz (aula)
+- Modo `one_response_per_user`: uma submission por utilizador autenticado; refazer exige `allow_retake` (quiz) e política do curso LMS. Não relaxar `require_login` nos exercícios de turma.
+
+### Aviso de privacidade
+- Página pública `/privacidade/` (modelo). Equipa edita o conteúdo no admin; o seed do tema **não** sobrescreve texto já publicado.
 
 ## WooCommerce
 

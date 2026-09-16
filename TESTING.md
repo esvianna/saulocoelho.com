@@ -115,16 +115,62 @@ Requer **deploy FTP do tema** em produção (autorização expressa). Depois:
 
 O PWA https://app.saulocoelho.com não deve receber estes dados.
 
-### Convite LMS — handoff sem e-mail (`/inscricao/{slug}/`)
+### Leadership Academy — convite (`/inscricao/{slug}/`)
 
-Requer **tema ≥ 1.3.25** (handoff). Token real da metabox Convite (Leadership Academy).
+Requer **deploy** do plugin AmaEducacional **e** do tema ≥ **1.3.25** (handoff). Token real da metabox Convite.
 
-- [x] Conta nova (e-mail inédito): logado → sala **sem** abrir o e-mail; aviso para definir senha (validado 2026-09-16 em prod)
-- [ ] Token inválido: continua a mensagem de erro; **sem** CTA de “inscrição confirmada”
-- [ ] Gravar senha em Detalhes da conta remove o aviso
-- [ ] E-mail já existente: continua o fluxo do plugin (login em Minha Conta); dica “Esqueci a senha” se `redirect_to` for o curso
-- [ ] Checkout `/boas-vindas/` e cadastro da loja **inalterados**
-- [ ] E-mail de acesso do plugin, se chegar, continua válido (backup)
+- [ ] Curso: metabox Convite activo; catálogo público desligado; “gratuito com conta” desligado
+- [ ] Link com `?t=` abre o formulário; token inválido não matricula (**sem** CTA “inscrição confirmada”)
+- [ ] E-mail já existente: matricula a vaga e **redireciona para Minha Conta** (com `redirect_to` do curso); dica “Esqueci a senha” no login
+- [ ] Conta nova (e-mail inédito): fica **logado**, chega à sala `/curso/leadership-academy/` (ou vê Entrar na sala / Definir senha) **sem abrir o e-mail**
+- [ ] Em Minha Conta / sala: aviso para definir senha; gravar Detalhes da conta remove o aviso
+- [ ] Conta nova: aparece em AmaEducacional → Alunos; e-mail do plugin, se chegar, continua válido (backup)
+- [ ] Checkout `/boas-vindas/` inalterado
+- [ ] Minha Conta mobile: menu acima e conteúdo (Meus Cursos) logo abaixo — sem faixa vazia enorme até ao rodapé
+- [ ] Minha Conta desktop (≥1024px): sidebar à esquerda + conteúdo à direita
+- [ ] Header mobile aberto: fundo opaco a cobrir a página (não ver título «Minha Conta» por baixo); itens do menu WP + bloco Área do Aluno / Sair
+- [ ] Header mobile: ícone Entrar / conta ao lado do carrinho; no hamburger, «Área do Aluno» (e «Sair» se logado) no fundo; scroll até ver todos os itens
+- [ ] Minha Conta login: ícone olho dourado à direita da senha; toque mostra/oculta o texto
+- [ ] Minha Conta senha errada: aviso em português **sem** repetir «N tentativa(s) restante(s)»
+- [ ] Minha Conta logada: menu lateral sem linhas douradas por baixo dos ícones
+- [ ] Minha Conta: avisos (senha temporária / erro) sem ícone sobreposto ao texto
+- [ ] Minha Conta já logada: não mostrar aviso de bloqueio/tentativas de login
+- [ ] https://saulocoelho.com/curso/leadership-academy/ sem login: porta de convite (sem “Ir para a loja”)
+- [ ] Aluno matriculado na mesma URL: sala com Aulas / Avaliações / Materiais / Certificado
+- [ ] https://saulocoelho.com/privacidade/ abre o aviso (template Legal); convite e rodapé apontam para essa URL
+
+### Leadership Academy — Noite 1 (`vtis-quiz` 1.3.33 + AmaEducacional 1.0.31)
+
+Requer **deploy** dos dois plugins. Após actualizar, seed Noite 1 + migração DB 22 (Conselho 5 campos) / DB 21 (uma resposta).
+
+- [ ] Ex. 1: 24 campos (6 temas × 4 frases) + 2 reflexões finais — sem chip de tema único
+- [ ] Completar um exercício no player → checkbox marcado e progresso sobe
+- [ ] Reabrir o mesmo exercício: aparece a síntese (não o formulário vazio)
+- [ ] Com refazer permitido: botão Refazer → novo envio substitui a resposta (admin/lista: uma submission)
+- [ ] Curso com «Permitir refazer exercícios (vtis-quiz)» desmarcado: sem Refazer
+- [ ] PDPA: 7 textos abertos (P/D/P/A + 3 de impacto) — sem chips inventados
+- [ ] Espelho: comportamento, situação, 5 do Espelho, 3 do Observador; fecho em **lacunas** (inputs inline) e síntese com frase montada
+- [ ] Matriz da Crença: inclui «ainda faz sentido?» + pergunta de confronto
+- [ ] Conselho: **5** campos editáveis (desafio + 3 sínteses + decisão); sub-perguntas Passado/Presente/Futuro só como guia (sem inputs)
+- [ ] Ex. 6: prompts iguais à apostila
+- [ ] Skin Saulo aplica-se; login obrigatório
+- [ ] Pendente opcional: Mapa da Origem (fecho da apostila)
+
+### Portal do Aluno — issue #15 (tema ≥ 1.3.23)
+
+Requer **deploy do tema**. Após 1.ª carga, rewrite `/portal-aluno/` é gravado (ou regenerar permalinks se 404).
+
+- [ ] Logado em `/minha-conta/`: topbar «Portal do Aluno», sem hamburger/loja/WhatsApp/footer marketing
+- [ ] Header marketing (logado): botão **Área do Aluno** (não «Área do Cliente»)
+- [ ] Tabs: Cursos | Certificados | Conta — conteúdo correcto
+- [ ] Tab Cursos (browser, não PWA): banner «Instale o Portal» **acima** de «Olá, …»; «Agora não» oculta; Instalar no Android quando o browser permitir
+- [ ] Abrir como app instalada (`standalone`): banner **não** aparece
+- [ ] Conta: lista detalhes, endereços, pedidos (+ questionário / turmas / pagamento se existirem) + Sair + CTA instalar
+- [ ] Visitante / home / palestra / blog: sem CTA instalar nem shell
+- [ ] Android: CTA / `beforeinstallprompt`; iOS: dica Partilhar → Ecrã inicial
+- [ ] Abrir curso LMS a partir de Cursos: topbar + tabs do portal mantêm-se; conteúdo do curso/player no centro
+- [ ] Visitante (não logado) em `/curso/…`: header/footer de marketing (sem shell do portal)
+- [ ] Separado de `app.saulocoelho.com`
 
 ## Testes automatizados (futuro)
 

@@ -22,9 +22,11 @@ if (!$subtitle) {
 }
 
 $container_class = $is_woocommerce ? 'max-w-7xl mx-auto' : 'max-w-3xl mx-auto';
+$sc_is_portal    = function_exists( 'saulocoelho_is_portal_aluno' ) && saulocoelho_is_portal_aluno();
 ?>
 
-<main class="bg-background-dark min-h-screen text-white pb-32">
+<main class="bg-background-dark min-h-screen text-white pb-32<?php echo $sc_is_portal ? ' sc-portal-main' : ''; ?>">
+    <?php if ( ! $sc_is_portal ) : ?>
     <!-- Header Section for Page Title -->
     <div class="relative pt-32 pb-24 overflow-hidden border-b border-white/5 bg-background-dark-alt/50">
         <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center lg:text-left">
@@ -35,9 +37,10 @@ $container_class = $is_woocommerce ? 'max-w-7xl mx-auto' : 'max-w-3xl mx-auto';
         <!-- Subtle Glow for Premium Aesthetic -->
         <div class="absolute -top-32 -left-32 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full pointer-events-none"></div>
     </div>
+    <?php endif; ?>
 
     <!-- Page Content Area -->
-    <div class="mx-auto w-full px-6 py-24">
+    <div class="mx-auto w-full px-6 <?php echo $sc_is_portal ? 'pt-4 pb-8' : 'py-24'; ?>">
         <?php
         while ( have_posts() ) :
             the_post();
