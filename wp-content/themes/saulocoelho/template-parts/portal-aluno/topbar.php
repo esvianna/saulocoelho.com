@@ -27,7 +27,27 @@ $site_name = get_bloginfo( 'name' );
 		<?php endif; ?>
 		<span class="sc-portal-topbar__title"><?php esc_html_e( 'Portal do Aluno', 'saulocoelho' ); ?></span>
 	</a>
-	<a class="sc-portal-topbar__site" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( $site_name ); ?>">
-		<?php esc_html_e( 'Site', 'saulocoelho' ); ?>
-	</a>
+	<div class="sc-portal-topbar__actions">
+		<div class="sc-portal-bell" data-sc-portal-bell>
+			<button
+				type="button"
+				class="sc-portal-bell__btn"
+				data-sc-portal-bell-btn
+				aria-expanded="false"
+				aria-controls="sc-portal-bell-panel"
+				aria-label="<?php esc_attr_e( 'Avisos', 'saulocoelho' ); ?>"
+			>
+				<span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+				<span class="sc-portal-bell__badge" data-sc-portal-bell-badge hidden>0</span>
+			</button>
+			<div class="sc-portal-bell__panel" id="sc-portal-bell-panel" data-sc-portal-bell-panel hidden role="region" aria-label="<?php esc_attr_e( 'Lista de avisos', 'saulocoelho' ); ?>">
+				<p class="sc-portal-bell__heading"><?php esc_html_e( 'Avisos', 'saulocoelho' ); ?></p>
+				<ul class="sc-portal-bell__list" data-sc-portal-bell-list></ul>
+				<p class="sc-portal-bell__empty" data-sc-portal-bell-empty hidden><?php esc_html_e( 'Sem avisos por agora.', 'saulocoelho' ); ?></p>
+			</div>
+		</div>
+		<a class="sc-portal-topbar__site" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( $site_name ); ?>">
+			<?php esc_html_e( 'Site', 'saulocoelho' ); ?>
+		</a>
+	</div>
 </header>

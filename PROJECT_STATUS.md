@@ -4,38 +4,23 @@
 
 ## Onde paramos
 
-**Convite LMS — handoff sem e-mail (ADR-014 / [#17](https://github.com/esvianna/saulocoelho.com/pull/17) merged):** tema **1.3.25** — **no ar** (FTP 2026-09-16). **Validado**. No `main` GitHub (squash merge 2026-09-16).
+**Portal avisos / sininho / Web Push (issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16)):** Fase A+B+C no tema **1.3.31** — **no ar** (FTP). **In review** — validar fila + e-mail + silêncio.
 
-**Portal do Aluno (issue [#15](https://github.com/esvianna/saulocoelho.com/issues/15)):** tema **1.3.24→1.3.25** — **no ar**. **Validado**. Código a entrar no `main` via sync git (este PR).
+- Fase A: admin **Avisos Portal**, inbox + sininho
+- Fase B: VAPID + subscriptions + Conta opt-in + SW push
+- Fase C: tabela `sc_portal_push_jobs`, WP-Cron lotes, checkbox e-mail, silenciar curso, coluna Envio
+- Tabelas: `sc_portal_notices`, `sc_portal_notice_reads`, `sc_portal_push_subs`, `sc_portal_push_jobs`
+- Vendor: `wp-content/themes/saulocoelho/vendor/` (`minishlink/web-push`)
 
-- App-shell só com utilizador logado em Minha Conta **e** no curso/player LMS (`/curso/…`)
-- Tabs: Cursos · Certificados · Conta; hero oculto; KPIs em **3 colunas** (ícone + número + rótulo)
-- Hub do curso: cards Aulas / Avaliações / Materiais em **linha (3 colunas)** também no mobile
-- Player: só «Voltar ao curso» (oculto «Catálogo de cursos» em PWA/mobile/desktop)
-- Sem saudação Woo «não é …? Sair» no fim do dashboard (Sair na tab Conta)
-- PWA: ícone = **ícone do site** (Customizer); CTA instalar **acima das boas-vindas** + tab Conta; oculto se `standalone`; copy pt-BR
-- Header: **Área do Aluno** (logado)
-- Separado do OCD (`app.saulocoelho.com`)
-- Deploy FTP 2026-09-15 (até **1.3.24**)
-- **Próximo:** avisos + sininho + Web Push — [#16](https://github.com/esvianna/saulocoelho.com/issues/16) (**Backlog**) · ADR-013
+**Convite LMS — handoff (ADR-014 / [#17](https://github.com/esvianna/saulocoelho.com/pull/17)):** tema **1.3.25** — **no ar**. **Validado**.
 
-**Leadership Academy Noite 1 (issue [#13](https://github.com/esvianna/saulocoelho.com/issues/13)):** **vtis-quiz 1.3.33** + **AmaEducacional 1.0.31** + tema **1.3.23**. **No ar.**
+**Portal do Aluno (issue [#15](https://github.com/esvianna/saulocoelho.com/issues/15)):** **Done**. Tema **1.3.27** no ar (ícone PWA = logo SC do site; fallbacks «P» removidos).
 
-- Grade **Noite 1** com os **6 exercícios** na ordem da apostila
-- **[#14](https://github.com/esvianna/saulocoelho.com/issues/14):** formulário completo (rever/editar antes de enviar) nos 6 exercícios
-- Tipo **`blanks`**: Espelho com «Quando… eu tendo a…» e «custa…» em lacunas (frase montada na síntese)
-- **Uma resposta por aluno** + opção Refazer (setting do quiz + política do curso no Ama)
-- **Conselho (pedido Saulo 15/09):** 5 respostas + guias Passado/Presente/Futuro — deploy FTP 2026-09-15 (`1.3.33` / DB 22); **validado** no player
-- Tema 1.3.12+: menu mobile com drawer fora do header (`sticky`/`backdrop-blur`); validado no browser (itens Programas/Agenda/Blog/Contato + Entrar)
+**Leadership Academy Noite 1 (issue [#13](https://github.com/esvianna/saulocoelho.com/issues/13)):** **Done**. **vtis-quiz 1.3.33** + Ama **1.0.31** — no ar; Conselho validado.
 
-**Leadership Academy (fase 1):** convite no AmaEducacional **1.0.31** + tema **1.3.25**. **No ar.**
+**Leadership Academy (fase 1):** convite Ama **1.0.31** + tema **1.3.25** (handoff). **No ar.**
 
-- URL convite: https://saulocoelho.com/inscricao/leadership-academy/
-- Fix 1.0.30: e-mail já cliente → redireciona para Minha Conta (`redirect_to` do curso)
-- Handoff 1.3.25: conta nova → login imediato + sala (sem depender do e-mail)
-- **Aviso de privacidade (modelo):** https://saulocoelho.com/privacidade/ — editar em Páginas no WP; completar CNPJ/DPO com a equipe
-- Admin do curso: metabox Convite → copiar link/`?t=` e baixar QR
-- Ocultar do catálogo público; não ligar “gratuito com conta”
+- URL: https://saulocoelho.com/inscricao/leadership-academy/
 
 **Palestra Teresópolis (segunda 14/09):** captura de leads **e CRUD de palestras no ar** em produção.
 
@@ -63,11 +48,9 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 
 ## Próximos passos sugeridos
 
-1. ~~Handoff / Conselho / Portal~~ — validados 2026-09-16.
-2. ~~PR [#17](https://github.com/esvianna/saulocoelho.com/pull/17)~~ — **merged** (ADR-014 no `main`).
-3. ~~Alinhar `main` com o tema real~~ — PR [#18](https://github.com/esvianna/saulocoelho.com/pull/18) **merged** — `main` alinhado ao tema 1.3.25 de produção.
-4. Quando priorizar: [#16](https://github.com/esvianna/saulocoelho.com/issues/16) → **Ready** (sininho).
-5. Opcional: marcar [#15](https://github.com/esvianna/saulocoelho.com/issues/15) / [#13](https://github.com/esvianna/saulocoelho.com/issues/13) como **Done**.
+1. Validar checklist #16 **Fase C** (fila + e-mail + silêncio + coluna Envio).
+2. Após OK: marcar #16 Done.
+3. Commit/push do tema 1.3.31 (+ `vendor/`) para o `main` quando quiseres alinhar o git.
 
 ## Como retomar
 

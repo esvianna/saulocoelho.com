@@ -382,6 +382,18 @@ if ( file_exists( __DIR__ . '/inc/module-portal-aluno.php' ) ) {
     require_once __DIR__ . '/inc/module-portal-aluno.php';
 }
 
+if ( file_exists( __DIR__ . '/inc/module-portal-notices.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-notices.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-portal-push.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-push.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-portal-push-queue.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-push-queue.php';
+}
+
 /**
  * Leads da palestra — PDF tokenizado (Teresópolis).
  */

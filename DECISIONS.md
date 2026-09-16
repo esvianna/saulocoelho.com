@@ -240,7 +240,7 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Contexto** | Alunos do Portal PWA precisam de avisos da equipa (turma, lembretes). iOS só tem Web Push fiável com PWA instalada; muitos alunos verão o browser sem permissão de push. OCD (`app.saulocoelho.com`) é produto à parte. |
 | **Decisão** | (1) **Inbox + sininho** é a fonte de verdade (sempre disponível no Portal logado). (2) **Web Push** (VAPID) é canal opcional na mesma notificação — não um sistema paralelo. (3) Backend em **módulo/plugin WP** (tabelas + REST + admin); UI do sininho no **tema** (topbar Portal). Preferência: plugin dedicado leve no ecossistema Saulo **ou** módulo no AmaEducacional se a segmentação por curso for o núcleo — **v1: plugin/módulo no site Saulo** com audience `all` / `course:{id}` / `user:{id}` via matrículas Ama quando existir. (4) Fases: **A** inbox+admin+sininho; **B** subscribe+SW push+envio; **C** fila/relatório/e-mail. (5) Não misturar SW/origin com OCD. |
 | **Motivo** | Inbox cobre quem nega push ou usa iOS sem instalar; push só “acorda” o aluno. Separar dados do tema facilita secrets VAPID e deploy. |
-| **Consequências** | Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) em **Backlog**. VAPID public no front; private só server-side. Opt-in explícito na tab Conta. SW Portal ganha handlers `push` / `notificationclick`. |
+| **Consequências** | Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16): **Fase A+B+C** no tema ≥ **1.3.31**. VAPID em option `saulocoelho_portal_vapid` (private só server-side). Opt-in na tab Conta. SW Portal com `push` / `notificationclick`. Lib `minishlink/web-push` no tema (`vendor/`). Fila `sc_portal_push_jobs` + cron; e-mail opcional; mute por curso. |
 
 ---
 

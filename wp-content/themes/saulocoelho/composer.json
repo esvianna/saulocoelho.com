@@ -1,0 +1,1 @@
+{"name":"saulocoelho/theme","description":"Saulo Coelho WP theme libs","type":"library","license":"GPL-2.0-or-later","require":{"php":">=8.1","minishlink/web-push":"^9.0"},"config":{"optimize-autoloader":true,"sort-packages":true}}

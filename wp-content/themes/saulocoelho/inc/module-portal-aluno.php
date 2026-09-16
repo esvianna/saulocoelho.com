@@ -47,14 +47,17 @@ function saulocoelho_portal_icon_url( $size = 192 ) {
 	if ( $size < 1 ) {
 		$size = 192;
 	}
+	$url = '';
 	if ( function_exists( 'get_site_icon_url' ) ) {
 		$url = get_site_icon_url( $size );
-		if ( $url ) {
-			return $url;
-		}
 	}
-	$file = $size >= 512 ? 'icon-512.png' : 'icon-192.png';
-	return get_template_directory_uri() . '/assets/portal-aluno/' . $file;
+	if ( ! $url ) {
+		$file = $size >= 512 ? 'icon-512.png' : 'icon-192.png';
+		$url  = get_template_directory_uri() . '/assets/portal-aluno/' . $file;
+	}
+	// Cache-bust: ícones de ecrã inicial / PWA ficam presos sem query string.
+	$ver = wp_get_theme()->get( 'Version' );
+	return add_query_arg( 'v', $ver ? $ver : '1', $url );
 }
 
 /**
@@ -172,14 +175,17 @@ function saulocoelho_portal_assets() {
 	wp_localize_script(
 		'saulocoelho-portal-aluno',
 		'scPortalAluno',
-		array(
-			'manifestUrl' => home_url( '/portal-aluno/manifest.webmanifest' ),
-			'swUrl'       => home_url( '/portal-aluno/sw.js' ),
-			'installLabel'=> __( 'Instalar Portal do Aluno', 'saulocoelho' ),
-			'iosHint'     => __( 'No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.', 'saulocoelho' ),
-			'installed'   => __( 'App já instalado neste dispositivo.', 'saulocoelho' ),
-			'dismissLabel'=> __( 'Agora não', 'saulocoelho' ),
-			'scope'       => home_url( '/' ),
+		apply_filters(
+			'saulocoelho_portal_js_data',
+			array(
+				'manifestUrl' => home_url( '/portal-aluno/manifest.webmanifest' ),
+				'swUrl'       => home_url( '/portal-aluno/sw.js' ),
+				'installLabel'=> __( 'Instalar Portal do Aluno', 'saulocoelho' ),
+				'iosHint'     => __( 'No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.', 'saulocoelho' ),
+				'installed'   => __( 'App já instalado neste dispositivo.', 'saulocoelho' ),
+				'dismissLabel'=> __( 'Agora não', 'saulocoelho' ),
+				'scope'       => home_url( '/' ),
+			)
 		)
 	);
 }
@@ -258,6 +264,7 @@ function saulocoelho_portal_output_manifest() {
 		'short_name'       => 'Portal do Aluno',
 		'description'      => __( 'Cursos, certificados e conta do aluno.', 'saulocoelho' ),
 		'start_url'        => $start,
+		'id'               => '/portal-aluno/',
 		'scope'            => home_url( '/' ),
 		'display'          => 'standalone',
 		'background_color' => '#050A14',
@@ -275,6 +282,18 @@ function saulocoelho_portal_output_manifest() {
 				'sizes'   => '512x512',
 				'type'    => 'image/png',
 				'purpose' => 'any',
+			),
+			array(
+				'src'     => $icon_192,
+				'sizes'   => '192x192',
+				'type'    => 'image/png',
+				'purpose' => 'maskable',
+			),
+			array(
+				'src'     => $icon_512,
+				'sizes'   => '512x512',
+				'type'    => 'image/png',
+				'purpose' => 'maskable',
 			),
 		),
 	);

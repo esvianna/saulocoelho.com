@@ -5,6 +5,9 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
+- Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase C**: fila `sc_portal_push_jobs` + WP-Cron (lotes), e-mail opcional, silenciar curso, coluna Envio no admin. `inc/module-portal-push-queue.php`. Tema **1.3.31**.
+- Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase B**: Web Push (VAPID) — opt-in na tab Conta, tabela `sc_portal_push_subs`, REST `saulocoelho/v1/push/*`, SW `push`/`notificationclick`, checkbox «Enviar push agora» no admin. Lib `minishlink/web-push` em `themes/saulocoelho/vendor/`. Tema **1.3.29**.
+- Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase A**: inbox + sininho no Portal — tabelas `sc_portal_notices` / `sc_portal_notice_reads`, admin **Avisos Portal**, REST `saulocoelho/v1/notices`, badge na topbar. Tema **1.3.26**. Web Push = Fase B.
 - **Convite LMS (handoff):** após cadastro em `/inscricao/{slug}/` o aluno entra na hora (cookie), vai à sala e vê como definir senha — sem depender do e-mail. `inc/module-lms-invite-handoff.php`. Tema **1.3.25**. ADR-014 · [#17](https://github.com/esvianna/saulocoelho.com/pull/17) merged.
 - Issue [#15](https://github.com/esvianna/saulocoelho.com/issues/15): **Portal do Aluno** — app-shell Minha Conta (tabs Cursos · Certificados · Conta) + PWA (`manifest`/`sw` em `/portal-aluno/`, CTA instalar só na tab Conta). Tema **1.3.22**. ADR-011.
 - Spec **avisos / sininho / Web Push** (ADR-013): issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) no Project #6 (**Backlog**).
@@ -42,7 +45,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 - Portal do Aluno (1.3.23): banner «Instale o Portal» **acima das boas-vindas** (tab Cursos); oculto se já aberto como PWA (`standalone`) ou após «Agora não» / instalação.
 - Portal do Aluno (1.3.14): ícone PWA/topbar = **ícone do site** (Customizer); hero «Portal do Aluno / Minha Conta» oculto no shell.
 - Portal do Aluno (1.3.15→1.3.22): KPIs com ícone; shell no LMS; hub em 3 colunas; player sem link «Catálogo de cursos».
-- Tema **v1.3.5 → v1.3.25**.
+- Portal do Aluno (1.3.31): Web Push Fase C (fila/cron + e-mail + silêncio por curso + relatório).
+- Portal do Aluno (1.3.30): copy push/avisos em **pt-BR** (Ativar/Desativar, etc.).
+- Portal do Aluno (1.3.29): Web Push Fase B (opt-in Conta + envio no admin).
+- Portal do Aluno (1.3.28): painel do sininho alinhado à direita no mobile/PWA; ícones Material Symbols forçados no shell (sem texto «notifications» / «school»).
+- Portal do Aluno (1.3.27): ícones PWA = ícone do site (Customizer) com cache-bust `?v=`; fallbacks PNG deixam de ser o «P» placeholder; manifest com `maskable`.
+- Tema **v1.3.5 → v1.3.31**.
 - Landing/player AmaEducacional: sala do curso (hub) + porta de convite; login da Minha Conta devolve ao curso quando `redirect_to` vem na URL.
 - Noite 1: exercícios em modo **uma resposta por aluno** (`vtis-quiz` 1.3.32) + política de refazer no curso (`AmaEducacional` 1.0.31).
 - Conselho dos Três Tempos (`vtis-quiz` **1.3.33**): 5 respostas + guias (pedido Saulo 15/09); **no ar** (FTP 2026-09-15).

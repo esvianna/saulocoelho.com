@@ -156,6 +156,40 @@ Requer **deploy** dos dois plugins. Após actualizar, seed Noite 1 + migração 
 - [ ] Skin Saulo aplica-se; login obrigatório
 - [ ] Pendente opcional: Mapa da Origem (fecho da apostila)
 
+### Portal do Aluno — avisos / sininho (#16 Fase A, tema ≥ 1.3.26)
+
+Requer **deploy do tema** (cria tabelas no 1.º `after_setup_theme`).
+
+- [ ] WP Admin → **Avisos Portal**: criar aviso publicado para curso Leadership Academy
+- [ ] Aluno matriculado logado no Portal: badge no sininho; abre painel e vê o aviso
+- [ ] Aluno **não** matriculado / audience `user:` errada: **não** vê o aviso
+- [ ] Clicar no aviso marca como lido; badge desce
+- [ ] Home / palestra / visitante: sem sininho
+- [ ] Shell Portal / PWA install sem regressão
+
+### Portal do Aluno — Web Push (#16 Fase B, tema ≥ 1.3.29)
+
+Requer **deploy do tema incluindo `vendor/`** (minishlink/web-push) e HTTPS.
+
+- [ ] Conta → «Ativar notificações» → permissão do navegador → estado ativo
+- [ ] iOS: sem PWA instalada → dica; com PWA + permissão → subscribe OK
+- [ ] Admin: publicar aviso com «Enviar push agora» → aluno recebe notificação do SO
+- [ ] Clique na notificação abre a URL do aviso (ou Minha Conta)
+- [ ] Quem negou permissão: só sininho (sem crash)
+- [ ] Subscription 410: removida na próxima tentativa de envio
+- [ ] `app.saulocoelho.com` (OCD) não afetado
+
+### Portal do Aluno — fila / e-mail (#16 Fase C, tema ≥ 1.3.31)
+
+Requer **deploy do tema** (cria `sc_portal_push_jobs` no upgrade option push ≥ 2).
+
+- [ ] Publicar aviso com «Enviar push agora» → coluna **Envio** mostra job (Concluído / A enviar…)
+- [ ] Turma grande: 1.º lote imediato; resto completa via cron (~1 min)
+- [ ] Checkbox e-mail → destinatários da audiência recebem `wp_mail` (assunto = título)
+- [ ] Silenciar curso → novo aviso `course:{id}` **não** enfileira (mensagem no admin); sininho continua
+- [ ] Audiência `all` / `user:` não é bloqueada pelo mute de curso
+- [ ] Quem negou push: e-mail (se marcado) ainda pode chegar; sininho intacto
+- [ ] OCD / `app.saulocoelho.com` não afetado
 ### Portal do Aluno — issue #15 (tema ≥ 1.3.23)
 
 Requer **deploy do tema**. Após 1.ª carga, rewrite `/portal-aluno/` é gravado (ou regenerar permalinks se 404).

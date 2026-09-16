@@ -62,7 +62,9 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 
 ### Portal do Aluno (PWA)
 - Shell e CTA instalar só com sessão autenticada em Minha Conta. Manifest/SW públicos em `/portal-aluno/` (necessário ao install); conteúdo da conta continua a exigir login WP. Banner de instalação oculto em `display-mode: standalone` / iOS `navigator.standalone`. Não misturar com `app.saulocoelho.com`.
-- **Avisos / Web Push (ADR-013, futuro):** inbox autenticado; VAPID private só no servidor; opt-in explícito; não enviar dados pessoais no payload do push além do necessário (título/corpo/URL).
+- **Avisos / inbox (ADR-013 Fase A):** REST autenticada; admin só `manage_options`; audience `all` / `course:{id}` / `user:{id}`. Leituras por utilizador.
+- **Avisos / Web Push (ADR-013 Fase B):** VAPID private só em option server-side; public no front; opt-in explícito na tab Conta; payload só título/corpo/URL; endpoints de push allowlisted; subs 404/410 removidas.
+- **Avisos / fila (ADR-013 Fase C):** envio em lotes via `sc_portal_push_jobs` + WP-Cron; e-mail opcional (`wp_mail`) só com checkbox; silenciar `course:{id}` bloqueia push/e-mail (inbox mantém-se); relatório só no admin.
 
 ### Exercícios vtis-quiz (aula)
 - Modo `one_response_per_user`: uma submission por utilizador autenticado; refazer exige `allow_retake` (quiz) e política do curso LMS. Não relaxar `require_login` nos exercícios de turma.

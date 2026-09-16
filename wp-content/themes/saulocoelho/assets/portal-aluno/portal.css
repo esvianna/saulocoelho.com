@@ -9,6 +9,22 @@ body.sc-portal-aluno {
   padding-bottom: calc(var(--sc-portal-tabs-h) + env(safe-area-inset-bottom, 0px)) !important;
 }
 
+/* Ícones: no Portal o header marketing (inline Material) não carrega — forçar a fonte */
+body.sc-portal-aluno .material-symbols-outlined {
+  font-family: "Material Symbols Outlined" !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  display: inline-block;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
 body.sc-portal-aluno #whatsapp-float,
 body.sc-portal-aluno > footer.bg-background-dark-alt,
 body.sc-portal-aluno .sc-site-footer-marketing {
@@ -244,6 +260,153 @@ body.sc-portal-aluno .sc-deco-corner {
   color: var(--sc-portal-gold);
 }
 
+.sc-portal-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.sc-portal-bell {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sc-portal-bell__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.sc-portal-bell__btn:hover,
+.sc-portal-bell__btn[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.sc-portal-bell__btn .material-symbols-outlined {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.sc-portal-bell__badge {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.15rem;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.28rem;
+  border-radius: 999px;
+  background: var(--sc-portal-gold);
+  color: #050A14;
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1.1rem;
+  text-align: center;
+}
+
+/*
+ * Ancorado à direita do botão do sininho.
+ * Evitar width ≈ 100vw: com right:0 no botão, a caixa sai pela esquerda
+ * e no telemóvel parece “desalinhada” sob o logo.
+ */
+.sc-portal-bell__panel {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  left: auto;
+  z-index: 90;
+  box-sizing: border-box;
+  width: 16.5rem;
+  max-width: min(16.5rem, calc(100vw - 1.5rem));
+  max-height: min(70vh, 22rem);
+  overflow: auto;
+  padding: 0.75rem 0;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0b1220;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  text-align: left;
+}
+
+/* Mobile: fixed sob a topbar, à direita (backdrop-filter no header prende fixed — usar absolute no bell). */
+@media (max-width: 640px) {
+  .sc-portal-bell__panel {
+    width: min(16.5rem, calc(100vw - 1.5rem));
+    max-width: calc(100vw - 1.5rem);
+  }
+}
+
+.sc-portal-bell__heading {
+  margin: 0 1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.sc-portal-bell__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sc-portal-bell__item {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  text-align: left;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.sc-portal-bell__item:hover {
+  background: rgba(197, 160, 89, 0.08);
+}
+
+.sc-portal-bell__item--unread {
+  background: rgba(197, 160, 89, 0.05);
+}
+
+.sc-portal-bell__item-title {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.sc-portal-bell__item-body {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.sc-portal-bell__empty {
+  margin: 0.5rem 1rem 0.25rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
 /* Esconder sidebar Woo no portal — tabs + hub Conta */
 body.sc-portal-aluno .saulocoelho-dashboard-sidebar {
   display: none !important;
@@ -445,6 +608,80 @@ body.sc-portal-aluno .prose-premium {
 
 .sc-portal-conta-link--logout .material-symbols-outlined:first-child {
   color: #f87171;
+}
+
+/* Web Push opt-in (tab Conta) */
+.sc-portal-push {
+  margin: 0 0 1.5rem;
+}
+
+.sc-portal-push__card {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 1rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sc-portal-push__icon .material-symbols-outlined {
+  font-size: 1.6rem;
+  color: var(--sc-portal-gold);
+}
+
+.sc-portal-push__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 650;
+  color: #fff;
+}
+
+.sc-portal-push__desc,
+.sc-portal-push__status,
+.sc-portal-push__hint {
+  margin: 0 0 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.sc-portal-push__status:empty,
+.sc-portal-push__hint:empty {
+  display: none;
+}
+
+.sc-portal-push__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.sc-portal-push__btn {
+  appearance: none;
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.sc-portal-push__btn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.sc-portal-push__btn--primary {
+  background: var(--sc-portal-gold);
+  color: #050A14;
+}
+
+.sc-portal-push__btn--ghost {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 /* Desktop: tabs como barra inferior ainda (app-like); sidebar continua escondida */
