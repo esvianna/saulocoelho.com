@@ -115,6 +115,17 @@ Requer **deploy FTP do tema** em produção (autorização expressa). Depois:
 
 O PWA https://app.saulocoelho.com não deve receber estes dados.
 
+### Convite LMS — handoff sem e-mail (`/inscricao/{slug}/`)
+
+Requer **tema ≥ 1.3.25** (handoff). Token real da metabox Convite (Leadership Academy).
+
+- [x] Conta nova (e-mail inédito): logado → sala **sem** abrir o e-mail; aviso para definir senha (validado 2026-09-16 em prod)
+- [ ] Token inválido: continua a mensagem de erro; **sem** CTA de “inscrição confirmada”
+- [ ] Gravar senha em Detalhes da conta remove o aviso
+- [ ] E-mail já existente: continua o fluxo do plugin (login em Minha Conta); dica “Esqueci a senha” se `redirect_to` for o curso
+- [ ] Checkout `/boas-vindas/` e cadastro da loja **inalterados**
+- [ ] E-mail de acesso do plugin, se chegar, continua válido (backup)
+
 ## Testes automatizados (futuro)
 
 Ver `ROADMAP.md` — PHPUnit para funções puras; E2E opcional para checkout. Não implementado nesta etapa.

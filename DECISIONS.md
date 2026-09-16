@@ -179,6 +179,19 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 
 ---
 
+## ADR-014 — Convite LMS: acesso imediato sem depender do e-mail
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-16 |
+| **Status** | Aceita (tema ≥ 1.3.25 em produção; PR #17) |
+| **Contexto** | Conta criada no `/inscricao/{slug}/?t=` com senha gerada por e-mail. Alunos sem e-mail ficavam sem senha e sem sala. |
+| **Decisão** | No tema (`inc/module-lms-invite-handoff.php`): após `user_register` nesse URL, autenticar por cookie, redirecionar à sala quando matriculado, CTA de backup + aviso para definir senha em Minha Conta. E-mail do plugin continua como backup. |
+| **Motivo** | O e-mail não pode ser o único próximo passo; alinhado ao login silencioso do checkout. |
+| **Consequências** | Patch no tema sem esperar release do AmaEducacional. Ideal no futuro: o plugin autenticar no próprio `InviteRegistration`. Portal e restantes módulos FTP (≥ 1.3.24) ficam fora deste PR — alinhar `main` com o tema de produção noutro passo. |
+
+---
+
 ## ADR-009 — Leads da palestra com PDF tokenizado
 
 | Campo | Valor |
