@@ -65,7 +65,7 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 
 1. ~~Handoff / Conselho / Portal~~ — validados 2026-09-16.
 2. ~~PR [#17](https://github.com/esvianna/saulocoelho.com/pull/17)~~ — **merged** (ADR-014 no `main`).
-3. ~~Alinhar `main` com o tema real~~ — PR `sync/tema-1.3.25-prod` (Portal + Leadership no git).
+3. ~~Alinhar `main` com o tema real~~ — PR [#18](https://github.com/esvianna/saulocoelho.com/pull/18) **merged** — `main` alinhado ao tema 1.3.25 de produção.
 4. Quando priorizar: [#16](https://github.com/esvianna/saulocoelho.com/issues/16) → **Ready** (sininho).
 5. Opcional: marcar [#15](https://github.com/esvianna/saulocoelho.com/issues/15) / [#13](https://github.com/esvianna/saulocoelho.com/issues/13) como **Done**.
 
