@@ -3,7 +3,7 @@ Theme Name: Saulo Coelho
 Theme URI: https://saulocoelho.com
 Author: Antigravity
 Description: Premium Custom Theme for Saulo Coelho - Leadership & High Performance.
-Version: 1.3.0
+Version: 1.3.25
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: saulocoelho
@@ -400,10 +400,28 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 700;
 }
 
-.prose-premium img {
-    border-radius: 1.5rem;
-    margin: 3rem 0;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+.prose-premium ul,
+.prose-premium ol {
+    margin: 0 0 1.5em 1.35em;
+    padding: 0;
+}
+.prose-premium li {
+    margin-bottom: 0.45em;
+}
+.prose-premium a {
+    color: #C5A059;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+/* Minha Conta / loja usam page.php com prose-premium; não sublinhar o menu. */
+body.woocommerce-account .prose-premium a {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: unset;
+}
+.prose-premium code {
+    font-size: 0.9em;
+    color: #e7d3a1;
 }
 
 /* ==========================================================================

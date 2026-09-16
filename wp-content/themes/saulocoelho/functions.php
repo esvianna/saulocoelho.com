@@ -362,18 +362,31 @@ if ( file_exists( __DIR__ . '/inc/module-vtis-quiz-skin.php' ) ) {
     require_once __DIR__ . '/inc/module-vtis-quiz-skin.php';
 }
 
+if ( file_exists( __DIR__ . '/inc/module-lms-invite-skin.php' ) ) {
+    require_once __DIR__ . '/inc/module-lms-invite-skin.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-lms-invite-handoff.php' ) ) {
+    require_once __DIR__ . '/inc/module-lms-invite-handoff.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-account-notices.php' ) ) {
+    require_once __DIR__ . '/inc/module-account-notices.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-legal-pages.php' ) ) {
+    require_once __DIR__ . '/inc/module-legal-pages.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-portal-aluno.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-aluno.php';
+}
+
 /**
  * Leads da palestra — PDF tokenizado (Teresópolis).
  */
 if ( file_exists( __DIR__ . '/inc/module-palestra-leads.php' ) ) {
     require_once __DIR__ . '/inc/module-palestra-leads.php';
-}
-
-/**
- * Convite LMS: login imediato + sala do curso, sem depender do e-mail de acesso.
- */
-if ( file_exists( __DIR__ . '/inc/module-lms-invite-handoff.php' ) ) {
-    require_once __DIR__ . '/inc/module-lms-invite-handoff.php';
 }
 
 /**

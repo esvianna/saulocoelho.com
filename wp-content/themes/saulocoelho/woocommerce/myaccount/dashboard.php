@@ -14,13 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $current_user = wp_get_current_user();
-
-$allowed_html = array(
-	'a' => array(
-		'href' => array(),
-	),
-);
-$user_id = $current_user->ID;
+$user_id      = $current_user->ID;
 
 // INTEGRAÇÃO DE DADOS AMAEDUCACIONAL
 $has_ama = class_exists( '\AmaEducacional\Services\ProgressService' );
@@ -61,49 +55,34 @@ if ( $has_ama ) {
 }
 
 ?>
-<div class="saulocoelho-welcome-dash mb-8 flex flex-col gap-2">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Bem-vindo(a) de volta, <?php echo esc_html( $current_user->display_name ); ?>!</h1>
-    <p class="text-sm text-slate-500">Acompanhe seu progresso e retome seus estudos abaixo.</p>
+<?php if ( function_exists( 'saulocoelho_is_portal_aluno' ) && saulocoelho_is_portal_aluno() && function_exists( 'saulocoelho_portal_render_install_banner' ) ) : ?>
+	<?php saulocoelho_portal_render_install_banner( 'dash' ); ?>
+<?php endif; ?>
+<div class="saulocoelho-welcome-dash mb-4 flex flex-col gap-0.5">
+    <h1 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Olá, <?php echo esc_html( $current_user->display_name ); ?></h1>
+    <p class="text-xs sm:text-sm text-slate-500">Retome seus estudos abaixo.</p>
 </div>
 
-<!-- KPIs Mocks baseados no Protótipo agora conectados ao Banco de Dados -->
-<div class="mb-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-    <div class="rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] p-6 shadow-sm shadow-primary/10">
-        <div class="flex items-center gap-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[#C5A059]/10 text-[#C5A059]">
-                <span class="material-symbols-outlined">play_lesson</span>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-slate-500">Cursos em Andamento</p>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white"><?php echo esc_html( $total_active ); ?></p>
-            </div>
-        </div>
+<!-- KPIs — 3 colunas; ícone + número + rótulo completo -->
+<div class="sc-dash-kpis mb-5" role="group" aria-label="<?php esc_attr_e( 'Resumo do progresso', 'saulocoelho' ); ?>">
+    <div class="sc-dash-kpi">
+        <span class="sc-dash-kpi__icon material-symbols-outlined" aria-hidden="true">play_lesson</span>
+        <p class="sc-dash-kpi__value"><?php echo esc_html( $total_active ); ?></p>
+        <p class="sc-dash-kpi__label"><?php esc_html_e( 'Cursos em andamento', 'saulocoelho' ); ?></p>
     </div>
-    <div class="rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] p-6 shadow-sm shadow-green-500/10">
-        <div class="flex items-center gap-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10 text-green-500">
-                <span class="material-symbols-outlined">workspace_premium</span>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-slate-500">Certificados Concluídos</p>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white"><?php echo esc_html( $total_completed ); ?></p>
-            </div>
-        </div>
+    <div class="sc-dash-kpi">
+        <span class="sc-dash-kpi__icon material-symbols-outlined" aria-hidden="true">workspace_premium</span>
+        <p class="sc-dash-kpi__value"><?php echo esc_html( $total_completed ); ?></p>
+        <p class="sc-dash-kpi__label"><?php esc_html_e( 'Certificados concluídos', 'saulocoelho' ); ?></p>
     </div>
-    <div class="rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] p-6 shadow-sm shadow-purple-500/10">
-        <div class="flex items-center gap-4">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
-                <span class="material-symbols-outlined">inventory</span>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-slate-500">Aulas Concluídas</p>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white"><?php echo esc_html( $total_lessons_done ); ?></p>
-            </div>
-        </div>
+    <div class="sc-dash-kpi">
+        <span class="sc-dash-kpi__icon material-symbols-outlined" aria-hidden="true">menu_book</span>
+        <p class="sc-dash-kpi__value"><?php echo esc_html( $total_lessons_done ); ?></p>
+        <p class="sc-dash-kpi__label"><?php esc_html_e( 'Aulas concluídas', 'saulocoelho' ); ?></p>
     </div>
 </div>
 
-<h2 class="mb-6 text-xl font-bold text-slate-900 dark:text-white">Continue Estudando</h2>
+<h2 class="mb-4 text-lg font-bold text-slate-900 dark:text-white">Continue Estudando</h2>
 
 <?php if ( $has_ama && ! empty( $enrolled_courses ) ) : ?>
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-2">
@@ -175,19 +154,6 @@ if ( $has_ama ) {
     </a>
 </div>
 <?php endif; ?>
-
-<div class="mt-12 pt-8 border-t border-slate-200 dark:border-white/10 text-slate-500 text-sm">
-    <p>
-        <?php
-        printf(
-            /* translators: 1: user display name 2: logout url */
-            wp_kses( __( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ), $allowed_html ),
-            '<strong>' . esc_html( $current_user->display_name ) . '</strong>',
-            esc_url( wc_logout_url() )
-        );
-        ?>
-    </p>
-</div>
 
 <?php
 /**

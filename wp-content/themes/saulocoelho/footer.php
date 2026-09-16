@@ -1,4 +1,7 @@
 <?php
+$sc_is_portal = function_exists( 'saulocoelho_is_portal_aluno' ) && saulocoelho_is_portal_aluno();
+if ( ! $sc_is_portal ) :
+
 $footer_bio = get_theme_mod( 'footer_bio', 'Saulo Coelho - Especialista em Desenvolvimento Humano e Estratégia Corporativa.' );
 $footer_phone = get_theme_mod( 'footer_phone', '+55 (11) 99999-9999' );
 $footer_location = get_theme_mod( 'footer_location', 'São Paulo, SP' );
@@ -10,7 +13,7 @@ $footer_privacy = get_theme_mod( 'footer_privacy_link', '#' );
 $footer_terms = get_theme_mod( 'footer_terms_link', '#' );
 ?>
 
-<footer class="py-20 bg-background-dark-alt border-t border-white/5">
+<footer class="sc-site-footer-marketing py-20 bg-background-dark-alt border-t border-white/5">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div class="col-span-1 md:col-span-2 space-y-6">
             <div class="flex items-center gap-3">
@@ -85,9 +88,12 @@ $footer_terms = get_theme_mod( 'footer_terms_link', '#' );
     <div class="max-w-7xl mx-auto px-6 pt-20 mt-20 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-600 uppercase tracking-widest">
         <p>© <?php echo date('Y'); ?> <?php echo esc_html( $footer_copyright ); ?></p>
         <div class="flex gap-8 text-[10px]">
-            <?php if ( $footer_privacy && $footer_privacy !== '#' ) : ?>
-                <a href="<?php echo esc_url( $footer_privacy ); ?>" class="hover:text-slate-400 transition-colors">Privacidade</a>
-            <?php endif; ?>
+            <?php
+            if ( ! $footer_privacy || $footer_privacy === '#' ) {
+                $footer_privacy = function_exists( 'saulocoelho_privacy_url' ) ? saulocoelho_privacy_url() : home_url( '/privacidade/' );
+            }
+            ?>
+            <a href="<?php echo esc_url( $footer_privacy ); ?>" class="hover:text-slate-400 transition-colors">Privacidade</a>
 
             <?php if ( $footer_terms && $footer_terms !== '#' ) : ?>
                 <a href="<?php echo esc_url( $footer_terms ); ?>" class="hover:text-slate-400 transition-colors">Termos</a>
@@ -141,6 +147,8 @@ if ( $wa_enable && ! empty( $wa_phone ) ) :
         });
     });
 </script>
+
+<?php endif; // ! portal ?>
 
 <?php wp_footer(); ?>
 </body>

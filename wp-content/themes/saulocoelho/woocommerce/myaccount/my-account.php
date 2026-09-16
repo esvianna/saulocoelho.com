@@ -35,24 +35,43 @@ nav.woocommerce-MyAccount-navigation ul {
     white-space: nowrap !important;
     gap: 0.75rem !important;
     text-align: left !important;
+    text-decoration: none !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
 }
 .saulocoelho-dashboard-sidebar a span.material-symbols-outlined {
     flex-shrink: 0 !important;
     display: inline-block !important;
+    text-decoration: none !important;
+    border-bottom: 0 !important;
+    line-height: 1 !important;
 }
 .saulocoelho-dashboard-wrapper {
     display: flex !important;
-    gap: 3rem !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    align-items: stretch !important;
+}
+.saulocoelho-dashboard-main {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
 }
 @media (min-width: 1024px) {
     .saulocoelho-dashboard-wrapper {
         flex-direction: row !important;
+        gap: 3rem !important;
+        align-items: flex-start !important;
+    }
+    .saulocoelho-dashboard-sidebar {
+        width: 18rem !important;
+        flex-shrink: 0 !important;
     }
 }
 </style>
 
-<div class="max-w-7xl mx-auto saulocoelho-dashboard-wrapper mt-10 lg:mt-20 px-6 min-h-[60vh] w-full items-start">
-    <aside class="saulocoelho-dashboard-sidebar w-full lg:w-72 shrink-0 flex flex-col border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] rounded-xl overflow-hidden mb-6 lg:mb-0 shadow-xl h-fit">
+<div class="max-w-7xl mx-auto saulocoelho-dashboard-wrapper mt-10 lg:mt-20 px-6 min-h-[60vh] w-full">
+    <aside class="saulocoelho-dashboard-sidebar w-full shrink-0 flex flex-col border border-slate-200 dark:border-white/5 bg-white dark:bg-[#0f172a] rounded-xl overflow-hidden mb-0 shadow-xl h-fit">
         <?php
         /**
          * My Account navigation.
