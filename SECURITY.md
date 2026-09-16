@@ -29,6 +29,11 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 - Normalização de endereço e validação CPF/CNPJ.
 - **Cuidado:** qualquer mudança afeta autenticação e dados pessoais (LGPD).
 
+### Convite LMS (`inc/module-lms-invite-handoff.php`)
+- Login por cookie após cadastro em `/inscricao/{slug}/` (senha gerada pelo LMS, não escolhida no form).
+- Não logar senhas. Não autenticar fora desse URL.
+- Aviso para definir senha some ao gravar Detalhes da conta.
+
 ### AJAX quantidade no checkout (`functions.php`)
 - Endpoint `saulocoelho_update_checkout_qty` registrado para usuários logados e `nopriv`.
 - **Risco:** manipulação de carrinho sem verificação forte de nonce.

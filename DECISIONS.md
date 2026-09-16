@@ -179,6 +179,19 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 
 ---
 
+## ADR-010 — Convite LMS: acesso imediato sem depender do e-mail
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-16 |
+| **Status** | Aceita (implementada no tema) |
+| **Contexto** | Leadership Academy é por convite (`/inscricao/{slug}/?t=` no AmaEducacional). A conta WP é criada com senha gerada e enviada por e-mail. Alunos relataram não receber o e-mail e ficarem sem senha e sem sala. |
+| **Decisão** | No tema, após `user_register` nesse URL: autenticar na hora, redirecionar à sala quando a matrícula existir, e orientar a definir senha em Minha Conta / “esqueci a senha”. O e-mail de acesso permanece como backup. |
+| **Motivo** | O e-mail não pode ser o único próximo passo; o checkout gate já faz login silencioso na loja. |
+| **Consequências** | Correção no tema, sem esperar release do plugin. Ideal no futuro: o próprio `InviteRegistration` do AmaEducacional autenticar e não bloquear no e-mail. |
+
+---
+
 ## ADR-009 — Leads da palestra com PDF tokenizado
 
 | Campo | Valor |

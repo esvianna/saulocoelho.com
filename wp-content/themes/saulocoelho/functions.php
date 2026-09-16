@@ -370,6 +370,13 @@ if ( file_exists( __DIR__ . '/inc/module-palestra-leads.php' ) ) {
 }
 
 /**
+ * Convite LMS: login imediato + sala do curso, sem depender do e-mail de acesso.
+ */
+if ( file_exists( __DIR__ . '/inc/module-lms-invite-handoff.php' ) ) {
+    require_once __DIR__ . '/inc/module-lms-invite-handoff.php';
+}
+
+/**
  * Otimização de Blog - Filtragem de Categorias
  * Oculta as categorias selecionadas no Customizer do feed principal do blog.
  */

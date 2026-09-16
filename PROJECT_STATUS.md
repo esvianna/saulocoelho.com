@@ -1,8 +1,10 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-09-12
+Última atualização: 2026-09-16
 
 ## Onde paramos
+
+**Leadership Academy (convite LMS):** alunos novos ficavam perdidos quando o e-mail de acesso não chegava. Handoff no tema: login imediato + sala do curso + aviso para definir senha. Falta deploy do tema e teste com token real. Patch definitivo no plugin AmaEducacional continua desejável.
 
 **Palestra Teresópolis (segunda 14/09):** captura de leads **e CRUD de palestras no ar** em produção.
 
