@@ -185,6 +185,8 @@ function saulocoelho_portal_assets() {
 				'installed'   => __( 'App já instalado neste dispositivo.', 'saulocoelho' ),
 				'dismissLabel'=> __( 'Agora não', 'saulocoelho' ),
 				'scope'       => home_url( '/' ),
+				'accountUrl'  => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/minha-conta/' ),
+				'resumeParam' => 'sc_portal_resume',
 			)
 		)
 	);
@@ -256,7 +258,9 @@ function saulocoelho_portal_serve_pwa_files() {
 
 function saulocoelho_portal_output_manifest() {
 	// Manifest público (necessário antes do login no install); start_url exige auth no WP.
+	// ?sc_portal_resume=1 → JS restaura a última página do Portal (aula/curso) ao abrir a PWA.
 	$start    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/minha-conta/' );
+	$start    = add_query_arg( 'sc_portal_resume', '1', $start );
 	$icon_192 = saulocoelho_portal_icon_url( 192 );
 	$icon_512 = saulocoelho_portal_icon_url( 512 );
 	$manifest = array(

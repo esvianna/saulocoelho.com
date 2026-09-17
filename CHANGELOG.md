@@ -5,9 +5,29 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
+- Issue [#24](https://github.com/esvianna/saulocoelho.com/issues/24) **Noite 3**: Líder que preciso me tornar + Meta Master + MAPA (vtis-quiz **1.3.40** + Ama **1.0.48**).
+- Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23) **Mentor: PDF de apoio**: escolher **módulo** no envio (Ama **1.0.47** + tema **1.3.42**).
+- Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23) **Mentor: PDF de apoio**: `sc_portal_material_notify_send()` + Ama **1.0.46** (upload no Painel da turma). Tema **1.3.41**.
+- Issue [#22](https://github.com/esvianna/saulocoelho.com/issues/22) **Notificar alunos**: metabox admin + **Painel da turma** (mentores) — botão por aula. Tema **1.3.40** + Ama **1.0.45**. `sc_portal_lesson_notify_send()`.
+- Issue [#22](https://github.com/esvianna/saulocoelho.com/issues/22) **Notificar alunos ao publicar aula**: metabox na aula LMS (`ama_lesson`) — aviso Portal `course:{id}` + push/e-mail opt-in (#16). `inc/module-portal-lesson-notify.php` + `sc_portal_notice_create()`. Tema **1.3.39**.
+- Issue [#19](https://github.com/esvianna/saulocoelho.com/issues/19) **Noite 2 — MAPA**: entregável final `leadership-mapa-pressao` (vtis-quiz **1.3.39** + Ama **1.0.44**).
+- Issue [#21](https://github.com/esvianna/saulocoelho.com/issues/21) **Portal PWA — sessão persistente**: cookie remember forçado no login Minha Conta / checkout gate; checkbox «Manter-me ligado neste aparelho» por omissão. `inc/module-portal-auth-persist.php`. Tema **1.3.32**.
+- Issue [#20](https://github.com/esvianna/saulocoelho.com/issues/20) **Painel do mentor**: Ama **1.0.37** + tema **1.3.35** (contraste dark); secções contraídas; modal/Editar/Remover. ADR-013.
+- Construtor do curso: «Adicionar exercício (vtis-quiz)» na grade (Ama **1.0.38**).
+- Issue [#20](https://github.com/esvianna/saulocoelho.com/issues/20) **Painel do mentor**: AmaEducacional **1.0.33** (`_ama_course_mentors`, hub «Painel da turma», REST mentor/dashboard). ADR-013.
+- Issue [#19](https://github.com/esvianna/saulocoelho.com/issues/19) **Noite 2**: RPSP + Radar + Decidir Antes + CMV no `vtis-quiz` **1.3.34**; grade no AmaEducacional **1.0.32**.
 - Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase C**: fila `sc_portal_push_jobs` + WP-Cron (lotes), e-mail opcional, silenciar curso, coluna Envio no admin. `inc/module-portal-push-queue.php`. Tema **1.3.31**.
 - Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase B**: Web Push (VAPID) — opt-in na tab Conta, tabela `sc_portal_push_subs`, REST `saulocoelho/v1/push/*`, SW `push`/`notificationclick`, checkbox «Enviar push agora» no admin. Lib `minishlink/web-push` em `themes/saulocoelho/vendor/`. Tema **1.3.29**.
 - Issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) **Fase A**: inbox + sininho no Portal — tabelas `sc_portal_notices` / `sc_portal_notice_reads`, admin **Avisos Portal**, REST `saulocoelho/v1/notices`, badge na topbar. Tema **1.3.26**. Web Push = Fase B.
+
+### Fixed
+- Painel da turma: mentor pode definir nova senha do aluno (Ama **1.0.43** + tema **1.3.38**).
+- Convite LMS: campos de senha alinhados + ícone olho (Ama **1.0.42** + tema **1.3.37**).
+- Convite LMS: contraste do banner «Bem-vindo à turma» no Portal dark; senha no formulário de inscrição (Ama **1.0.41** + tema **1.3.36**) — deixa de depender do e-mail.
+- RPSP (vtis-quiz **1.3.38**): mapa sem `_tiebreak` / `_tiebreak_final`; CTA com botão **Revisar Resultado** após perguntas pós-perfil.
+- Painel da turma: contraste no Portal dark (cartões/modal ilegíveis) — Ama **1.0.37** + tema **1.3.35**.
+- Player LMS: «Aula anterior» / «Próxima aula» sempre na mesma linha no mobile/PWA (Ama **1.0.34** + skin tema **1.3.33**).
+- Portal PWA: ao reabrir a app, retoma a última página (aula/curso) em vez de ir sempre a Minha Conta. Manifest `start_url` + `localStorage` em `portal.js`. Tema **1.3.34**.
 - **Convite LMS (handoff):** após cadastro em `/inscricao/{slug}/` o aluno entra na hora (cookie), vai à sala e vê como definir senha — sem depender do e-mail. `inc/module-lms-invite-handoff.php`. Tema **1.3.25**. ADR-014 · [#17](https://github.com/esvianna/saulocoelho.com/pull/17) merged.
 - Issue [#15](https://github.com/esvianna/saulocoelho.com/issues/15): **Portal do Aluno** — app-shell Minha Conta (tabs Cursos · Certificados · Conta) + PWA (`manifest`/`sw` em `/portal-aluno/`, CTA instalar só na tab Conta). Tema **1.3.22**. ADR-011.
 - Spec **avisos / sininho / Web Push** (ADR-013): issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16) no Project #6 (**Backlog**).

@@ -243,9 +243,9 @@ function sc_ajax_quick_register() {
     update_user_meta( $customer_id, 'billing_state', strtoupper( sanitize_text_field( wp_unslash( $_POST['state'] ) ) ) );
     update_user_meta( $customer_id, 'billing_country', 'BR' );
 
-    // Login Silencioso
+    // Login Silencioso (cookie persistente — PWA / issue #21)
     wp_set_current_user( $customer_id );
-    wp_set_auth_cookie( $customer_id );
+    wp_set_auth_cookie( $customer_id, true, is_ssl() );
 
     wp_send_json_success( array( 'redirect' => wc_get_checkout_url() ) );
 }

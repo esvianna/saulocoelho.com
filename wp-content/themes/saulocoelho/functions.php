@@ -382,6 +382,10 @@ if ( file_exists( __DIR__ . '/inc/module-portal-aluno.php' ) ) {
     require_once __DIR__ . '/inc/module-portal-aluno.php';
 }
 
+if ( file_exists( __DIR__ . '/inc/module-portal-auth-persist.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-auth-persist.php';
+}
+
 if ( file_exists( __DIR__ . '/inc/module-portal-notices.php' ) ) {
     require_once __DIR__ . '/inc/module-portal-notices.php';
 }
@@ -392,6 +396,10 @@ if ( file_exists( __DIR__ . '/inc/module-portal-push.php' ) ) {
 
 if ( file_exists( __DIR__ . '/inc/module-portal-push-queue.php' ) ) {
     require_once __DIR__ . '/inc/module-portal-push-queue.php';
+}
+
+if ( file_exists( __DIR__ . '/inc/module-portal-lesson-notify.php' ) ) {
+    require_once __DIR__ . '/inc/module-portal-lesson-notify.php';
 }
 
 /**

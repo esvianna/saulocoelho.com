@@ -1,0 +1,418 @@
+﻿TESTERPSP - Radar de Perfis Sob Pressão
+Método OCD — O Comportamento Decide
+Pergunta central:Quem você tende a se tornar quando a pressão aumenta?
+INSTRUÇÕES AO PARTICIPANTE
+Leia cada frase pensando especificamente em situações de pressão, cobrança, conflito, urgência ou risco.
+Responda de acordo com o que você realmente faz, não com o que acredita que deveria fazer.
+Escala
+0 — Nunca1 — Raramente2 — Às vezes3 — Frequentemente4 — Quase sempre5 — Isso me descreve fortemente sob pressão
+
+AS 30 AFIRMAÇÕES
+1.
+Quando o tempo fica curto, prefiro tomar uma decisão rapidamente e corrigir depois, se necessário.
+2.
+Quando percebo risco de erro, sinto necessidade de analisar mais informações antes de decidir.
+3.
+Em situações tensas, preocupo-me muito com a forma como minha decisão afetará as pessoas.
+4.
+Quando um plano deixa de funcionar, rapidamente começo a imaginar novas alternativas.
+5.
+Quando algo importante está ameaçado, minha tendência é aumentar o acompanhamento e reduzir riscos.
+6.
+Quando alguém demora demais para entregar, fico impaciente e aumento a cobrança.
+7.
+Tenho dificuldade de avançar quando ainda sinto que faltam dados importantes.
+8.
+Posso adiar uma conversa difícil para evitar desgaste no relacionamento.
+9.
+Sob pressão, tenho facilidade para abandonar uma abordagem e experimentar outra.
+10.
+Quando as coisas começam a sair do controle, sinto necessidade de acompanhar detalhes mais de perto.
+11.
+Em momentos críticos, prefiro assumir a frente e fazer as coisas acontecerem.
+12.
+Antes de tomar uma decisão importante, reviso mentalmente os riscos e possíveis consequências.
+13.
+Quando alguém fica frustrado comigo, isso pode influenciar minha maneira de conduzir a situação.
+14.
+Situações difíceis costumam estimular minha criatividade e minha busca por caminhos diferentes.
+15.
+Quando percebo instabilidade, procuro criar regras, critérios ou estruturas para recuperar segurança.
+16.
+Tenho pouca paciência com reuniões ou discussões que demoram demais para chegar a uma decisão.
+17.
+Posso revisar uma decisão várias vezes antes de me sentir confortável para executá-la.
+18.
+Tenho dificuldade de cobrar alguém quando sei que a pessoa está passando por problemas pessoais.
+19.
+Quando encontro obstáculos, minha primeira reação costuma ser buscar outra possibilidade.
+20.
+Quando uma entrega é muito importante, prefiro acompanhar pessoalmente para garantir que tudo saia como esperado.
+21.
+Quando alguém questiona minha decisão em um momento de pressão, tenho tendência a responder de forma mais firme e direta.
+22.
+Sob pressão, fico especialmente atento a detalhes que outras pessoas podem não perceber.
+23.
+Quando o clima da equipe fica ruim, isso pode se tornar tão importante para mim quanto o próprio resultado.
+24.
+Tenho facilidade de enxergar várias possibilidades ao mesmo tempo, mesmo em situações difíceis.
+25.
+Quando alguma coisa ameaça um resultado importante, minha primeira preocupação é impedir que a situação piore.
+26.
+Quando sinto que a equipe não está reagindo com velocidade suficiente, minha tendência é assumir o comando.
+27.
+Uma decisão incompleta ou mal fundamentada me incomoda mais do que ter de esperar um pouco mais.
+28.
+Posso flexibilizar uma decisão para preservar uma relação importante.
+29.
+Quando a pressão aumenta, novas ideias aparecem rapidamente e tenho vontade de testá-las.
+30.
+Quando percebo risco, erro ou instabilidade, posso ter dificuldade de delegar completamente.
+
+CHAVE DE CORREÇÃO
+Na plataforma, essas categorias ficam invisíveis para o participante.
+ACELERADOR
+Questões:
+1, 6, 11, 16, 21, 26
+Pontuação máxima: 30
+ANALÍTICO
+Questões:
+2, 7, 12, 17, 22, 27
+Pontuação máxima: 30
+RELACIONAL
+Questões:
+3, 8, 13, 18, 23, 28
+Pontuação máxima: 30
+CRIATIVO
+Questões:
+4, 9, 14, 19, 24, 29
+Pontuação máxima: 30
+PROTETOR
+Questões:
+5, 10, 15, 20, 25, 30
+Pontuação máxima: 30
+
+INTERPRETAÇÃO DA PONTUAÇÃO
+Para cada perfil:
+0–8 — Pouco acionadoEssa rota comportamental aparece pouco sob pressão.
+9–14 — PresenteO comportamento aparece em algumas situações.
+15–20 — RelevanteEsse perfil influencia de forma importante sua resposta à pressão.
+21–25 — Muito forteEssa rota tende a assumir bastante espaço quando você está sob pressão.
+26–30 — Dominante em alta pressãoÉ uma das respostas mais automatizadas do seu repertório.
+Essas faixas ajudam na devolutiva, mas não determinam dominante e secundário. Para isso, usamos o ranking entre os cinco resultados.
+
+COMO DEFINIR O PERFIL DOMINANTE
+O perfil com maior pontuação total é o Perfil Dominante Sob Pressão.
+Exemplo:
+Acelerador: 24Analítico: 14Relacional: 12Criativo: 17Protetor: 21
+Resultado:
+Dominante: ACELERADORSecundário: PROTETOR
+
+SISTEMA DE DESEMPATE
+Aqui eu faria uma lógica em três níveis.
+DESEMPATE 1 — INTENSIDADE
+Se dois perfis terminarem com a mesma pontuação, conte quantas respostas 5 cada perfil recebeu.
+Exemplo:
+Acelerador = 23 pontos, com três respostas 5.Protetor = 23 pontos, com uma resposta 5.
+Acelerador vence o desempate.
+
+DESEMPATE 2 — FREQUÊNCIA ALTA
+Se continuarem empatados, some quantas respostas 4 ou 5 existem em cada perfil.
+O perfil com maior quantidade vence.
+Isso identifica qual comportamento aparece de forma mais consistentemente intensa.
+
+DESEMPATE 3 — PERGUNTAS DE PRESSÃO EXTREMA
+Eu acrescentaria cinco perguntas obrigatórias no final do teste, mas elas não entram na pontuação inicial.
+Elas existem especificamente como índice de desempate.
+O participante deverá escolher apenas uma alternativa em cada questão.
+
+PERGUNTA DE DESEMPATE 1
+Quando um problema sério surge e precisa ser resolvido imediatamente, minha primeira tendência é:
+A. Assumir a frente e fazer algo rapidamente.→ Acelerador
+B. Entender exatamente o que aconteceu antes de agir.→ Analítico
+C. Observar como a situação está afetando as pessoas envolvidas.→ Relacional
+D. Procurar uma alternativa diferente daquilo que estava sendo feito.→ Criativo
+E. Conter o problema e impedir que a situação piore.→ Protetor
+
+PERGUNTA DE DESEMPATE 2
+Quando minha equipe comete um erro importante, minha reação mais espontânea tende a ser:
+A. Quero resolver aquilo imediatamente.→ Acelerador
+B. Quero entender exatamente onde o processo falhou.→ Analítico
+C. Quero conversar com as pessoas envolvidas e entender o contexto.→ Relacional
+D. Quero encontrar outra forma de executar aquilo.→ Criativo
+E. Quero aumentar controles para evitar que aconteça novamente.→ Protetor
+
+PERGUNTA DE DESEMPATE 3
+Quando sou criticado em uma situação importante, minha primeira reação interna tende a ser:
+A. Defender minha posição.→ Acelerador
+B. Avaliar se a crítica faz sentido.→ Analítico
+C. Preocupar-me com a relação com aquela pessoa.→ Relacional
+D. Pensar em outra maneira de abordar a situação.→ Criativo
+E. Tornar-me mais cauteloso para não cometer outro erro.→ Protetor
+
+PERGUNTA DE DESEMPATE 4
+Diante de uma meta ameaçada, naturalmente tendo a:
+A. Aumentar velocidade e cobrança.→ Acelerador
+B. Revisar números, causas e variáveis.→ Analítico
+C. Conversar com as pessoas para recuperar engajamento.→ Relacional
+D. Buscar uma estratégia diferente.→ Criativo
+E. Reduzir riscos e acompanhar mais de perto.→ Protetor
+
+PERGUNTA DE DESEMPATE 5
+Quando tudo parece estar saindo do controle, sinto mais necessidade de:
+A. Agir.→ Acelerador
+B. Entender.→ Analítico
+C. Conectar.→ Relacional
+D. Criar.→ Criativo
+E. Proteger.→ Protetor
+
+COMO USAR O DESEMPATE NA PLATAFORMA
+Cada escolha nas cinco perguntas finais vale 1 ponto de desempate para o perfil correspondente.
+Esses pontos não devem ser somados aos 30 pontos originais.
+Crie uma variável separada:
+TieBreakScore
+Então:
+REGRA 1
+Maior pontuação nas 30 questões.
+REGRA 2
+Em caso de empate, maior número de respostas 5.
+REGRA 3
+Persistindo empate, maior número de respostas 4 ou 5.
+REGRA 4
+Persistindo empate, maior TieBreakScore.
+Com isso, a chance de permanecer empate cai muito.
+
+E SE MESMO ASSIM EMPATAR?
+Para que o sistema nunca fique sem resposta, acrescente uma pergunta final dinâmica apenas entre os perfis empatados:
+DESEMPATE FINAL
+Quando estou realmente sob pressão e não tenho tempo para pensar muito, qual dessas reações mais se parece comigo?
+A plataforma exibe somente as descrições dos perfis empatados.
+Por exemplo, empate Acelerador x Protetor:
+A. Eu aumento velocidade, assumo a frente e pressiono pela solução.
+B. Eu aumento controle, reduzo risco e acompanho tudo mais de perto.
+A resposta define o ranking.
+Assim você sempre terá um 1º e 2º lugar claros.
+
+COMO DEFINIR O PERFIL SECUNDÁRIO
+Depois de definir o dominante, retire-o temporariamente do ranking.
+Entre os quatro restantes, o perfil com maior pontuação será o secundário.
+Se houver empate para o segundo lugar, use exatamente o mesmo sistema:
+total → quantidade de 5 → quantidade de 4/5 → TieBreakScore → desempate final.
+
+DEVOLUTIVA DOS 5 PERFIS
+ACELERADOR
+Quando está consciente
+Você traz:
+velocidade 
+coragem 
+ação 
+objetividade 
+capacidade de decisão 
+Quando entra no automático
+Pode aparecer:
+impaciência 
+agressividade 
+atropelo 
+decisões precipitadas 
+cobrança excessiva 
+Pergunta-chave
+Estou acelerando porque a situação exige ou porque não tolero o desconforto de esperar?
+Necessidade de condução
+Direção + limite
+
+ANALÍTICO
+Quando consciente
+Você traz:
+precisão 
+critério 
+planejamento 
+qualidade 
+capacidade de avaliar riscos 
+Quando automático
+Pode aparecer:
+excesso de análise 
+indecisão 
+lentidão 
+perfeccionismo 
+dificuldade de agir sem certeza 
+Pergunta-chave
+Estou buscando clareza ou tentando eliminar toda possibilidade de erro antes de agir?
+Necessidade de condução
+Clareza + prazo
+
+RELACIONAL
+Quando consciente
+Você traz:
+empatia 
+conexão 
+escuta 
+cooperação 
+sensibilidade às pessoas 
+Quando automático
+Pode aparecer:
+evitação de conflito 
+permissividade 
+dificuldade de cobrar 
+necessidade de aprovação 
+medo de desagradar 
+Pergunta-chave
+Estou preservando a relação ou evitando uma conversa que a própria relação precisa?
+Necessidade de condução
+Segurança + firmeza
+
+CRIATIVO
+Quando consciente
+Você traz:
+inovação 
+adaptação 
+possibilidades 
+visão 
+flexibilidade 
+Quando automático
+Pode aparecer:
+dispersão 
+mudanças frequentes 
+abandono de processos 
+dificuldade de concluir 
+oscilação 
+Pergunta-chave
+Estou criando uma solução melhor ou fugindo da disciplina necessária para executar a atual?
+Necessidade de condução
+Liberdade + foco
+
+PROTETOR
+Quando consciente
+Você traz:
+prudência 
+estabilidade 
+prevenção 
+consistência 
+atenção ao risco 
+Quando automático
+Pode aparecer:
+controle 
+resistência 
+microgestão 
+dificuldade de delegar 
+excesso de cautela 
+Pergunta-chave
+Estou protegendo um resultado real ou tentando eliminar qualquer sensação de insegurança?
+Necessidade de condução
+Contexto + segurança
+
+COMBINAÇÃO DOMINANTE + SECUNDÁRIO
+Essa parte pode tornar a devolutiva muito mais interessante.
+O participante não recebe apenas:
+“Você é Acelerador.”
+Ele recebe:
+SEU PADRÃO SOB PRESSÃO
+ACELERADOR + PROTETOR
+E a devolutiva poderia dizer:
+“Quando a pressão aumenta, sua primeira tendência é acelerar e assumir o comando. Ao mesmo tempo, você procura reduzir riscos e recuperar controle. Essa combinação pode produzir enorme capacidade de execução, mas, quando automatizada, pode se transformar em centralização, microgestão e cobrança excessiva.”
+Isso aumenta muito a precisão percebida do RPSP.
+
+TELA FINAL DA PLATAFORMA
+Eu estruturaria assim:
+SEU RPSP
+Radar de Perfis Sob Pressão
+Perfil dominante:
+ACELERADOR — 24/30
+Perfil secundário:
+PROTETOR — 21/30
+Sua força sob pressão:Velocidade + capacidade de proteger resultados.
+Seu risco no automático:Centralização + excesso de controle.
+Seu principal desafio comportamental:Manter velocidade sem retirar autonomia da equipe.
+Pergunta OCD:
+Quando a pressão aumenta, sua equipe recebe sua melhor liderança ou seu padrão mais antigo?
+E depois:
+Complete agora:
+Meu principal disparador é: ______
+Quando sou ativado, tendo a: ______
+O impacto disso na minha equipe é: ______
+O comportamento que preciso treinar é: ______
+Parte superior do formulário
+Parte inferior do formulário
+
+
+
+EXERCÍCIO 1
+RADAR DA LIDERANÇA SOB PRESSÃO
+O participante escolhe uma situação real e recorrente.
+1. Minha situação de pressão
+Que situação costuma me tirar do eixo?
+Exemplos:
+erro 
+cobrança 
+atraso 
+confronto 
+meta não alcançada 
+perda financeira 
+resistência da equipe 
+crítica 
+falta de comprometimento 
+2. Meu estado
+O que normalmente sinto?
+
+3. Meu pensamento automático
+Que frase passa pela minha cabeça?
+
+4. Meu impulso
+O que tenho vontade de fazer imediatamente?
+
+5. Meu comportamento
+O que efetivamente faço?
+
+
+6. Impacto
+O que minha equipe recebe desse comportamento?
+
+7. Resultado
+Esse comportamento aproxima ou afasta o resultado que desejo?
+
+
+EXERCÍCIO 2
+DECIDIR ANTES
+Protocolo “Quando... então...”
+O participante identifica cinco situações.
+1.
+Quando eu estiver sob pressão...
+Eu já decidi que vou...
+
+2.
+Quando alguém da equipe errar...
+Eu já decidi que vou...
+
+3.
+Quando eu for confrontado ou criticado...
+Eu já decidi que vou...
+
+4.
+Quando eu sentir vontade de assumir tudo...
+Eu já decidi que vou...
+
+5.
+Quando meu padrão antigo aparecer...
+Eu já decidi que vou...
+
+
+EXERCÍCIO 3
+MEU CMV DE LIDERANÇA — PRÓXIMAS 24 HORAS
+1. O padrão que quero interromper
+
+2. O comportamento que vou praticar
+
+3. Em qual situação?
+
+4. Quando vou executar?
+
+5. Como saberei que fiz?
+
+6. Qual resultado espero produzir?
+
+7. Quem perceberá primeiro essa mudança?
+
+Compromisso final
+“Nas próximas 24 horas, minha liderança será provada quando eu...”
+
+
+

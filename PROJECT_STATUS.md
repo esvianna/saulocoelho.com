@@ -1,10 +1,26 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-09-16
+Última atualização: 2026-09-17
 
 ## Onde paramos
 
-**Portal avisos / sininho / Web Push (issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16)):** Fase A+B+C no tema **1.3.31** — **no ar** (FTP). **In review** — validar fila + e-mail + silêncio.
+**Leadership Academy Noite 3 (issue [#24](https://github.com/esvianna/saulocoelho.com/issues/24)):** **vtis-quiz 1.3.40** + **AmaEducacional 1.0.48** — Líder que preciso me tornar + Meta Master + MAPA. **Done** (validado 2026-09-17).
+
+**Mentor: PDF de apoio (issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23)):** tema **1.3.42** + Ama **1.0.47** — upload + escolha de módulo + notificar. **Done** (validado 2026-09-17).
+
+**Notificar ao publicar aula (issue [#22](https://github.com/esvianna/saulocoelho.com/issues/22)):** tema **1.3.40** + Ama **1.0.45** — metabox admin + botão **Notificar** no Painel da turma. **Done** (validado 2026-09-17).
+
+**Leadership Academy Noite 2 (issue [#19](https://github.com/esvianna/saulocoelho.com/issues/19)):** **vtis-quiz 1.3.39** + **AmaEducacional 1.0.44** — MAPA. **Done** (validado 2026-09-17).
+
+**Painel do mentor (issue [#20](https://github.com/esvianna/saulocoelho.com/issues/20)):** Ama **1.0.43** + tema **1.3.38** — contraste dark; Editar aluno com **nova senha** opcional. **Done** (validado 2026-09-17).
+
+**Portal PWA — sessão persistente (issue [#21](https://github.com/esvianna/saulocoelho.com/issues/21)):** tema **1.3.32+**. **Done** (validado 2026-09-17).
+
+**vtis-quiz stepped vs all_at_once (issue [#14](https://github.com/esvianna/saulocoelho.com/issues/14)):** **Done** (validado 2026-09-17).
+
+**Convite + senha (ADR-016):** Ama **1.0.42+** + tema **1.3.37+** — senha no `/inscricao/` (altura alinhada + olho); contraste do banner. **no ar** (FTP).
+
+**Portal avisos / sininho / Web Push (issue [#16](https://github.com/esvianna/saulocoelho.com/issues/16)):** Fase A+B+C no tema **1.3.31** — **Done** (validado 2026-09-17).
 
 - Fase A: admin **Avisos Portal**, inbox + sininho
 - Fase B: VAPID + subscriptions + Conta opt-in + SW push
@@ -48,9 +64,8 @@ Repo plugin: https://github.com/esvianna/vtis-quiz · Skin: `inc/module-vtis-qui
 
 ## Próximos passos sugeridos
 
-1. Validar checklist #16 **Fase C** (fila + e-mail + silêncio + coluna Envio).
-2. Após OK: marcar #16 Done.
-3. Commit/push do tema 1.3.31 (+ `vendor/`) para o `main` quando quiseres alinhar o git.
+1. Avançar [#11](https://github.com/esvianna/saulocoelho.com/issues/11) Identidade Método OCD (Ready) — ou nova prioridade Leadership / Portal.
+2. Commit/push do tema + plugins alinhados ao `main` quando quiseres.
 
 ## Como retomar
 

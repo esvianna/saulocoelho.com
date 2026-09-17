@@ -56,15 +56,20 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 - Avisos de erro são só apresentação (tradução + CSS). Não relaxar autenticação nem limites do plugin de tentativas.
 
 ### Convite LMS (`inc/module-lms-invite-handoff.php`)
-- Login por cookie só em `/inscricao/{slug}/` após `user_register` (senha gerada pelo LMS, não escolhida no form).
+- Login por cookie só em `/inscricao/{slug}/` após `user_register`.
+- Ama ≥ **1.0.41**: senha escolhida no formulário; o handoff **não** marca nudge de «definir senha» nesse caso.
+- Contas antigas (sem senha no form) mantêm o aviso até gravarem Detalhes da conta.
 - Não autenticar fora desse URL. Não logar senhas.
-- Aviso para definir senha some ao gravar Detalhes da conta (`woocommerce_save_account_details`).
 
 ### Portal do Aluno (PWA)
 - Shell e CTA instalar só com sessão autenticada em Minha Conta. Manifest/SW públicos em `/portal-aluno/` (necessário ao install); conteúdo da conta continua a exigir login WP. Banner de instalação oculto em `display-mode: standalone` / iOS `navigator.standalone`. Não misturar com `app.saulocoelho.com`.
+- **Sessão persistente (ADR-015 / issue #21):** logins no front (Minha Conta, checkout gate, `wp_login`) usam cookie **remember** (não sessão `Expire=0`). Ecrã `/wp-login.php` (admin) mantém o comportamento nativo. Duração filtrável (`saulocoelho_portal_auth_cookie_days`, omissão 14). Não alongar cookies de sessão em dispositivos partilhados sem necessidade — o checkbox UI continua visível para transparência.
+- **Retomar última página (tema ≥ 1.3.34):** `localStorage` guarda path do Portal; `start_url` do manifest inclui `?sc_portal_resume=1`. Só paths de conta/curso/quiz; logout limpa. Não guardar checkout/carrinho/inscrição.
 - **Avisos / inbox (ADR-013 Fase A):** REST autenticada; admin só `manage_options`; audience `all` / `course:{id}` / `user:{id}`. Leituras por utilizador.
 - **Avisos / Web Push (ADR-013 Fase B):** VAPID private só em option server-side; public no front; opt-in explícito na tab Conta; payload só título/corpo/URL; endpoints de push allowlisted; subs 404/410 removidas.
 - **Avisos / fila (ADR-013 Fase C):** envio em lotes via `sc_portal_push_jobs` + WP-Cron; e-mail opcional (`wp_mail`) só com checkbox; silenciar `course:{id}` bloqueia push/e-mail (inbox mantém-se); relatório só no admin.
+- **Notificar aula (issue #22 / tema ≥ 1.3.39):** metabox na `ama_lesson` (opt-in); exige `edit_post` + aula publicada + `_ama_parent_course`; cria aviso via `sc_portal_notice_create`; meta `_sc_portal_lesson_notice_id` impede reenvio sem «Forçar»; push/e-mail reutilizam a fila #16.
+- **Material de apoio (issue #23 / tema ≥ 1.3.41):** `sc_portal_material_notify_send()` para `ama_material`; meta `_sc_portal_material_notice_id`; link `?lesson_id=` no curso. Upload feito pelo Ama REST (só mentor; PDF; rate-limit).
 
 ### Exercícios vtis-quiz (aula)
 - Modo `one_response_per_user`: uma submission por utilizador autenticado; refazer exige `allow_retake` (quiz) e política do curso LMS. Não relaxar `require_login` nos exercícios de turma.

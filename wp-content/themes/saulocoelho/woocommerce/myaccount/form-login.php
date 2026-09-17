@@ -46,8 +46,8 @@ do_action( 'woocommerce_before_customer_login_form' );
 				<input type="hidden" name="redirect" value="<?php echo esc_url( $sc_login_redirect ); ?>" />
 				<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Acessar', 'saulocoelho' ); ?>"><?php esc_html_e( 'Acessar', 'saulocoelho' ); ?></button>
 				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" />
-					<span><?php esc_html_e( 'Lembrar-me', 'saulocoelho' ); ?></span>
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" checked="checked" />
+					<span><?php esc_html_e( 'Manter-me ligado neste aparelho', 'saulocoelho' ); ?></span>
 				</label>
 			</p>
 			<p class="woocommerce-LostPassword lost_password">

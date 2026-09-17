@@ -255,3 +255,55 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Motivo** | O e-mail não pode ser o único próximo passo; alinhado ao login silencioso do checkout. |
 | **Consequências** | Patch no tema sem esperar release do AmaEducacional. Ideal no futuro: o plugin autenticar no próprio `InviteRegistration`. Não sobrescrever o Portal 1.3.24+ no deploy — só ficheiros do handoff + bump de versão. |
 
+---
+
+## ADR-016 — Convite: senha no formulário de inscrição
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-16 |
+| **Status** | Aceita |
+| **Contexto** | Alunos sem e-mail (spam/filtro) não conseguiam definir senha; banner pós-inscrição ilegível no Portal dark. |
+| **Decisão** | (1) Ama ≥ **1.0.41**: campos senha + confirmação no `/inscricao/`; `wc_create_new_customer` com password. E-mail já existente ignora a senha do form. (2) Tema ≥ **1.3.36**: contraste do banner handoff; nudge «definir senha» só se a conta foi criada sem senha no form. |
+| **Motivo** | Acesso imediato e reutilizável sem canal de e-mail. |
+| **Consequências** | Deploy conjunto plugin + tema. Contas antigas com nudge mantêm o CTA de definir senha. |
+
+---
+
+## ADR-015 — Portal PWA: cookie de autenticação persistente
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-16 |
+| **Status** | Aceita |
+| **Contexto** | PWA Portal instalada (iOS/Android) perdia a sessão ao fechar a app. Cookie WP de sessão (`Expire=0`) quando «Lembrar-me» não estava marcado. |
+| **Decisão** | (1) Tema ≥ **1.3.32**: `inc/module-portal-auth-persist.php` — `woocommerce_login_credentials` com `remember=true`; `wp_login` no front reemite cookie persistente; checkout gate `wp_set_auth_cookie( …, true )`. (2) UI: checkbox «Manter-me ligado neste aparelho» checked por omissão. (3) `/wp-login.php` admin não é forçado. (4) Duração 14 dias (`saulocoelho_portal_auth_cookie_days`). |
+| **Motivo** | PWA standalone limpa cookies de sessão; o Portal precisa de sessão estável para cursos e push. |
+| **Consequências** | Issue [#21](https://github.com/esvianna/saulocoelho.com/issues/21). Utilizador deve voltar a fazer login **uma vez** após o deploy para obter o novo cookie. |
+
+---
+
+## ADR-017 — Notificar alunos ao publicar aula LMS
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-17 |
+| **Status** | Aceita |
+| **Contexto** | Conteúdo novo na grade sem canal automático; #16 já tem inbox/push/e-mail manuais. |
+| **Decisão** | Tema ≥ **1.3.39**: metabox opt-in em `ama_lesson` + API `sc_portal_lesson_notify_send()`. Tema ≥ **1.3.40** + Ama ≥ **1.0.45**: mentores/monitores notificam no **Painel da turma** (REST `mentor/lessons/{id}/notify`). Idempotência por meta; «Forçar»/Reenviar para reenvio. |
+| **Motivo** | Reutilizar pipeline Portal; monitores não precisam do wp-admin da aula. |
+| **Consequências** | Issue [#22](https://github.com/esvianna/saulocoelho.com/issues/22). Deploy conjunto tema + Ama. |
+
+---
+
+## ADR-018 — Mentor: PDF de apoio + aviso Portal
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-17 |
+| **Status** | Aceita |
+| **Contexto** | Mentores precisam publicar PDFs sem wp-admin; #16/#22 já cobrem avisos. |
+| **Decisão** | Tema ≥ **1.3.41**: `sc_portal_material_notify_send()` (audience `course:{id}`, meta no `ama_material`). Ama ≥ **1.0.46**: upload no Painel da turma + REST materials. |
+| **Motivo** | Reutilizar pipeline Portal; monitores não precisam do admin de materiais. |
+| **Consequências** | Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23). Deploy conjunto tema + Ama. |
+

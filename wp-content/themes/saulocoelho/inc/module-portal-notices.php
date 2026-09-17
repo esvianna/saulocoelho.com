@@ -81,6 +81,62 @@ function sc_portal_notices_reads_table() {
 }
 
 /**
+ * Cria um aviso Portal (API reutilizável — admin e #22 lesson notify).
+ *
+ * @param array $args {
+ *     @type string $title      Título (obrigatório).
+ *     @type string $body       Corpo.
+ *     @type string $link_url   URL do CTA.
+ *     @type string $audience   all | course:{id} | user:{id}.
+ *     @type string $status     draft|published (omissão published).
+ *     @type int    $author_id  Autor (omissão current user).
+ * }
+ * @return int|\WP_Error Notice ID.
+ */
+function sc_portal_notice_create( array $args ) {
+	global $wpdb;
+
+	$title = isset( $args['title'] ) ? sanitize_text_field( (string) $args['title'] ) : '';
+	if ( '' === $title ) {
+		return new \WP_Error( 'title', __( 'Título obrigatório.', 'saulocoelho' ) );
+	}
+
+	$body     = isset( $args['body'] ) ? sanitize_textarea_field( (string) $args['body'] ) : '';
+	$link_url = isset( $args['link_url'] ) ? esc_url_raw( (string) $args['link_url'] ) : '';
+	$audience = isset( $args['audience'] ) ? sanitize_text_field( (string) $args['audience'] ) : 'all';
+	if ( ! preg_match( '/^(all|course:\d+|user:\d+)$/', $audience ) ) {
+		$audience = 'all';
+	}
+	$status    = ( isset( $args['status'] ) && 'draft' === $args['status'] ) ? 'draft' : 'published';
+	$author_id = isset( $args['author_id'] ) ? (int) $args['author_id'] : get_current_user_id();
+	$now       = current_time( 'mysql', true );
+	$table     = sc_portal_notices_table();
+
+	$data = array(
+		'title'        => $title,
+		'body'         => $body,
+		'link_url'     => $link_url,
+		'audience'     => $audience,
+		'status'       => $status,
+		'author_id'    => $author_id,
+		'created_at'   => $now,
+		'published_at' => ( 'published' === $status ) ? $now : null,
+	);
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+	$ok = $wpdb->insert(
+		$table,
+		$data,
+		array( '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
+	);
+	if ( ! $ok ) {
+		return new \WP_Error( 'db', __( 'Não foi possível criar o aviso.', 'saulocoelho' ) );
+	}
+
+	return (int) $wpdb->insert_id;
+}
+
+/**
  * Utilizador tem acesso ao aviso segundo audience.
  *
  * @param int    $user_id  User ID.

@@ -117,27 +117,31 @@ O PWA https://app.saulocoelho.com não deve receber estes dados.
 
 ### Leadership Academy — convite (`/inscricao/{slug}/`)
 
-Requer **deploy** do plugin AmaEducacional **e** do tema ≥ **1.3.25** (handoff). Token real da metabox Convite.
+Requer **deploy** do plugin AmaEducacional ≥ **1.0.41** **e** do tema ≥ **1.3.36** (senha no form + contraste handoff). Token real da metabox Convite.
 
 - [ ] Curso: metabox Convite activo; catálogo público desligado; “gratuito com conta” desligado
-- [ ] Link com `?t=` abre o formulário; token inválido não matricula (**sem** CTA “inscrição confirmada”)
-- [ ] E-mail já existente: matricula a vaga e **redireciona para Minha Conta** (com `redirect_to` do curso); dica “Esqueci a senha” no login
-- [ ] Conta nova (e-mail inédito): fica **logado**, chega à sala `/curso/leadership-academy/` (ou vê Entrar na sala / Definir senha) **sem abrir o e-mail**
-- [ ] Em Minha Conta / sala: aviso para definir senha; gravar Detalhes da conta remove o aviso
-- [ ] Conta nova: aparece em AmaEducacional → Alunos; e-mail do plugin, se chegar, continua válido (backup)
+- [ ] Link com `?t=` abre o formulário com **senha + confirmação**; token inválido não matricula
+- [ ] Conta nova: fica **logado**, chega à sala; **logout → login** com e-mail/senha do form (sem abrir e-mail)
+- [ ] Conta nova: **não** mostra banner «Definir minha senha» (só contas antigas sem senha no form)
+- [ ] Banner legado (se aparecer): texto legível no Portal dark
+- [ ] E-mail já existente: matricula a vaga e **redireciona para Minha Conta** (senha do form ignorada)
+- [ ] Conta nova: aparece em AmaEducacional → Alunos
 - [ ] Checkout `/boas-vindas/` inalterado
+- [ ] https://saulocoelho.com/curso/leadership-academy/ sem login: porta de convite (sem “Ir para a loja”)
+- [ ] Aluno matriculado na mesma URL: sala com Aulas / Avaliações / Materiais / Certificado
+- [ ] https://saulocoelho.com/privacidade/ abre o aviso (template Legal); convite e rodapé apontam para essa URL
+
+### Minha Conta / Portal (regressão UI)
+
 - [ ] Minha Conta mobile: menu acima e conteúdo (Meus Cursos) logo abaixo — sem faixa vazia enorme até ao rodapé
 - [ ] Minha Conta desktop (≥1024px): sidebar à esquerda + conteúdo à direita
-- [ ] Header mobile aberto: fundo opaco a cobrir a página (não ver título «Minha Conta» por baixo); itens do menu WP + bloco Área do Aluno / Sair
-- [ ] Header mobile: ícone Entrar / conta ao lado do carrinho; no hamburger, «Área do Aluno» (e «Sair» se logado) no fundo; scroll até ver todos os itens
+- [ ] Header mobile aberto: fundo opaco a cobrir a página; itens do menu WP + bloco Área do Aluno / Sair
+- [ ] Header mobile: ícone Entrar / conta ao lado do carrinho; no hamburger, «Área do Aluno» (e «Sair» se logado)
 - [ ] Minha Conta login: ícone olho dourado à direita da senha; toque mostra/oculta o texto
 - [ ] Minha Conta senha errada: aviso em português **sem** repetir «N tentativa(s) restante(s)»
 - [ ] Minha Conta logada: menu lateral sem linhas douradas por baixo dos ícones
 - [ ] Minha Conta: avisos (senha temporária / erro) sem ícone sobreposto ao texto
 - [ ] Minha Conta já logada: não mostrar aviso de bloqueio/tentativas de login
-- [ ] https://saulocoelho.com/curso/leadership-academy/ sem login: porta de convite (sem “Ir para a loja”)
-- [ ] Aluno matriculado na mesma URL: sala com Aulas / Avaliações / Materiais / Certificado
-- [ ] https://saulocoelho.com/privacidade/ abre o aviso (template Legal); convite e rodapé apontam para essa URL
 
 ### Leadership Academy — Noite 1 (`vtis-quiz` 1.3.33 + AmaEducacional 1.0.31)
 
@@ -155,6 +159,72 @@ Requer **deploy** dos dois plugins. Após actualizar, seed Noite 1 + migração 
 - [ ] Ex. 6: prompts iguais à apostila
 - [ ] Skin Saulo aplica-se; login obrigatório
 - [ ] Pendente opcional: Mapa da Origem (fecho da apostila)
+
+### Leadership Academy — Noite 2 (`vtis-quiz` ≥ 1.3.39, Ama ≥ 1.0.44, issue #19)
+
+Requer **deploy** vtis-quiz (DB **26** cria seed MAPA) + AmaEducacional **1.0.44** (seed grade `v2`).
+
+- [ ] `/quiz/leadership-rpsp/` — 30 Likert + 5 desempates + final + 4 textos; resultado com dominante/secundário e mapa 0–30
+- [ ] Empate forçado (totais iguais) → desempate por 5s / 4–5 / TieBreak / pergunta final
+- [ ] `/quiz/leadership-radar-pressao/`, `decidir-antes`, `cmv-24h` — reflection `all_at_once`, login, uma resposta
+- [ ] `/quiz/leadership-mapa-pressao/` — 10 campos do entregável (cenário → CMV 24h); síntese no fim
+- [ ] Skin Saulo; OCD / app não afetados
+- [ ] Grade Noite 2 com **5** aulas; MAPA como última
+- [ ] Abrir módulo Noite 2 no player e concluir o MAPA (checkbox progresso)
+
+### Leadership Academy — Noite 3 (`vtis-quiz` ≥ 1.3.40, Ama ≥ 1.0.48, issue #24)
+
+Requer **deploy** vtis-quiz (DB **27**) + AmaEducacional **1.0.48** (seed grade `noite3_v1`).
+
+- [ ] `/quiz/leadership-lider-tornar/` — 8 campos + síntese; reflection; login; uma resposta
+- [ ] `/quiz/leadership-meta-master/` — 8 campos + frase final Meta Master
+- [ ] `/quiz/leadership-mapa-lider/` — 10 campos do entregável
+- [ ] Skin Saulo; Noite 1/2 / OCD não afetados
+- [ ] Grade com módulo **Noite 3** e **3** aulas
+- [ ] Abrir módulo Noite 3 no player e concluir o MAPA
+
+### Painel do mentor (Ama ≥ 1.0.35, issue #20)
+
+Requer **deploy** AmaEducacional **1.0.35**.
+
+- [ ] Curso → metabox «Mentores / monitores»: adicionar/remover utilizadores
+- [ ] Login como mentor → hub mostra «Painel da turma» (agregados + lista + % por aula)
+- [ ] Labels: «Ativos», «Exercícios»; mobile empilha título/%; clique no exercício abre modal
+- [ ] Tabela: Nome largo; Editar (nome/e-mail/telefone) e Remover da turma
+- [ ] Aluno comum → hub **sem** painel
+- [ ] Mentor **sem** matrícula → acede ao painel (não vê grade de aluno)
+- [ ] Admin (`manage_options`) acede mesmo fora da lista
+- [ ] REST `GET /wp-json/ama-lms/v1/courses/{id}/mentor/dashboard` com cookie/nonce → 200; sem auth → 401; aluno → 403
+- [ ] Sem respostas abertas / scores RPSP no painel
+
+### Portal — notificar ao publicar aula (#22, tema ≥ 1.3.40 + Ama ≥ 1.0.45)
+
+Requer **deploy** tema + AmaEducacional.
+
+- [ ] Editar `ama_lesson` associada a um curso: metabox «Notificar alunos (Portal)»
+- [ ] Sem checkbox → gravar → nenhum aviso novo
+- [ ] Com «Notificar» + aula publicada → aviso no sininho dos matriculados; link abre `?lesson_id=`
+- [ ] Push marcado → fila/job (se VAPID ok); e-mail só se checkbox e-mail
+- [ ] Segunda gravação com notificar (sem Forçar) → não duplica; mensagem de aviso
+- [ ] «Forçar novo aviso» → cria segundo aviso
+- [ ] Curso silenciado (#16) → inbox ok; push/e-mail bloqueados
+- [ ] Aula em rascunho → mensagem a pedir publicar
+- [ ] Login como **mentor**: Painel da turma → Conclusão por aula → **Notificar** → aluno vê sininho
+- [ ] **Reenviar aviso** pede confirmação e cria novo aviso
+- [ ] Aluno comum → hub sem painel / sem botão
+
+### Portal — mentor envia PDF de apoio (#23, tema ≥ 1.3.41 + Ama ≥ 1.0.46)
+
+Requer **deploy** tema + AmaEducacional.
+
+- [ ] Mentor → Painel da turma → **Materiais de apoio** → escolher **Módulo** (ex. Noite 1) + título + PDF → Enviar
+- [ ] Material aparece no módulo escolhido na grade (sidebar do player)
+- [ ] Material aparece em Material de apoio do hub e na grade
+- [ ] Com «Notificar» → sininho do aluno; link abre o material
+- [ ] Sem «Notificar» → só na grade
+- [ ] **Reenviar aviso** no material listado
+- [ ] Ficheiro não-PDF rejeitado
+- [ ] Aluno comum sem formulário de upload
 
 ### Portal do Aluno — avisos / sininho (#16 Fase A, tema ≥ 1.3.26)
 
@@ -205,6 +275,21 @@ Requer **deploy do tema**. Após 1.ª carga, rewrite `/portal-aluno/` é gravado
 - [ ] Abrir curso LMS a partir de Cursos: topbar + tabs do portal mantêm-se; conteúdo do curso/player no centro
 - [ ] Visitante (não logado) em `/curso/…`: header/footer de marketing (sem shell do portal)
 - [ ] Separado de `app.saulocoelho.com`
+
+### Portal PWA — sessão persistente (#21, tema ≥ 1.3.32)
+
+- [ ] Login em Minha Conta: checkbox «Manter-me ligado neste aparelho» vem **marcado**
+- [ ] Mesmo desmarcando o checkbox, o cookie fica com validade (não só sessão) — login front
+- [ ] PWA instalada: login → fechar app completamente → reabrir → continua logado
+- [ ] `/wp-login.php` (admin): comportamento nativo (não forçado pelo módulo)
+- [ ] Checkout gate (registo rápido): entra com cookie persistente
+
+### Portal PWA — retomar última página (tema ≥ 1.3.34)
+
+- [ ] Abrir uma aula no PWA → fechar app → reabrir pelo ícone → volta à mesma aula (`?lesson_id=`)
+- [ ] Em Minha Conta (tab Cursos) de propósito → fechar → reabre em Cursos (não força aula antiga se foi a última)
+- [ ] Sair (logout) limpa a posição guardada
+- [ ] Abrir aviso/push com URL específica não é sobrescrito pelo resume (não é cold start na home)
 
 ## Testes automatizados (futuro)
 

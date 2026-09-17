@@ -3,6 +3,9 @@
  *
  * Detecção de app instalado: display-mode standalone / navigator.standalone (iOS).
  * Se já estiver instalado (abrir como PWA), os banners permanecem ocultos.
+ *
+ * Retomar última página: start_url do manifest traz ?sc_portal_resume=1; o JS
+ * restaura a URL guardada (aula/curso) em localStorage.
  */
 (function () {
   'use strict';
@@ -12,6 +15,8 @@
   }
 
   var DISMISS_KEY = 'sc_portal_install_dismissed_v1';
+  var LAST_URL_KEY = 'sc_portal_last_path_v1';
+  var RESUME_PARAM = scPortalAluno.resumeParam || 'sc_portal_resume';
   var deferredPrompt = null;
   var roots = document.querySelectorAll('[data-sc-portal-install]');
 
@@ -25,6 +30,180 @@
   function isIos() {
     return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
   }
+
+  function currentPath() {
+    return window.location.pathname + window.location.search + window.location.hash;
+  }
+
+  function stripResumeParam(path) {
+    try {
+      var u = new URL(path, window.location.origin);
+      u.searchParams.delete(RESUME_PARAM);
+      var q = u.searchParams.toString();
+      return u.pathname + (q ? '?' + q : '') + u.hash;
+    } catch (e) {
+      return path;
+    }
+  }
+
+  function isDisallowedPath(path) {
+    var p = (path || '').toLowerCase();
+    if (!p) return true;
+    if (p.indexOf('customer-logout') !== -1) return true;
+    if (p.indexOf('wp-login') !== -1) return true;
+    if (p.indexOf('/cart') !== -1 || p.indexOf('/carrinho') !== -1) return true;
+    if (p.indexOf('/checkout') !== -1 || p.indexOf('/finalizar') !== -1) return true;
+    if (p.indexOf('/inscricao/') !== -1) return true;
+    if (p.indexOf('lost-password') !== -1 || p.indexOf('lostpassword') !== -1) return true;
+    return false;
+  }
+
+  function isAllowedResumePath(path) {
+    if (isDisallowedPath(path)) return false;
+    var p = path.split('?')[0].toLowerCase();
+    // Conta / cursos LMS / quizzes no mesmo site (shell portal ou player).
+    if (p.indexOf('/minha-conta') !== -1 || p.indexOf('/my-account') !== -1) return true;
+    if (p.indexOf('/curso/') !== -1 || p.indexOf('/cursos/') !== -1) return true;
+    if (p.indexOf('/quiz/') !== -1) return true;
+    if (p.indexOf('/ama_') !== -1) return true;
+    return false;
+  }
+
+  function isAccountDashboard() {
+    var path = stripResumeParam(currentPath()).split('?')[0].replace(/\/+$/, '');
+    var account = '/minha-conta';
+    try {
+      account = new URL(scPortalAluno.accountUrl || '/minha-conta/', window.location.origin).pathname.replace(
+        /\/+$/,
+        ''
+      );
+    } catch (e) {
+      /* keep default */
+    }
+    return (
+      path === account ||
+      path === account + '/dashboard' ||
+      path === '/minha-conta' ||
+      path === '/my-account'
+    );
+  }
+
+  function isColdStandaloneLaunch() {
+    if (!isStandalone()) {
+      return false;
+    }
+    try {
+      var nav = window.performance && performance.getEntriesByType
+        ? performance.getEntriesByType('navigation')[0]
+        : null;
+      if (nav && nav.type && nav.type !== 'navigate') {
+        return false;
+      }
+    } catch (e) {
+      /* ignore */
+    }
+    // Ícone da PWA: referrer vazio. Navegação interna: referrer same-origin.
+    if (document.referrer) {
+      try {
+        if (new URL(document.referrer).origin === window.location.origin) {
+          return false;
+        }
+      } catch (e2) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function saveLastPath() {
+    if (!document.body || !document.body.classList.contains('sc-portal-aluno')) {
+      return;
+    }
+    var path = stripResumeParam(currentPath());
+    if (isDisallowedPath(path)) {
+      return;
+    }
+    try {
+      window.localStorage.setItem(LAST_URL_KEY, path);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function clearLastPath() {
+    try {
+      window.localStorage.removeItem(LAST_URL_KEY);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function tryRedirectToLast() {
+    var cleanHere = stripResumeParam(currentPath());
+    var last = '';
+    try {
+      last = window.localStorage.getItem(LAST_URL_KEY) || '';
+    } catch (e) {
+      last = '';
+    }
+    last = stripResumeParam(last);
+    if (last && isAllowedResumePath(last) && last !== cleanHere) {
+      window.location.replace(last);
+      return true;
+    }
+    return false;
+  }
+
+  function maybeResumeLastPath() {
+    var params = new URLSearchParams(window.location.search);
+    var fromStartUrl = params.get(RESUME_PARAM) === '1';
+
+    if (fromStartUrl) {
+      if (tryRedirectToLast()) {
+        return true;
+      }
+      var cleanHere = stripResumeParam(currentPath());
+      if (cleanHere !== currentPath()) {
+        try {
+          window.history.replaceState(null, '', cleanHere);
+        } catch (e2) {
+          /* ignore */
+        }
+      }
+      return false;
+    }
+
+    // Fallback: PWA já instalada com manifest antigo (sem ?sc_portal_resume=1).
+    if (isColdStandaloneLaunch() && isAccountDashboard()) {
+      return tryRedirectToLast();
+    }
+
+    return false;
+  }
+
+  // Retomar antes do resto (evita flash do início).
+  if (maybeResumeLastPath()) {
+    return;
+  }
+
+  // Guardar posição enquanto navega no Portal.
+  saveLastPath();
+  window.addEventListener('pagehide', saveLastPath);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') {
+      saveLastPath();
+    }
+  });
+
+  // Logout: limpar última posição.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a || !a.href) return;
+    var href = String(a.href).toLowerCase();
+    if (href.indexOf('customer-logout') !== -1 || href.indexOf('action=logout') !== -1) {
+      clearLastPath();
+    }
+  });
 
   function isDismissed() {
     try {
