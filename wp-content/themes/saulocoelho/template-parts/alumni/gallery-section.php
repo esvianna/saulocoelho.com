@@ -3,10 +3,10 @@
  * Template Part: Alumni Gallery Section
  *
  * Exibe a seção "Memórias das Nossas Turmas" na página de produto.
- * - Lista as turmas selecionadas pelo admin (ama_course IDs)
+ * - Lista as turmas selecionadas no produto (`_alumni_turmas` → ama_course)
+ * - Fotos vêm do curso (`_alumni_fotos`) — issue #25 / ADR-019
  * - Tabs por turma com grid de fotos
  * - Lightbox Vanilla JS puro (sem dependências externas)
- * - Galeria pública (Fase 1)
  *
  * @package SauloCoelho
  */
@@ -29,24 +29,9 @@ foreach ( $selected_turmas as $course_id ) {
     $course = get_post( $course_id );
     if ( ! $course || $course->post_status !== 'publish' ) continue;
 
-    $fotos_ids = get_post_meta( $pid, '_alumni_fotos_' . $course_id, true );
-    if ( ! is_array( $fotos_ids ) ) $fotos_ids = [];
-
-    // Filtrar apenas IDs válidos com imagens
-    $fotos = [];
-    foreach ( $fotos_ids as $img_id ) {
-        $full  = wp_get_attachment_image_src( $img_id, 'large' );
-        $thumb = wp_get_attachment_image_src( $img_id, 'medium' );
-        $alt   = get_post_meta( $img_id, '_wp_attachment_image_alt', true ) ?: esc_html( $course->post_title );
-        if ( $full ) {
-            $fotos[] = [
-                'id'    => $img_id,
-                'full'  => $full[0],
-                'thumb' => $thumb ? $thumb[0] : $full[0],
-                'alt'   => $alt,
-            ];
-        }
-    }
+    $fotos = function_exists( 'alumni_build_fotos_payload' )
+        ? alumni_build_fotos_payload( $course_id, $course->post_title )
+        : [];
 
     $turmas_data[] = [
         'id'    => $course_id,

@@ -83,6 +83,9 @@ if ( file_exists( __DIR__ . '/inc/metaboxes.php' ) ) {
 if ( file_exists( __DIR__ . '/inc/module-alumni.php' ) ) {
     require_once __DIR__ . '/inc/module-alumni.php';
 }
+if ( file_exists( __DIR__ . '/inc/module-alumni-hub.php' ) ) {
+    require_once __DIR__ . '/inc/module-alumni-hub.php';
+}
 
 /**
  * Gate de Checkout (Login/Cadastro antes do Checkout)

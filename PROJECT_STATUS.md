@@ -1,8 +1,20 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-09-17
+Última atualização: 2026-09-23
 
 ## Onde paramos
+
+**Banner Minha Conta → instruções do app OCD:** tema **1.3.47** — CTA «Ver como instalar» → https://app.saulocoelho.com/?install=1.
+
+**Banner Minha Conta → app OCD:** tema **1.3.46** — «Instale o app Método OCD» no Portal (em vez do PWA do portal).
+
+**Guia criar exercícios/quizzes (issue [#26](https://github.com/esvianna/saulocoelho.com/issues/26)):** **em pausa** — prioridade validação do app OCD. Causa da «média» em dissertativo corrigida no **vtis-quiz 1.3.41** (campo Modo de resultado + cura só-texto).
+
+**App Método OCD:** https://app.saulocoelho.com — lote 1 em validação (Project #21).
+
+**Alumni fotos na hub + upload alunos (issue [#25](https://github.com/esvianna/saulocoelho.com/issues/25)):** tema **1.3.44** + Ama **1.0.53** — hub fotos + botão Minha conta no player. **In review** / FTP prod.
+
+**Alumni fotos no curso (issue [#25](https://github.com/esvianna/saulocoelho.com/issues/25)):** tema **1.3.43** — `_alumni_fotos` em `ama_course`; produto só turmas/textos; Ferramentas → migrar. ADR-019.
 
 **Leadership Academy Noite 3 (issue [#24](https://github.com/esvianna/saulocoelho.com/issues/24)):** **vtis-quiz 1.3.40** + **AmaEducacional 1.0.48** — Líder que preciso me tornar + Meta Master + MAPA. **Done** (validado 2026-09-17).
 

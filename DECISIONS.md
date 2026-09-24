@@ -307,3 +307,15 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Motivo** | Reutilizar pipeline Portal; monitores não precisam do admin de materiais. |
 | **Consequências** | Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23). Deploy conjunto tema + Ama. |
 
+## ADR-019 — Alumni: fotos na turma (`ama_course`), não no produto Woo
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-09-18 |
+| **Status** | Aceita |
+| **Contexto** | Galeria Alumni guardava fotos no meta do produto (`_alumni_fotos_{id}`), impedindo reutilização e gestão central. Issue [#25](https://github.com/esvianna/saulocoelho.com/issues/25). |
+| **Decisão** | Fonte de verdade: `_alumni_fotos` no CPT `ama_course`. Produto Woo mantém só `_alumni_turmas` + textos da secção. Migração one-shot em Ferramentas → Alumni (união de IDs). Tema ≥ **1.3.43**. |
+| **Motivo** | Uma turma = um conjunto de fotos; vários produtos podem apontar para a mesma turma sem duplicar uploads. |
+| **Consequências** | Front e «Minhas Turmas» leem do curso. v2 (CPT Galeria genérico / shortcode) fica fora de escopo. |
+
+**Hub follow-up (2026-09-18):** _alumni_show_on_hub + _alumni_students_can_upload; tema >= **1.3.44** (module-alumni-hub.php AJAX); Ama >= **1.0.52** chama lumni_render_course_hub_gallery(). Uploads de aluno: MIME JPEG/PNG/WebP, max 5 MB, nonce, so matriculados; meta _alumni_from_student.

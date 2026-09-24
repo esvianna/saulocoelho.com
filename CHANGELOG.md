@@ -5,6 +5,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 ## [Unreleased]
 
 ### Added
+- Portal: banner «Instale o app Método OCD» → instruções em https://app.saulocoelho.com/?install=1 («Ver como instalar»). Tema **1.3.47**.
+- Portal: banner «Instale o app Método OCD» (substitui «Instale o Portal do Aluno») → https://app.saulocoelho.com/. Tema **1.3.46**.
+- Issue [#25](https://github.com/esvianna/saulocoelho.com/issues/25) **Alumni na hub**: galeria «Fotos da turma» + upload pelos alunos; tema **1.3.45** mostra galeria se houver fotos (mesmo sem checkbox). Ama **1.0.54**.
+- Issue [#25](https://github.com/esvianna/saulocoelho.com/issues/25) **Alumni**: fotos na turma (`ama_course` `_alumni_fotos`); produto Woo só selecciona turmas + textos; migração em Ferramentas → Alumni. Tema **1.3.43**. ADR-019.
 - Issue [#24](https://github.com/esvianna/saulocoelho.com/issues/24) **Noite 3**: Líder que preciso me tornar + Meta Master + MAPA (vtis-quiz **1.3.40** + Ama **1.0.48**).
 - Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23) **Mentor: PDF de apoio**: escolher **módulo** no envio (Ama **1.0.47** + tema **1.3.42**).
 - Issue [#23](https://github.com/esvianna/saulocoelho.com/issues/23) **Mentor: PDF de apoio**: `sc_portal_material_notify_send()` + Ama **1.0.46** (upload no Painel da turma). Tema **1.3.41**.

@@ -38,6 +38,24 @@ npm run watch    # desenvolvimento
 2. Salvar e recarregar — valores persistem?
 3. Front exibe conteúdo salvo corretamente?
 
+### Alumni / galeria de turmas (issue #25 / tema ≥ 1.3.43)
+
+1. Em **Cursos (ama_course)** → metabox «Fotos Alumni»: adicionar/remover fotos; gravar; recarregar.
+2. Em **produto Woo** → Alumni: só textos + checkboxes de turmas; link «Editar fotos da turma»; contagem de fotos.
+3. **Ferramentas → Alumni: migrar fotos** (uma vez em prod/staging se houver dados antigos) → galeria do produto continua a mostrar fotos.
+4. Front do produto: `#alumni-galeria` com tabs; dois produtos com a mesma turma partilham as mesmas fotos.
+5. Minha Conta → Minhas Turmas (se aplicável): fotos vêm do curso.
+6. Produto sem turmas / turmas sem fotos → secção oculta.
+
+### Alumni na sala do curso (issue #25 / tema ≥ 1.3.44 + Ama ≥ 1.0.52)
+
+1. No curso: marcar **Exibir galeria na hub** (+ opcionalmente **alunos podem enviar**); gravar.
+2. Aluno matriculado: card **Fotos** + secção `#ama-hub-fotos`; vê fotos oficiais e de colegas.
+3. Com upload activo: **Enviar foto** (JPEG/PNG/WebP ≤ 5 MB) → aparece na grelha; autor pode remover a sua.
+4. Sem a opção de upload: aluno vê mas não tem botão; mentor/admin ainda podem enviar.
+5. Visitante / não matriculado: secção não aparece.
+6. Desmarcar «Exibir na hub» → secção e card desaparecem.
+
 ### Alteração em WooCommerce / checkout
 
 1. **Visitante:** adicionar produto → redireciona para checkout gate (`/boas-vindas/`)?

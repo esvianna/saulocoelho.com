@@ -14,9 +14,10 @@
     return;
   }
 
-  var DISMISS_KEY = 'sc_portal_install_dismissed_v1';
+  var DISMISS_KEY = 'sc_portal_install_dismissed_v2_ocd';
   var LAST_URL_KEY = 'sc_portal_last_path_v1';
   var RESUME_PARAM = scPortalAluno.resumeParam || 'sc_portal_resume';
+  var ocdAppUrl = (scPortalAluno.ocdAppUrl || '').replace(/\/?$/, '/');
   var deferredPrompt = null;
   var roots = document.querySelectorAll('[data-sc-portal-install]');
 
@@ -228,7 +229,12 @@
   }
 
   function showAll() {
-    if (isStandalone() || isDismissed() || !roots.length) {
+    // Banner OCD: mostrar no browser (e no antigo PWA do portal). Não depende de beforeinstallprompt.
+    if (isDismissed() || !roots.length) {
+      hideAll();
+      return;
+    }
+    if (!ocdAppUrl && isStandalone()) {
       hideAll();
       return;
     }
@@ -236,40 +242,54 @@
       el.hidden = false;
       var iosHint = el.querySelector('[data-sc-portal-install-ios]');
       var btn = el.querySelector('[data-sc-portal-install-btn]');
+      if (btn) {
+        btn.hidden = false;
+        if (ocdAppUrl && btn.tagName === 'A') {
+          btn.setAttribute('href', ocdAppUrl);
+        }
+      }
       if (isIos() && iosHint) {
         iosHint.hidden = false;
         iosHint.textContent = scPortalAluno.iosHint || '';
-        if (btn) {
-          btn.hidden = true;
-        }
-      } else if (btn && !deferredPrompt) {
-        // Android/desktop: botão visível; o prompt só dispara quando o browser permitir.
-        btn.hidden = false;
+      } else if (iosHint) {
+        iosHint.hidden = true;
       }
     });
   }
 
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    showAll();
-  });
+  // Mantém BIP só se não houver URL do app OCD (legado).
+  if (!ocdAppUrl) {
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      showAll();
+    });
 
-  window.addEventListener('appinstalled', function () {
-    deferredPrompt = null;
-    setDismissed();
-    hideAll();
-  });
+    window.addEventListener('appinstalled', function () {
+      deferredPrompt = null;
+      setDismissed();
+      hideAll();
+    });
+  }
 
   roots.forEach(function (el) {
     var btn = el.querySelector('[data-sc-portal-install-btn]');
     var dismiss = el.querySelector('[data-sc-portal-install-dismiss]');
     if (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (ev) {
+        if (ocdAppUrl) {
+          // <a href> já navega; se for button legado, força redirect.
+          if (btn.tagName !== 'A') {
+            ev.preventDefault();
+            window.location.href = ocdAppUrl;
+          }
+          return;
+        }
         if (!deferredPrompt) {
           showAll();
           return;
         }
+        ev.preventDefault();
         deferredPrompt.prompt();
         deferredPrompt.userChoice.finally(function () {
           deferredPrompt = null;
@@ -284,8 +304,8 @@
     }
   });
 
-  // Mostrar se ainda não for app: iOS sempre (dica); Android também (texto + botão quando BIP chegar).
-  if (!isStandalone() && !isDismissed()) {
+  // Mostrar banner OCD (ou legado) se ainda não dispensado.
+  if (!isDismissed()) {
     showAll();
   }
 

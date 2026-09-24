@@ -44,6 +44,7 @@ Regras específicas para o tema WordPress + WooCommerce deste repositório.
 
 ### Uploads e mídia
 - Usar APIs WordPress (`wp_enqueue_media`) — não implementar upload custom sem validação MIME.
+- **Alumni hub** (`inc/module-alumni-hub.php`): AJAX só logado; nonce `alumni_hub_{course_id}`; MIME JPEG/PNG/WebP; máx. 5 MB; exige matrícula (ou mentor/admin); alunos só apagam anexos com `_alumni_from_student` próprios.
 
 ### Leads da palestra (`inc/module-palestra-leads.php`)
 - Formulário público: nonce AJAX, honeypot, rate limit por IP (transients).

@@ -180,8 +180,9 @@ function saulocoelho_portal_assets() {
 			array(
 				'manifestUrl' => home_url( '/portal-aluno/manifest.webmanifest' ),
 				'swUrl'       => home_url( '/portal-aluno/sw.js' ),
-				'installLabel'=> __( 'Instalar Portal do Aluno', 'saulocoelho' ),
-				'iosHint'     => __( 'No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.', 'saulocoelho' ),
+				'ocdAppUrl'   => 'https://app.saulocoelho.com/?install=1',
+				'installLabel'=> __( 'Ver como instalar', 'saulocoelho' ),
+				'iosHint'     => __( 'No iPhone: abra o link → siga as instruções Safari → Adicionar à Tela de Início.', 'saulocoelho' ),
 				'installed'   => __( 'App já instalado neste dispositivo.', 'saulocoelho' ),
 				'dismissLabel'=> __( 'Agora não', 'saulocoelho' ),
 				'scope'       => home_url( '/' ),
@@ -193,24 +194,25 @@ function saulocoelho_portal_assets() {
 }
 
 /**
- * Banner PWA: oculto no PHP; o JS mostra se não for standalone e não estiver dispensado.
+ * Banner: promove o app Método OCD (PWA em app.saulocoelho.com).
  *
  * @param string $variant 'dash' | 'conta'.
  */
 function saulocoelho_portal_render_install_banner( $variant = 'dash' ) {
 	$variant = 'conta' === $variant ? 'conta' : 'dash';
 	$id      = 'dash' === $variant ? 'sc-portal-install-dash' : 'sc-portal-install';
-	$title   = __( 'Instale o Portal do Aluno', 'saulocoelho' );
+	$title   = __( 'Instale o app Método OCD', 'saulocoelho' );
 	$text    = 'dash' === $variant
-		? __( 'Acesso rápido aos cursos na tela inicial do celular — como um app.', 'saulocoelho' )
-		: __( 'Acesso rápido aos cursos na tela inicial. Disponível só nesta área.', 'saulocoelho' );
+		? __( 'Cursos, mentoria e pílulas no celular — como um app. A mesma conta deste portal.', 'saulocoelho' )
+		: __( 'Acesso rápido a cursos e mentoria. Instale a partir de app.saulocoelho.com.', 'saulocoelho' );
+	$app_url = 'https://app.saulocoelho.com/?install=1';
 	?>
-	<div class="sc-portal-install sc-portal-install--<?php echo esc_attr( $variant ); ?>" id="<?php echo esc_attr( $id ); ?>" hidden data-sc-portal-install>
+	<div class="sc-portal-install sc-portal-install--<?php echo esc_attr( $variant ); ?>" id="<?php echo esc_attr( $id ); ?>" hidden data-sc-portal-install data-sc-ocd-app="<?php echo esc_attr( $app_url ); ?>">
 		<div class="sc-portal-install__body">
 			<p class="sc-portal-install__title"><?php echo esc_html( $title ); ?></p>
 			<p class="sc-portal-install__text"><?php echo esc_html( $text ); ?></p>
 			<div class="sc-portal-install__actions">
-				<button type="button" class="sc-portal-install__btn" data-sc-portal-install-btn><?php esc_html_e( 'Instalar app', 'saulocoelho' ); ?></button>
+				<a class="sc-portal-install__btn" href="<?php echo esc_url( $app_url ); ?>" data-sc-portal-install-btn><?php esc_html_e( 'Ver como instalar', 'saulocoelho' ); ?></a>
 				<button type="button" class="sc-portal-install__dismiss" data-sc-portal-install-dismiss><?php esc_html_e( 'Agora não', 'saulocoelho' ); ?></button>
 			</div>
 			<p class="sc-portal-install__ios" data-sc-portal-install-ios hidden></p>

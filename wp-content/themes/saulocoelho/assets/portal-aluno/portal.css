@@ -526,6 +526,7 @@ body.sc-portal-aluno .prose-premium {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
 }
 
