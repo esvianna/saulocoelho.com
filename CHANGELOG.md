@@ -4,6 +4,9 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/). Versões do 
 
 ## [Unreleased]
 
+### Changed
+- Botão flutuante do WhatsApp no padrão do vtis.com.br (Joinchat): logo oficial do WhatsApp em traço único (antes o desenho saía duplicado), botão 60 px sem pulsar, balão branco «Fale comigo!» no hover e exibido sozinho por 5 s após 3 s (só desktop). Tema **1.3.48**.
+
 ### Added
 - Portal: banner «Instale o app Método OCD» → instruções em https://app.saulocoelho.com/?install=1 («Ver como instalar»). Tema **1.3.47**.
 - Portal: banner «Instale o app Método OCD» (substitui «Instale o Portal do Aluno») → https://app.saulocoelho.com/. Tema **1.3.46**.

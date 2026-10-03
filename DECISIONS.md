@@ -319,3 +319,14 @@ Schema: `coaching-terapia-2026-07` — 22 campos; detalhe em issue #3. CRUD conf
 | **Consequências** | Front e «Minhas Turmas» leem do curso. v2 (CPT Galeria genérico / shortcode) fica fora de escopo. |
 
 **Hub follow-up (2026-09-18):** _alumni_show_on_hub + _alumni_students_can_upload; tema >= **1.3.44** (module-alumni-hub.php AJAX); Ama >= **1.0.52** chama lumni_render_course_hub_gallery(). Uploads de aluno: MIME JPEG/PNG/WebP, max 5 MB, nonce, so matriculados; meta _alumni_from_student.
+
+## ADR-020 — Captcha desligado em «Senha perdida» (Captcha Code Authentication)
+
+| Campo | Valor |
+|-------|-------|
+| **Data** | 2026-10-03 |
+| **Status** | Aceita |
+| **Contexto** | Aluna não conseguia redefinir a senha: «Please complete the CAPTCHA.». O plugin **Captcha Code Authentication** (3.33) desenha o captcha só no `lostpassword_form` (tela `wp-login.php`), mas valida no `lostpassword_post`, que roda em todo `retrieve_password()` — inclusive na página Woo `/minha-conta/lost-password/` (sem o campo) e no `POST /wp-json/ocd/v1/auth/forgot` do app Método OCD. Resultado: `wp_die` (HTTP 500) nos dois. |
+| **Decisão** | Em wp-admin → WP Captcha, opção **Lost password** desmarcada (Eduardo, 03/10). Captcha segue ativo no login e no cadastro do `wp-login.php` (os formulários Woo usam `username`/`password` e não passam pela validação do plugin). |
+| **Motivo** | Correção imediata sem código; brute force no login continua coberto pelo Loginizer e pelo WPS Limit Login. |
+| **Consequências** | **Não religar «Lost password»** neste plugin: quebra de novo a redefinição na loja e no app. Se quiser captcha nessa tela, usar uma solução que se integre ao WooCommerce (`woocommerce_lostpassword_form`) e excluir o REST do app. Verificado em 03/10: página Woo 200, `/ocd/v1/auth/forgot` 200, login inalterado. |

@@ -1,8 +1,12 @@
 # PROJECT_STATUS.md — Continuidade do projeto
 
-Última atualização: 2026-09-23
+Última atualização: 2026-10-03
 
 ## Onde paramos
+
+**Redefinição de senha (03/10):** captcha do plugin Captcha Code Authentication bloqueava «Senha perdida» na loja e no app OCD (erro «Please complete the CAPTCHA.»). Opção **Lost password** desligada no wp-admin; verificado. Não religar — ver ADR-020.
+
+**Botão do WhatsApp (03/10):** tema **1.3.48** — ícone oficial e balão «Fale comigo!» no padrão do vtis.com.br (`footer.php` + `style.css`). Publicado por FTP em 03/10 (home com `style.css?ver=1.3.48`).
 
 **Banner Minha Conta → instruções do app OCD:** tema **1.3.47** — CTA «Ver como instalar» → https://app.saulocoelho.com/?install=1.
 
